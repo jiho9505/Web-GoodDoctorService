@@ -4,13 +4,14 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 function LeftMenu(props) {
+ 
   return (
     <Menu mode={props.mode}>
       <Menu.Item key="home">
-        <a href="/">홈</a>
+        <a href="/" >홈</a>
       </Menu.Item>
       <Menu.Item key="community">
-        <a href="/">커뮤니티</a>
+        <a href="/community" >커뮤니티</a>
       </Menu.Item>
     {/*}
     <SubMenu title={<span>커뮤니티</span>}>

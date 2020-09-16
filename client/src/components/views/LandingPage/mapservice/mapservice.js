@@ -1,8 +1,9 @@
 import React , { useState } from 'react'
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
+import { NAVER_KEY } from '../../../Config'
 
 function Mapservice(props) {
-    const NAVER_API_KEY = '1mqg482ke0';
+    const NAVER_API_KEY = NAVER_KEY;
 
     return (
     <RenderAfterNavermapsLoaded
