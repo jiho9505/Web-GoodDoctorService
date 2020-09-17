@@ -33,7 +33,7 @@ function LandingPage() {
                      
                     <Mapservice style={{ margin: '3rem auto'}}/>
                     
-                    </Col>
+                </Col>
                 <Col lg={12} xs={24}>
                     {/* CheckBox */}
                     <div style={{width:'550px' , height: '400px' , border: '1px solid gray' ,display:'flex', justifyContent:'center', alignItems:'center'}}>
