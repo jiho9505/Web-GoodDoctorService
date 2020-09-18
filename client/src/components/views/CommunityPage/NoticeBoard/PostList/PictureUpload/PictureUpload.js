@@ -42,16 +42,19 @@ function PictureUpload(props) {
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <Dropzone onDrop={dropHandler}>
                 {({ getRootProps, getInputProps }) => (
-                   <div {...getRootProps()}>
+                   <div style={{height: 30}} {...getRootProps()}>
                         <input {...getInputProps()} />
-                        <Icon type="plus" style={{ fontSize: '3rem' }} /> 사진 추가
+                       
+                        <Icon type="plus" /> 사진 추가
+                        
+                        
                   </div>
                 )}
             </Dropzone>
-
+            
             <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
 
                 {Images.map((image, index) => (
@@ -64,8 +67,6 @@ function PictureUpload(props) {
 
 
             </div>
-
-
         </div>
     )
 }

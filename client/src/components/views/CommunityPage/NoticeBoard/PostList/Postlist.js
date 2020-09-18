@@ -57,16 +57,21 @@ function Postlist() {
                     </Select>
                     <br />
                     <br />
-                    <label>제목</label>
+                    <label style={{fontSize : '16px'}}>제목</label>
+                    <br />
+                   
                     <Input onChange={TitleHandler} value={PostTitle} placeholder='제목을 입력해주세요.'/>
                     <br />
                     <br />
+                    <label style={{fontSize : '16px'}}>내용</label>
+                    
+                    <br />
+            
+                    <TextArea onChange={DescHandler} value={Description} style={{height:300}} placeholder='내용을 입력해주세요.'/>
+    
+                    <br />
+                    <br />
                     <PictureUpload refreshFunction={updateImages} />
-                    <br/>
-                    <label>내용</label>
-                    <TextArea onChange={DescHandler} value={Description} placeholder='내용을 입력해주세요.'/>
-                    <br />
-                    <br />
                    
                     <div style = {{display:'flex', justifyContent:'center'}}>
                         <Button type="primary" htmlType="submit" onClick>글 게시하기</Button>
