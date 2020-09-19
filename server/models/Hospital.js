@@ -18,7 +18,14 @@ const hospitalSchema = mongoose.Schema({
     },
     cafe : {
         type: String,
+    },
+    lat :{
+        type: Number
+    },
+    lng :{
+        type: Number
     }
+    
 })
 
 const Hospital = mongoose.model('Hospital', hospitalSchema);

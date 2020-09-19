@@ -2,7 +2,6 @@ import React , { useState } from 'react'
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import { NAVER_KEY } from '../../../Config'
 import './mapservice.css'
-import Hospitalimage from './hospital.jpg'
 
 
 function Mapservice(props) {
@@ -33,7 +32,7 @@ function Mapservice(props) {
                 <Marker
                   // icon={""}
                   icon = {{
-                    content: '<img class="pulse" src="https://myfirstmap.s3.ap-northeast-2.amazonaws.com/circle.png">' ,
+                    content: '<div class="pulse"/>' ,
                     anchor: {x:12, y:12}
                    // 중심 좌표 설정
                   }}

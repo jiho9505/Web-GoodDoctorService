@@ -7,6 +7,7 @@ import axios from 'axios';
 function PictureUpload(props) {
 
     const [Images, setImages] = useState([])
+    const [Show, setShow] = useState(false)
 
     const dropHandler = (files) => {
 
@@ -16,13 +17,13 @@ function PictureUpload(props) {
         }
         formData.append("file", files[0])
 
-        axios.post('/api/product/image', formData, config)
+        axios.post('/api/board/image', formData, config)
             .then(response => {
                 if (response.data.success) {
                     setImages([...Images, response.data.filePath])
                     props.refreshFunction([...Images, response.data.filePath])
-
-
+                    setShow(true)
+                    console.log(Images)
                 } else {
                     alert('파일을 저장하는데 실패했습니다.')
                 }
@@ -36,16 +37,22 @@ function PictureUpload(props) {
         newImages.splice(currentIndex, 1)
         setImages(newImages)
         props.refreshFunction(newImages)
-
+        
+        if(newImages.length > 0){
+            setShow(true)
+        }
+        else{
+            setShow(false)
+        }
 
     }
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <div>
             <Dropzone onDrop={dropHandler}>
                 {({ getRootProps, getInputProps }) => (
-                   <div style={{height: 30}} {...getRootProps()}>
+                   <div style={{display:'flex', justifyContent:'center' , height: 30}} {...getRootProps()}>
                         <input {...getInputProps()} />
                        
                         <Icon type="plus" /> 사진 추가
@@ -54,19 +61,23 @@ function PictureUpload(props) {
                   </div>
                 )}
             </Dropzone>
-            
-            <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
+            {Show ? 
+            <div style={{display:'flex', justifyContent:'center'}}>
+                <div style={{  width: '300px', height: '290px', overflowX: 'scroll' }}>
 
-                {Images.map((image, index) => (
+                {Images && Images.map((image, index) => (
                     <div onClick={() => deleteHandler(image)} key={index}>
                         <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
-                            src={`http://localhost:5000/${image}`}
+                            src={`http://localhost:5000/${image}`} alt='image'
                         />
+                        {console.log(image)}
                     </div>
                 ))}
 
 
+                </div>
             </div>
+            : ""} 
         </div>
     )
 }
