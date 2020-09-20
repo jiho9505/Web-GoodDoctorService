@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Typography, Button, Select , Form } from 'antd'
+import { Input, Typography, Button, Select , Form , message} from 'antd'
 import { SmileTwoTone } from '@ant-design/icons';
 import PictureUpload from './PictureUpload/PictureUpload'
 import Axios from 'axios';
@@ -26,12 +26,8 @@ function Postlist(props) {
 
 
     const TitleHandler = (e) => {
-        if(Title.length>100){
-            return alert('제목 글자 수 제한은 한글 기준 50글자 입니다.')
-        }
-        else{
-            setPostTitle(e.currentTarget.value)
-        }
+        setPostTitle(e.currentTarget.value)
+        
     }
     const DescHandler = (e) => {
         setDescription(e.currentTarget.value)
@@ -50,14 +46,14 @@ function Postlist(props) {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        if (!Title || !Description || !ChooseBoard) {
+        if (!PostTitle || !Description || !ChooseBoard) {
             return alert("게시판 선택,제목,내용 부분을 입력했는지 확인해주세요.")
         }
 
 
         const body = {
             writer: props.user.userData._id,
-            title: Title,
+            title: PostTitle,
             description: Description,
             chooseBoard: ChooseBoard,
             images: Images,
@@ -69,15 +65,21 @@ function Postlist(props) {
         Axios.post('/api/board', body)
             .then(response => {
                 if (response.data.success) {
-                    alert('글을 게시하는데 성공 했습니다.')
-                    props.history.push('/commuinity')
+                    message.config({
+                        top: 100
+                      })
+                    message.success('글 게시 성공!')
+            
+                    setTimeout(() => {
+                        props.history.push('/community')
+                    }, 3000)
                 } else {
-                    alert('글을 게시하는데 실패 했습니다.')
+                    alert('글을 게시하는데 실패했습니다.')
                 }
             })
     }
     const ChooseBoardHandler = (value) => {
-        setChooseBoard(value)
+        setChooseBoard(value) 
       }
 
     return (
@@ -97,7 +99,7 @@ function Postlist(props) {
                     <label style={{fontSize : '16px'}}>제목</label>
                     <br />
                    
-                    <Input onChange={TitleHandler} value={PostTitle} placeholder='제목을 입력해주세요.'/>
+                    <Input onChange={TitleHandler} maxLength='50' value={PostTitle} placeholder='제목을 입력해주세요.(50자 제한)'/>
                     <br />
                     <br />
                     <label style={{fontSize : '16px'}}>내용</label>
@@ -122,5 +124,4 @@ function Postlist(props) {
         </div>
     )
 }
-
 export default Postlist

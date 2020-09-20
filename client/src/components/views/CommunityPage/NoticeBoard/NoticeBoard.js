@@ -1,44 +1,86 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Table } from 'antd';
+import Axios from 'axios'  
 
 function NoticeBoard() {
+  
+   const [Board, setBoard] = useState([])
+  
+  useEffect(() => {
+    
+    Axios.get('/api/board')
+         .then(response => {
+           if(response.data.success){
+              setBoard(response.data.result)
+              console.log(response.data.result)
+            }
+            else{
+              alert("게시판 목록을 불러오는데 실패하였습니다.")
+            }
+          }
+        )
+         
+      
+          
+  }, [])
+
+  const newmem = () => {
    
+    Board.map((board,index)=>{
+      return {
+        key : index,
+        chooseboard: board.chooseboard,
+        title: board.title,
+        date: board.date,
+        nickname: board.nickname,
+        view: board.view,
+        like: board.like
+      }
+    }
+    )
+
+   
+  }
+
+  const newData = newmem()
+
+
   
     const dataSource = [
         {
           key: '1',
-          judge: '정보 공유',
+          chooseboard: '정보 공유',
           title: 'test...ing',
           date: '2020.09.16',
-          name: 'Jiho',
+          nickname: 'Jiho',
           view: '50',
           like: '5'
         },
         {
-          judge: '완치 후기',
+          chooseboard: '완치 후기',
           key: '2',
           title: 'test...ing second',
           date: '2020.09.16',
-          name: 'Mom',
+          nickname: 'Mom',
           view: '55',
           like: '8'
         },
         {
-          judge: '고민 털기',
+          chooseboard: '고민 털기',
           key: '3',
           title: 'test...ing third',
           date: '2020.09.14',
-          name: 'Dad',
+          nickname: 'Dad',
           view: '67',
           like: '14'
         },
       ];
-      
+    
       const columns = [
         {
           title: '구분',
-          dataIndex: 'judge',
-          key: 'judge',
+          dataIndex: 'chooseBoard',
+          key: 'chooseBoard',
           width: 100,
           align: 'center'
         },
@@ -58,8 +100,8 @@ function NoticeBoard() {
         },
         {
             title: '닉네임',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'nickname',
+            key: 'nickname',
             width: 100,
             align: 'center'
         },
@@ -84,7 +126,7 @@ function NoticeBoard() {
   
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns}  size="small" bordered='true' />;
+            <Table dataSource={newData} columns={columns}  size="small" bordered='true' />;
         </div>
     )
 }

@@ -7,6 +7,7 @@ import SearchTool from './SearchTool/SearchTool'
 const {Title} = Typography
 
 function  CommunityPage() {
+
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
@@ -16,7 +17,7 @@ function  CommunityPage() {
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'flex-end'}}>
-               <Button onClick ><EditOutlined style={{marginTop : 10}} />글쓰기</Button>
+               <a href='/test'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>
             </div>
             
             <br/>
