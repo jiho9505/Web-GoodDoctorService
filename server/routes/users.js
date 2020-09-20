@@ -14,10 +14,9 @@ router.get("/auth", auth, (req, res) => {
         isAdmin: req.user.role === 0 ? false : true,
         isAuth: true,
         email: req.user.email,
-        name: req.user.name,
-        lastname: req.user.lastname,
+        nickname: req.user.nickname,
         role: req.user.role,
-        image: req.user.image,
+        
     });
 });
 
@@ -38,12 +37,12 @@ router.post("/login", (req, res) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
-                message: "Auth failed, email not found"
+                message: "아이디를 확인해주세요."
             });
 
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
-                return res.json({ loginSuccess: false, message: "Wrong password" });
+                return res.json({ loginSuccess: false, message: "비밀번호를 확인해주세요" });
 
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);

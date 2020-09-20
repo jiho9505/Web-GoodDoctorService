@@ -5,24 +5,25 @@ const jwt = require('jsonwebtoken');
 const moment = require("moment");
 
 const userSchema = mongoose.Schema({
-    name: {
+   
+    nickname: {
         type:String,
         maxlength:10
     },
-    nickname: {
-        type:String,
-        maxlength:15
-    },
     email: {
         type:String,
-        trim:true,
-        unique: 1 
+        trim: true,
+        unique: 1
     },
     password: {
         type: String,
         minglength: 5
     },
     role : {
+        type:Number,
+        default: 0 
+    },
+    birth : {
         type:Number,
         default: 0 
     },
