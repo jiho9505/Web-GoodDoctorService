@@ -28,7 +28,7 @@ const boardSchema = mongoose.Schema({
         type: Array,
         default: []
     }
-},{timestmap : true})
+},{ timestamps : true })
 
 const Board = mongoose.model('Board', boardSchema);
 

@@ -1,81 +1,45 @@
 import React, {useEffect, useState} from 'react'
-import { Table } from 'antd';
-import Axios from 'axios'  
+import { Table } from 'antd';  
+import moment from "moment";
 
-function NoticeBoard() {
-  
-   const [Board, setBoard] = useState([])
-  
+function NoticeBoard(props) {
+  const [Datas, setDatas] = useState([])
   useEffect(() => {
-    
-    Axios.get('/api/board')
-         .then(response => {
-           if(response.data.success){
-              setBoard(response.data.result)
-              console.log(response.data.result)
+    let array = []
+    if(props.list && props.list.length>0){
+        props.list.map((list,index)=>{
+          if(list.chooseBoard === 1){
+            list.chooseBoard = '완치 후기'
+          }
+          else{
+            if(list.chooseBoard === 2){
+              list.chooseBoard = '정보 공유'
             }
             else{
-              alert("게시판 목록을 불러오는데 실패하였습니다.")
+              list.chooseBoard = '고민 털기'
             }
           }
-        )
-         
-      
-          
-  }, [])
 
-  const newmem = () => {
-   
-    Board.map((board,index)=>{
-      return {
-        key : index,
-        chooseboard: board.chooseboard,
-        title: board.title,
-        date: board.date,
-        nickname: board.nickname,
-        view: board.view,
-        like: board.like
-      }
-    }
-    )
-
-   
+        array.push( {
+          chooseBoard : list.chooseBoard,
+          key : index,
+          title: list.title,
+          date: moment(list.createdAt).format("YYYY-MM-D"),
+          nickname: list.writer.nickname,
+          view: list.view,
+          like: list.like
+        } )
+        
+    })
+    setDatas(array)
   }
 
-  const newData = newmem()
+    console.log(array)
+    console.log(props.list)
+    console.log(Datas)
+  },[props.list])
+ 
 
-
-  
-    const dataSource = [
-        {
-          key: '1',
-          chooseboard: '정보 공유',
-          title: 'test...ing',
-          date: '2020.09.16',
-          nickname: 'Jiho',
-          view: '50',
-          like: '5'
-        },
-        {
-          chooseboard: '완치 후기',
-          key: '2',
-          title: 'test...ing second',
-          date: '2020.09.16',
-          nickname: 'Mom',
-          view: '55',
-          like: '8'
-        },
-        {
-          chooseboard: '고민 털기',
-          key: '3',
-          title: 'test...ing third',
-          date: '2020.09.14',
-          nickname: 'Dad',
-          view: '67',
-          like: '14'
-        },
-      ];
-    
       const columns = [
         {
           title: '구분',
@@ -126,7 +90,8 @@ function NoticeBoard() {
   
     return (
         <div>
-            <Table dataSource={newData} columns={columns}  size="small" bordered='true' />;
+          
+            <Table dataSource={Datas} columns={columns}  size='small' bordered={true} />;
         </div>
     )
 }
