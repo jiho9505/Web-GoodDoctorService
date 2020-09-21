@@ -37,7 +37,7 @@ function  CommunityPage() {
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'flex-end'}}>
-               <a href='/test'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>
+               <a href='/write'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>
             </div>
             
             <br/>

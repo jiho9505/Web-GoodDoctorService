@@ -9,6 +9,7 @@ import CommunityPage from "./views/CommunityPage/CommunityPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 import Postlist from "./views/CommunityPage/NoticeBoard/PostList/Postlist"
+import DetailBoardPage from "./views/CommunityPage/DetailBoardPage/DetailBoardPage"
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -26,7 +27,8 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/community" component={Auth(CommunityPage, null)} />
-          <Route exact path="/test" component={Auth(Postlist, true)} />
+          <Route exact path="/write" component={Auth(Postlist, true)} />
+          <Route exact path="/community/:postId" component={Auth(DetailBoardPage, true)} />
         </Switch>
       </div>
       <Footer />

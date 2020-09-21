@@ -27,7 +27,8 @@ function NoticeBoard(props) {
           date: moment(list.createdAt).format("YYYY-MM-D"),
           nickname: list.writer.nickname,
           view: list.view,
-          like: list.like
+          like: list.like,
+          _id: list._id
         } )
         
     })
@@ -53,7 +54,10 @@ function NoticeBoard(props) {
           dataIndex: 'title',
           key: 'title',
           width: 520,
-          align: 'center'
+          align: 'center',
+          render: (text,record) => (
+            <a href={`community/${record._id}`}>{text}</a>
+          )
         },
         {
           title: '날짜',

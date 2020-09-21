@@ -37,8 +37,12 @@ router.post('/', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-
-    Board.find()
+    var postId = req.query.id
+    var body = {
+        _id: postId
+    }
+    
+    Board.find(body)
          .populate('writer')
          .exec((err,result)=>{
              if(err)  return res.status(400).json({ success: false ,err })
