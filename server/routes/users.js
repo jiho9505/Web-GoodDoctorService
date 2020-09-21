@@ -23,8 +23,7 @@ router.get("/auth", auth, (req, res) => {
 router.post("/register", (req, res) => {
 
     const user = new User(req.body);
-
-    user.save((err, doc) => {
+    user.save((err, doc) => {                                                                        
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
             success: true
@@ -37,7 +36,7 @@ router.post("/login", (req, res) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
-                message: "아이디를 확인해주세요."
+                message: "E-mail을 확인해주세요."
             });
 
         user.comparePassword(req.body.password, (err, isMatch) => {

@@ -65,6 +65,8 @@ function RegisterPage(props) {
           .min(8, '생년월일(8자리)를 입력해주세요')
           .max(8, '생년월일(8자리)를 입력해주세요')
           .required('생년월일(8자리)를 입력해주세요'),
+  
+        
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -76,6 +78,7 @@ function RegisterPage(props) {
             birth: values.birth
            
           };
+          
 
           dispatch(registerUser(dataToSubmit)).then(response => {
             if (response.payload.success) {
@@ -179,7 +182,6 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-
               <Form.Item required label="생년월일">
                 <Input
                   id="birth"
@@ -196,7 +198,7 @@ function RegisterPage(props) {
                   <div className="input-feedback">{errors.birth}</div>
                 )}
               </Form.Item>
-
+       
              
 
               <Form.Item {...tailFormItemLayout}>
