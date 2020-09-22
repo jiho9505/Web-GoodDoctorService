@@ -15,7 +15,7 @@ function DetailBoardPage(props) {
         axios.get(`/api/board?id=${postId}`)
              .then(response => {
                  if(response.data.success){
-                     setPostInfo(response.data.result)
+                     setPostInfo(response.data.result[0])
                      console.log(response.data.result)
                      console.log(PostInfo)
                  }
@@ -39,7 +39,7 @@ function DetailBoardPage(props) {
             <label style={{fontSize : '16px'}}>내용</label>
                     
             <br />
-            
+           
             <TextArea  value={PostInfo.description} style={{height:300}} />
     
             <br />

@@ -1,11 +1,11 @@
 import React , {useEffect,useState} from 'react'
-import { SmileTwoTone, EditOutlined } from '@ant-design/icons';
-import { Button, Typography } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
+import Logo from '../Logo/Logo'
 
-const {Title} = Typography
 
 function  CommunityPage() {
     const [Board, setBoard] = useState([])
@@ -31,9 +31,7 @@ function  CommunityPage() {
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
-            <div style={{ textAlign: 'center' }}>
-                <Title level={3}>Find good doctors <SmileTwoTone/></Title>
-            </div>
+            <Logo/>
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'flex-end'}}>

@@ -38,10 +38,12 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     var postId = req.query.id
-    var body = {
-        _id: postId
+    var body = {}
+
+    if(postId){
+        body._id = postId
     }
-    
+
     Board.find(body)
          .populate('writer')
          .exec((err,result)=>{

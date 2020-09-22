@@ -5,7 +5,7 @@ import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
 import { SmileTwoTone } from '@ant-design/icons';
 import { Test } from './Test'
-
+import Logo from '../Logo/Logo'
 
 const { Title } = Typography
 
@@ -14,9 +14,7 @@ function LandingPage() {
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
-            <div style={{ textAlign: 'center' }}>
-                <Title level={3}>Find good doctors <SmileTwoTone/></Title>
-            </div>
+            <Logo/>
             <br/>    
             <br/>
 
