@@ -10,6 +10,8 @@ import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 import Postlist from "./views/CommunityPage/NoticeBoard/PostList/Postlist"
 import DetailBoardPage from "./views/CommunityPage/DetailBoardPage/DetailBoardPage"
+import Logo from "./views/Logo/Logo"
+import FindPassword from "./views/LoginPage/FindPassword/FindPassword"
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -21,7 +23,10 @@ function App() {
       <NavBar /> 
       
       
-      <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
+      <div style={{ minHeight: 'calc(100vh - 80px)' }}>
+        <div style={{ paddingTop: '140px'}}>
+          <Logo/>
+        </div>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
@@ -29,6 +34,7 @@ function App() {
           <Route exact path="/community" component={Auth(CommunityPage, null)} />
           <Route exact path="/write" component={Auth(Postlist, true)} />
           <Route exact path="/community/:postId" component={Auth(DetailBoardPage, true)} />
+          <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
         </Switch>
       </div>
       <Footer />

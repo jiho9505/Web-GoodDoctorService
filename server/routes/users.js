@@ -13,7 +13,6 @@ router.get("/auth", auth, (req, res) => {
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
         isAuth: true,
-        email: req.user.email,
         nickname: req.user.nickname,
         role: req.user.role,
         

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Input, Button, Select , Form , message} from 'antd'
 import PictureUpload from './PictureUpload/PictureUpload'
 import Axios from 'axios';
-import Logo from '../../../Logo/Logo'
 
 const { Option } = Select;
 
@@ -85,8 +84,7 @@ function Postlist(props) {
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
-            <Logo/>
-
+         
             <div style = {{ width: '75%', margin: '3rem auto' }}>
                 <Form onSubmit={submitHandler}>
                     

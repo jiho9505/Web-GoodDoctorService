@@ -106,9 +106,11 @@ function RegisterPage(props) {
         } = props;
         return (
           <div className="app">
+            <br/>
+            <br/>
             <Title level={3}>회원 가입</Title>
             <br/>
-            <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
+            <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit} >
 
 
             <Form.Item required label="E-mail" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
@@ -201,7 +203,7 @@ function RegisterPage(props) {
              
 
               <Form.Item {...tailFormItemLayout}>
-                <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   가입하기
                 </Button>
               </Form.Item>

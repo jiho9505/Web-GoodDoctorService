@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
-import Logo from '../Logo/Logo'
 
 
 function  CommunityPage() {
@@ -31,7 +30,7 @@ function  CommunityPage() {
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
-            <Logo/>
+           
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'flex-end'}}>

@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
-import { Col, Row , Button , Typography } from 'antd'
+import { Col, Row , Button } from 'antd'
 import Mapservice from "./mapservice/mapservice"
 import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
-import { SmileTwoTone } from '@ant-design/icons';
 import { Test } from './Test'
-import Logo from '../Logo/Logo'
 
-const { Title } = Typography
+
+
 
 function LandingPage() {
     const [continents, setcontinents] = useState(["hi","bye"])
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
-            <Logo/>
+           
             <br/>    
             <br/>
 
