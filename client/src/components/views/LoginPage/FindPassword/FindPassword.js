@@ -2,15 +2,11 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Icon, Input, Button,  Typography } from 'antd';
-import { useDispatch } from "react-redux";
+import { Form, Icon, Input, Button } from 'antd';
 
-
-const { Title } = Typography;
+import axios from 'axios'
 
 function FindPassword(props) {
-  const dispatch = useDispatch();
-
   const [formErrorMessage, setFormErrorMessage] = useState('')
 
   return (
@@ -30,8 +26,30 @@ function FindPassword(props) {
           let dataToSubmit = {
             email: values.email
           };
-
-        })}}
+          axios.post('/api/users/findpassword',dataToSubmit)
+               .then(response => {
+                 console.log(response.data)
+                 if(!response.data.success){
+                   setFormErrorMessage(response.data.message)
+                  setTimeout(() => {
+                    setFormErrorMessage("")
+                  }, 3000);
+                 
+                 }
+                 else{
+                  props.history.push('/findpwnextpage') 
+                 }   
+                }          
+            )
+            .catch(err => {
+              setFormErrorMessage('Error 발생!')
+              setTimeout(() => {
+                setFormErrorMessage("")
+              }, 3000);
+            });
+          setSubmitting(false);
+        }, 500)
+      }}
         >
       {props => {
         const {

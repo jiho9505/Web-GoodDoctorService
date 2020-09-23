@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-
 const { auth } = require("../middleware/auth");
-
+const { Tokenauth } = require("../models/tokenauth")
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const config = require('../config/dev')
 //=================================
 //             User
 //=================================
@@ -64,5 +66,103 @@ router.get("/logout", auth, (req, res) => {
         });
     });
 });
+
+
+
+router.post("/findpassword", (req, res) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (!user)
+            return res.json({
+                success: false,
+                message: 'E-mali이 존재하지 않습니다'
+            });
+
+        const token = crypto.randomBytes(20).toString('hex'); // token 생성
+        const data = { // 데이터 정리
+            token,
+            userId: user._id,
+            ttl: 300000 // ttl 값 설정 (5분)
+        };
+        
+        const tokenauth = new Tokenauth(data)
+        
+        tokenauth.save((err,doc)=>{
+            if(err) {
+                return res.status(400).json({
+                    success: false,
+                    message: '오류 발생-다시 입력해주시기 바랍니다'
+                })
+            }
+            return res.status(200).json({
+                success: true
+            })
+        })
+        
+        const transporter = nodemailer.createTransport({
+            service: 'Naver',
+            host: 'smtp.naver.com',
+            port: 587,
+            auth: { // 이메일을 보낼 계정 데이터 입력
+              user: config.MAIL_EMAIL,
+              pass: config.MAIL_PASS,
+            },
+          });
+        const emailOptions = { // 옵션값 설정
+              from: config.MAIL_EMAIL,
+              to: req.body.email,
+              subject: '[숨은 명의 찾기] 비밀번호 초기화 이메일입니다.',
+              html: `<div>
+              <h1 style="color:#ffa940;  font-family: roboto,helvetica neue,helvetica,arial,sans-serif;
+               display:flex; justify-content:flex-end;">[숨은 명의 찾기]</h1>
+              <hr></hr>
+              <h2 style="color:#ffa940; font-family: roboto,helvetica neue,helvetica,arial,sans-serif"> 
+              비밀번호 찾기 요청 </h2>
+              <br></br>
+              <p>[숨은 명의 찾기]에서 비밀번호 찾기를 요청하셔서 보낸 이메일입니다.</p>
+              <p>(만약 실수로 변경신청을 하셨다면 이 이메일을 무시해 주세요.)</p>
+              <p>본인이 맞으시다면 비밀번호 초기화를 위해서 아래의 '버튼'을 클릭하여 주세요.</p>
+              <br></br>
+              <a href=http://localhost:3000/reset/${token}><button>비밀번호 초기화</button></a></div>`
+              
+            };
+            transporter.sendMail(emailOptions, res); //전송
+        });
+     });
+ 
+
+router.post('/resetpw', (req, res) => {
+   Tokenauth.findOne({ token : req.body.tokenId } , (err,info)=>
+    {
+        if(err){
+            return res.status(400).json({
+                success:false,
+                message:'Error..'
+            })
+        }
+        if(!info){
+            return res.status(400).json({
+                success:false,
+                message:'Error.. 비밀번호 찾기 절차를 다시 밟아주세요.'
+            })
+        }
+        else{
+            if(Date.now() - info.createdAt > info.ttl)
+            {
+                return res.status(400).json({
+                    success:false,
+                    message:'유효 시간(5분)이 지났습니다..'
+                })
+                
+    
+            }
+            else{
+                User.findOneAndUpdate({_id:info.userId},{password:req.body.password})
+            }
+        }
+    
+    }
+
+)
+})
 
 module.exports = router;

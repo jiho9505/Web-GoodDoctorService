@@ -27,9 +27,9 @@ const userSchema = mongoose.Schema({
         type:Number,
         default: 0 
     },
-    token : {
+   token : {
         type: String,
-    },
+    }, 
     tokenExp :{
         type: Number
     }

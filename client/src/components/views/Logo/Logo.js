@@ -6,9 +6,9 @@ const {Title} = Typography
 
 function Logo() {
     return (
-        <div style={{  textAlign:'center'}}>
+        <div style={{  textAlign:'center' }}>
             <Title level={3} >
-            <SmileTwoTone twoToneColor="#52c41a"/> Find Hidden Good Doctors <SmileTwoTone twoToneColor="#52c41a"/></Title>
+            <SmileTwoTone twoToneColor="#52c41a"/> Find Good Doctors <SmileTwoTone twoToneColor="#52c41a"/></Title>
         </div>
     )
 }
