@@ -8,7 +8,8 @@ import {
   Form,
   Input,
   Button,
-  Typography
+  Typography,
+  message
 } from 'antd';
 
 const {Title} = Typography
@@ -81,7 +82,14 @@ function RegisterPage(props) {
 
           dispatch(registerUser(dataToSubmit)).then(response => {
             if (response.payload.success) {
-              props.history.push("/login");
+                  message.config({
+                    top: 100
+                  })
+                message.success("회원가입 성공!")
+                setTimeout(() => {
+                  props.history.push('/login')
+                }, 3000);
+              
             } else {
         
               alert("이미 사용중인 E-mail입니다")

@@ -1,7 +1,8 @@
 const express = require('express');
+const { Mongoose } = require('mongoose');
 const router = express.Router();
 const multer = require('multer');
-const { Board } = require("../models/board");
+const { Board } = require("../models/Board");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -46,8 +47,11 @@ router.get('/', (req, res) => {
 
     Board.find(body)
          .populate('writer')
+         .sort( { createdAt: -1 } )
          .exec((err,result)=>{
-             if(err)  return res.status(400).json({ success: false ,err })
+             
+             if(err)  return res.json({ success: false ,err })
+             if(result.length === 0) return res.json({ success: false })
              return res.status(200).json({ success: true, result })
          })
     })

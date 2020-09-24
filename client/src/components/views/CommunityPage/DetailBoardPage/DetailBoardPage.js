@@ -13,11 +13,12 @@ function DetailBoardPage(props) {
 
     useEffect(() => {
         axios.get(`/api/board?id=${postId}`)
-             .then(response => {
+             .then(response => {                        
                  if(response.data.success){
                      setPostInfo(response.data.result[0])
-                     console.log(response.data.result)
-                     console.log(PostInfo)
+                 }
+                 else{
+                     props.history.push('/notfound')
                  }
                 }
             )

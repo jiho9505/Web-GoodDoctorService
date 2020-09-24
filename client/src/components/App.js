@@ -13,6 +13,8 @@ import Logo from "./views/Logo/Logo"
 import FindPassword from "./views/LoginPage/FindPassword/FindPassword"
 import FindPwNextPage from  "./views/LoginPage/FindPassword/FindPwNextPage"
 import ResetPw from  "./views/LoginPage/FindPassword/ResetPw"
+import NotFound from "./views/NotFound/NotFound"
+import Success from "./views/Success/Success"
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -37,6 +39,8 @@ function App() {
           <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
           <Route exact path="/findpwnextpage" component={Auth(FindPwNextPage, false)} />
           <Route exact path="/reset/:tokenId" component={Auth(ResetPw, false)} />
+          <Route exact path="/:notfound" component={Auth(NotFound, null)} />
+          <Route exact path="/success" component={Auth(Success, null)} />
         </Switch>
       </div>
       <Footer />

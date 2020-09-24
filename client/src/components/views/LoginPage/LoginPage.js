@@ -45,6 +45,9 @@ function LoginPage(props) {
                 props.history.push("/");
               } else {
                 setFormErrorMessage('E-mail과 비밀번호를 다시 확인해주세요')
+                setTimeout(() => {
+                  setFormErrorMessage("")
+                }, 3000);
               }
             })
             .catch(err => {

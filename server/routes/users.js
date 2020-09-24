@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
-const { Tokenauth } = require("../models/tokenauth")
+const { Tokenauth } = require("../models/Tokenauth")
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const config = require('../config/dev')
@@ -133,6 +133,7 @@ router.post("/findpassword", (req, res) => {
 router.post('/resetpw', (req, res) => {
    Tokenauth.findOne({ token : req.body.tokenId } , (err,info)=>
     {
+        console.log(err)       
         if(err){
             return res.status(400).json({
                 success:false,
@@ -142,10 +143,25 @@ router.post('/resetpw', (req, res) => {
         if(!info){
             return res.status(400).json({
                 success:false,
-                message:'Error.. 비밀번호 찾기 절차를 다시 밟아주세요.'
+                message:'제한시간 초과... 비밀번호 찾기 절차를 다시 밟아주세요.'
             })
         }
+      
+        User.findOne({_id:info.userId}
+            , (err,userInfo) => {                
+                 if(err) return res.status(400).json({ success : false ,
+                    message:'Error 발생...'})
+                 const user = userInfo
+                 user.password = req.body.password
+                 user.save((err)=>{
+                     if(err) return res.status(400).json({ success : false , 
+                        message:'Error 발생...'})
+                     return res.status(200).json({ success : true})
+                 })
+                 }) 
+        /*
         else{
+           
             if(Date.now() - info.createdAt > info.ttl)
             {
                 return res.status(400).json({
@@ -155,14 +171,9 @@ router.post('/resetpw', (req, res) => {
                 
     
             }
-            else{
-                User.findOneAndUpdate({_id:info.userId},{password:req.body.password})
-            }
-        }
-    
+            */        
+        })   
     }
-
 )
-})
 
 module.exports = router;

@@ -4,6 +4,11 @@ import moment from "moment";
 
 function NoticeBoard(props) {
   const [Datas, setDatas] = useState([])
+
+  function onChange(pagination, filters, sorter, extra) {
+    console.log('params', pagination, filters, sorter, extra);
+  }
+
   useEffect(() => {
     let array = []
     if(props.list && props.list.length>0){
@@ -35,9 +40,6 @@ function NoticeBoard(props) {
     setDatas(array)
   }
 
-    console.log(array)
-    console.log(props.list)
-    console.log(Datas)
   },[props.list])
  
 
@@ -78,14 +80,22 @@ function NoticeBoard(props) {
             dataIndex: 'view',
             key: 'view',
             width: 50,
-            align: 'center'
+            align: 'center', 
+            sorter: {
+              compare: (a, b) => a.view - b.view
+            }, 
+         
           },
           {
             title: '좋아요',
             dataIndex: 'like',
             key: 'like',
             width: 50,
-            align: 'center'
+            align: 'center',
+            sorter: {
+              compare: (a, b) => a.like - b.like
+            },
+           
         }
 
 
@@ -94,8 +104,7 @@ function NoticeBoard(props) {
   
     return (
         <div>
-          
-            <Table dataSource={Datas} columns={columns}  size='small' bordered={true} />;
+            <Table dataSource={Datas} columns={columns}  onChange={onChange} size='small' bordered={true} />;
         </div>
     )
 }

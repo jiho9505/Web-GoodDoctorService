@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Input, Button,  Typography, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { ExclamationCircleOutlined} from '@ant-design/icons';
 import axios from 'axios'
-const { Title } = Typography;
 
 
 const formItemLayout = {
@@ -36,6 +35,14 @@ function ResetPw(props) {
   const tokenId = props.match.params.tokenId
   const [formErrorMessage, setFormErrorMessage] = useState('')
 
+  useEffect(()=>{
+    axios.post('/api/tokenauth',tokenId)
+         .then(response => {
+           if(!response.data.success){
+             props.history.push('/notfound')
+           }
+         })
+  },[])
   return (
    
    
@@ -61,7 +68,14 @@ function ResetPw(props) {
           axios.post('/api/users/resetpw',dataToSubmit)
                .then(response => {
                  
-                 
+                  if(response.data.success){
+                    props.history.push('/success')
+
+                  }
+                  else{
+                    props.history.push('/notfound')
+
+                  }
                 }          
             )
             .catch(err => {
