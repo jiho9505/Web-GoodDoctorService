@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     var board = new Board(req.body)
 
     board.save((err,doc) => {
-        if(err) return res.status(400).json({ success: false ,err })
+        if(err) return res.json({ success: false ,err })
         return res.status(200).json({ success: true, doc})
     })
 })

@@ -62,9 +62,9 @@ function RegisterPage(props) {
           .oneOf([Yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
           .required('비밀번호를 다시 입력해주세요'),
         birth: Yup.string()
-          .min(8, '생년월일(8자리)를 입력해주세요')
-          .max(8, '생년월일(8자리)를 입력해주세요')
-          .required('생년월일(8자리)를 입력해주세요'),
+          .min(2, "나이를 입력해주세요")
+          .max(2, "나이를 입력해주세요")
+          .required("나이를 입력해주세요"),
   
         
       })}
@@ -92,7 +92,7 @@ function RegisterPage(props) {
               
             } else {
         
-              alert("이미 사용중인 E-mail입니다")
+              alert(response.payload.message)
             }
           })
 
@@ -191,10 +191,10 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="생년월일">
+              <Form.Item required label="나이">
                 <Input
                   id="birth"
-                  placeholder="생년월일(8자리)를 입력해주세요."
+                  placeholder="나이를 입력해주세요"
                   type="number"
                   value={values.birth}
                   onChange={handleChange}

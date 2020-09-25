@@ -22,14 +22,19 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
+    User.findOne({ nickname : req.body.nickname } , (err,userInfo)=>{
+        if(err) return res.json({ success: false, message: 'Error 발생..' })
+        if(userInfo) return res.json({ success: false, message: '중복된 닉네임이 있습니다' })
 
-    const user = new User(req.body);
-    user.save((err, doc) => {                                                                        
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        });
+        const user = new User(req.body);
+            user.save((err, doc) => {                                                                                    
+                if (err) return res.json({ success: false, message: '중복된 E-mail이 있습니다' });
+                return res.status(200).json({
+                    success: true
+                });
     });
+    })
+    
 });
 
 router.post("/login", (req, res) => {
@@ -45,7 +50,7 @@ router.post("/login", (req, res) => {
                 return res.json({ loginSuccess: false, message: "비밀번호를 확인해주세요" });
 
             user.generateToken((err, user) => {
-                if (err) return res.status(400).send(err);
+                if (err) return res.send(err);
                 res.cookie("w_authExp", user.tokenExp);
                 res
                     .cookie("w_auth", user.token)
@@ -88,7 +93,7 @@ router.post("/findpassword", (req, res) => {
         
         tokenauth.save((err,doc)=>{
             if(err) {
-                return res.status(400).json({
+                return res.json({
                     success: false,
                     message: '오류 발생-다시 입력해주시기 바랍니다'
                 })
@@ -119,7 +124,7 @@ router.post("/findpassword", (req, res) => {
               비밀번호 찾기 요청 </h2>
               <br></br>
               <p>[숨은 명의 찾기]에서 비밀번호 찾기를 요청하셔서 보낸 이메일입니다.</p>
-              <p>(만약 실수로 변경신청을 하셨다면 이 이메일을 무시해 주세요.)</p>
+              <p>(만약 실수로 변경신청을 하셨다면 이 이메일을 무시해 주세요)</p>
               <p>본인이 맞으시다면 비밀번호 초기화를 위해서 아래의 '버튼'을 클릭하여 주세요.</p>
               <br></br>
               <a href=http://localhost:3000/reset/${token}><button>비밀번호 초기화</button></a></div>`
@@ -135,13 +140,13 @@ router.post('/resetpw', (req, res) => {
     {
         console.log(err)       
         if(err){
-            return res.status(400).json({
+            return res.json({
                 success:false,
                 message:'Error..'
             })
         }
         if(!info){
-            return res.status(400).json({
+            return res.json({
                 success:false,
                 message:'제한시간 초과... 비밀번호 찾기 절차를 다시 밟아주세요.'
             })
@@ -149,12 +154,12 @@ router.post('/resetpw', (req, res) => {
       
         User.findOne({_id:info.userId}
             , (err,userInfo) => {                
-                 if(err) return res.status(400).json({ success : false ,
+                 if(err) return res.json({ success : false ,
                     message:'Error 발생...'})
                  const user = userInfo
                  user.password = req.body.password
                  user.save((err)=>{
-                     if(err) return res.status(400).json({ success : false , 
+                     if(err) return res.json({ success : false , 
                         message:'Error 발생...'})
                      return res.status(200).json({ success : true})
                  })
@@ -164,7 +169,7 @@ router.post('/resetpw', (req, res) => {
            
             if(Date.now() - info.createdAt > info.ttl)
             {
-                return res.status(400).json({
+                return res.json({
                     success:false,
                     message:'유효 시간(5분)이 지났습니다..'
                 })

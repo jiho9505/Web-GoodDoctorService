@@ -3,7 +3,7 @@ import { Result, Button } from 'antd';
 
 function Success() {
     return (
-        <div>
+        <div style={{marginTop : 50}}>
             <Result
                 status="success"
                 title="비밀번호 변경에 성공하였습니다!"

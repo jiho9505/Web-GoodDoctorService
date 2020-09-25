@@ -39,8 +39,8 @@ function App() {
           <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
           <Route exact path="/findpwnextpage" component={Auth(FindPwNextPage, false)} />
           <Route exact path="/reset/:tokenId" component={Auth(ResetPw, false)} />
-          <Route exact path="/:notfound" component={Auth(NotFound, null)} />
           <Route exact path="/success" component={Auth(Success, null)} />
+          <Route exact path="/:notfound" component={Auth(NotFound, null)} />
         </Switch>
       </div>
       <Footer />

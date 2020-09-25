@@ -34,15 +34,21 @@ const tailFormItemLayout = {
 function ResetPw(props) {
   const tokenId = props.match.params.tokenId
   const [formErrorMessage, setFormErrorMessage] = useState('')
+  
+  let body =  {
+    token : tokenId
+  }
 
   useEffect(()=>{
-    axios.post('/api/tokenauth',tokenId)
+    axios.post('/api/tokenauth',body)
          .then(response => {
            if(!response.data.success){
              props.history.push('/notfound')
            }
          })
   },[])
+    
+
   return (
    
    
