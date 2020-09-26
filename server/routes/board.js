@@ -57,6 +57,21 @@ router.get('/', (req, res) => {
     })
 
 
+router.post('/view', (req, res) => {
+        var _id = req.body._id
+        var body = {
+            _id
+        }
+    
+        Board.findOneAndUpdate(body,{ $inc: { "view": 1 } },
+            (err,result)=> {
+                if(err)  return res.json({ success: false ,err })
+                return res.status(200).json({ success: true, result })
+            })
+                 
+                 
+       })
+
 
 
 

@@ -1,13 +1,36 @@
 import React, {useEffect, useState} from 'react'
 import { Table } from 'antd';  
 import moment from "moment";
+import axios from 'axios'
 
 function NoticeBoard(props) {
   const [Datas, setDatas] = useState([])
+  const [Likes, setLikes] = useState(0)
+    const [LikeAction, setLikeAction] = useState(null)
+    let body = {
+        postId: props.postId, userId: props.userId
+    };
 
-  
-  
+    useEffect(() => {
 
+        axios.post('/api/like/getLikes', body)
+            .then(response => {
+                if (response.data.success) {              
+                    setLikes(response.data.likes.length)
+ 
+                    response.data.likes.map(like => {
+                        if (like.userId === props.userId) {
+                            setLikeAction('liked')
+                        }
+                    })
+                } else {
+                    alert('좋아요 정보를 가져오는데 실패하였습니다')
+                }
+            })
+
+       
+
+    }, [])
   useEffect(() => {
     let array = []
     if(props.list && props.list.length>0){
@@ -40,7 +63,18 @@ function NoticeBoard(props) {
   }
 
   },[props.list])
- 
+      const clickHandler = (id) => {
+        let body = {
+          _id : id
+        }
+        axios.post('/api/board/view',body)
+             .then(response => {
+               if(!response.data.success){
+                 alert("Error 발생...")
+               }
+             })
+             
+      }
 
       const columns = [
         {
@@ -57,7 +91,7 @@ function NoticeBoard(props) {
           width: 520,
           align: 'center',
           render: (text,record) => (
-            <a href={`community/${record._id}`}>{text}</a>
+            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}</a>
           )
         },
         {
