@@ -1,17 +1,18 @@
 import React , {useState,useEffect} from 'react'
 import axios from 'axios'
-import { Input , Typography , List, Avatar} from 'antd'
+import { Input , Typography , List, Avatar , Button , message } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import Comments from './Sections/Comments'
 import Likes from './Sections/Likes';
+import Postlist from '../NoticeBoard/PostList/Postlist'
 
 const { Title } = Typography
 const { TextArea } = Input
 
 function DetailBoardPage(props) {
     const postId = props.match.params.postId
-
+    const [update, setupdate] = useState(false)
     const [PostInfo, setPostInfo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
 
@@ -45,62 +46,102 @@ function DetailBoardPage(props) {
         setCommentLists(CommentLists.concat(newComment))
     }
 
+    const updateHandler = () => {
+        if(window.confirm('이 게시물을 수정하시겠습니까?')){
+            setupdate(true)
+        }
+    }
+
+    const deleteHandler = () => {
+        if(window.confirm('이 게시물을 삭제하시겠습니까?')){
+            axios.delete(`/api/board?id=${postId}`)
+                 .then(response => {
+                    if(response.data.success){
+                        message.config({
+                            top: 100
+                          })
+                        message.success('삭제가 되었습니다!')
+                        setTimeout(() => {
+                            props.history.push('/community')
+                        }, 3000);
+                    }
+                    else{
+                        alert('삭제 기능 Error..')
+                    }
+                })
+        }
+    }
+
     return (
-        <div style = {{ width: '75%', margin: '3rem auto' }}>
-            <div style={{color:'yellowgreen'}}>
-                { PostInfo.chooseBoard === 1 ? '완치후기 >' : 
-                    PostInfo.chooseBoard === 2 ? '정보공유 >' : '고민털기 >'
+        <div>
+            {update ? 
+                <Postlist postInfo={PostInfo} /> : 
+                <div style = {{ width: '55%', margin: '3rem auto' }}>
+                {
+                    PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') ?
+                    <div style={{display:'flex', justifyContent:'flex-end'}}>
+                        <Button onClick={updateHandler}>수정</Button>&nbsp;<Button onClick={deleteHandler}>삭제</Button>
+                    </div> : ""
                 }
-            </div>
-                
-            <Title level={3} >{PostInfo.title}</Title>
-            <List.Item>
-                    <List.Item.Meta
-                            avatar={<Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />}
-                            title={PostInfo.writer && PostInfo.writer.nickname}
-                            description={moment(PostInfo.createdAt).format("YYYY-MM-D") +' '+ moment(PostInfo.createdAt).format('LT')}
-                        />
-                        <div></div>
-            </List.Item>       
-           
-            <div style={{border : '1px solid #eee'}}></div>
-            <br />
-           
-            <TextArea  value={PostInfo.description} style={{height:400}} />
-    
-            <br />
-            <br />
-            <div style={{border : '1px solid #eee'}}></div>
-
-            {PostInfo.images && PostInfo.images.length> 0 ? 
-             <div style={{display:'flex', justifyContent:'center'}}>
-                <div style={{  width: '300px', height: '290px', overflowX: 'scroll'}}>
-
-                {PostInfo.images.map((image, index) => (
-                    <div key={index}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
-                            src={`http://localhost:5000/${image}`} alt='image'
-                        />
-                        
-                    </div>
-    
-                ))}
+                <div style={{color:'yellowgreen'}}>
+                    { PostInfo.chooseBoard === 1 ? '완치후기 >' : 
+                        PostInfo.chooseBoard === 2 ? '정보공유 >' : '고민털기 >'
+                    }
                 </div>
-             </div>
-             : 'No Images'}
-             <div style={{border : '1px solid #eee'}}></div>
-             <br/>
-             <div style={{display:'flex', justifyContent:'center'}}>
-                <p>이 게시물이 마음에 드신다면 아래의 엄지를 눌러주세요!</p>
-             </div>
-             <div style={{display:'flex', justifyContent:'center'}}>
-                <Likes postId={postId} userId={localStorage.getItem('userId')}  />
-             </div>
-          
-             <Comments CommentLists={CommentLists} postId={PostInfo._id} refreshFunction={updateComment} />
-             
+                    
+                <Title level={3} >{PostInfo.title}</Title>
+                
+                
+                <List.Item>
+                        <List.Item.Meta
+                                avatar={<Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />}
+                                title={PostInfo.writer && PostInfo.writer.nickname}
+                                description={moment(PostInfo.createdAt).format("YYYY-MM-D") +' '+ moment(PostInfo.createdAt).format('LT')}
+                            />
+                            <div></div>
+                </List.Item>       
+        
+                <div style={{border : '1px solid #eee'}}></div>
+                <br />
             
-        </div>
+                <TextArea  value={PostInfo.description} style={{height:400}} />
+        
+                <br />
+                <br />
+                <div style={{border : '1px solid #eee'}}></div>
+
+                {PostInfo.images && PostInfo.images.length> 0 ? 
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <div style={{  width: '300px', height: '290px', overflowX: 'scroll'}}>
+
+                    {PostInfo.images.map((image, index) => (
+                        <div key={index}>
+                            <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
+                                src={`http://localhost:5000/${image}`} alt='image'
+                            />
+                            
+                        </div>
+        
+                    ))}
+                    </div>
+                </div>
+                : 'No Images'}
+                <div style={{border : '1px solid #eee'}}></div>
+                <br/>
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <p>이 게시물이 마음에 드신다면 아래의 엄지를 눌러주세요!</p>
+                </div>
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <Likes postId={postId} userId={localStorage.getItem('userId')}  />
+                </div>
+            
+                <Comments CommentLists={CommentLists} postId={PostInfo._id} refreshFunction={updateComment} />
+                
+                
+            </div>}    
+            
+        
+        </div>    
     )
 }
 

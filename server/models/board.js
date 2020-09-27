@@ -30,6 +30,17 @@ const boardSchema = mongoose.Schema({
     }
 },{ timestamps : true })
 
+
+boardSchema.index({ 
+    title:'text',
+    description: 'text'
+}, {
+    weights: {
+        title: 3,
+        description: 2,
+    }
+})
+
 const Board = mongoose.model('Board', boardSchema);
 
 module.exports = { Board }

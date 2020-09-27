@@ -8,8 +8,8 @@ import Axios from 'axios'
 
 function  CommunityPage() {
     const [Board, setBoard] = useState([])
-  
-  useEffect(() => {
+    const [SearchTerms, setSearchTerms] = useState("")
+    useEffect(() => {
     
     Axios.get('/api/board')
          .then(response => {
@@ -27,6 +27,23 @@ function  CommunityPage() {
           
   }, [])
 
+  const updateSearchTerms = (newSearchTerm) => {
+
+    setSearchTerms(newSearchTerm)
+
+    Axios.get(`/api/board?term=${newSearchTerm}`)
+         .then(response => {
+            if(response.data.success){
+              setBoard(response.data.result)
+              console.log(response.data.result)
+            }
+            else{
+              alert("게시판 목록을 불러오는데 실패하였습니다.")
+            }
+          }
+        )
+}
+
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
             
@@ -39,7 +56,7 @@ function  CommunityPage() {
             
             <br/>
             {Board && <NoticeBoard list={Board}/>}
-            <SearchTool />
+            <SearchTool refreshFunction={updateSearchTerms}/>
 
         </div>
     )

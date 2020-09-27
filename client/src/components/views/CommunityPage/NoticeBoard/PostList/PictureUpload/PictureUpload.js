@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Dropzone from 'react-dropzone'
 import { Icon } from 'antd';
 import axios from 'axios';
 
 
 function PictureUpload(props) {
+    useEffect(() => {
+       
+        if(props.images.length>0){
+            setImages([...props.images])
+            setShow(true)
+        }
+    }, [props.images])
 
     const [Images, setImages] = useState([])
     const [Show, setShow] = useState(false)
@@ -23,7 +30,6 @@ function PictureUpload(props) {
                     setImages([...Images, response.data.filePath])
                     props.refreshFunction([...Images, response.data.filePath])
                     setShow(true)
-                    console.log(Images)
                 } else {
                     alert('파일을 저장하는데 실패했습니다.')
                 }

@@ -5,32 +5,7 @@ import axios from 'axios'
 
 function NoticeBoard(props) {
   const [Datas, setDatas] = useState([])
-  const [Likes, setLikes] = useState(0)
-    const [LikeAction, setLikeAction] = useState(null)
-    let body = {
-        postId: props.postId, userId: props.userId
-    };
 
-    useEffect(() => {
-
-        axios.post('/api/like/getLikes', body)
-            .then(response => {
-                if (response.data.success) {              
-                    setLikes(response.data.likes.length)
- 
-                    response.data.likes.map(like => {
-                        if (like.userId === props.userId) {
-                            setLikeAction('liked')
-                        }
-                    })
-                } else {
-                    alert('좋아요 정보를 가져오는데 실패하였습니다')
-                }
-            })
-
-       
-
-    }, [])
   useEffect(() => {
     let array = []
     if(props.list && props.list.length>0){
@@ -67,22 +42,37 @@ function NoticeBoard(props) {
         let body = {
           _id : id
         }
-        axios.post('/api/board/view',body)
+        axios.post('/api/board/view', body)
              .then(response => {
                if(!response.data.success){
-                 alert("Error 발생...")
+                 alert('조회 수 기능에 Error 발생!')
                }
              })
-             
       }
-
       const columns = [
         {
           title: '구분',
           dataIndex: 'chooseBoard',
           key: 'chooseBoard',
           width: 100,
-          align: 'center'
+          align: 'center',
+          filters: [
+            {
+              text: '완치 후기',
+              value: '완치 후기',
+            },
+            {
+              text: '정보 공유',
+              value: '정보 공유',
+            },
+            {
+              text: '고민 털기',
+              value: '고민 털기',
+            }
+            
+          ],
+
+          onFilter: (value, record) => record.chooseBoard.indexOf(value) === 0
         },
         {
           title: '제목',
