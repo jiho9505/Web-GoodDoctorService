@@ -78,7 +78,7 @@ function NoticeBoard(props) {
           title: '제목',
           dataIndex: 'title',
           key: 'title',
-          width: 520,
+          width: 480,
           align: 'center',
           render: (text,record) => (
             <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}</a>
@@ -102,7 +102,7 @@ function NoticeBoard(props) {
             title: '조회수',
             dataIndex: 'view',
             key: 'view',
-            width: 50,
+            width: 70,
             align: 'center', 
             sorter: (a, b) => a.view - b.view,
             sortDirections: ['descend']
@@ -111,7 +111,7 @@ function NoticeBoard(props) {
             title: '좋아요',
             dataIndex: 'like',
             key: 'like',
-            width: 50,
+            width: 70,
             align: 'center',
             sorter: (a, b) => a.like - b.like,
             sortDirections: ['descend']

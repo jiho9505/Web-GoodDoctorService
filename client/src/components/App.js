@@ -15,7 +15,7 @@ import FindPwNextPage from  "./views/LoginPage/FindPassword/FindPwNextPage"
 import ResetPw from  "./views/LoginPage/FindPassword/ResetPw"
 import NotFound from "./views/NotFound/NotFound"
 import Success from "./views/Success/Success"
-
+import HospitalList from "./views/LandingPage/hospitalList/hospitalList"
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -42,6 +42,7 @@ function App() {
           <Route exact path="/reset/:tokenId" component={Auth(ResetPw, false)} />
           <Route exact path="/success" component={Auth(Success, null)} />
           <Route exact path="/:notfound" component={Auth(NotFound, null)} />
+          hospitalList
           
         </Switch>
       </div>

@@ -47,7 +47,7 @@ function CheckBox(props) {
     ))
     return (
         <div>
-            <Collapse defaultActiveKey={['0']} >
+            <Collapse defaultActiveKey={['1']} >
                 <Panel header="부위 선택하기" key="1">
 
                     {renderCheckboxLists()}

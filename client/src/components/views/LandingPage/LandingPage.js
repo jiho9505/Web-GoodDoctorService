@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { Col, Row , Button } from 'antd'
+import { Col, Row  } from 'antd'
 import Mapservice from "./mapservice/mapservice"
 import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
 import { Test } from './Test'
+import HospitalList from './hospitalList/hospitalList'
 
 
 
-
-function LandingPage() {
+function LandingPage(props) {
     const [continents, setcontinents] = useState(["hi","bye"])
     return (
         <div style = {{ width: '75%', margin: '3rem auto' }}>
@@ -28,15 +28,19 @@ function LandingPage() {
                 </Col>
             </Row>
             <Row gutter={[64,32]} style={{ marginTop: '3rem auto'}}>
-                <Col lg={12} xs={24}>
+                <Col lg={12} md={24} xs={24}>
                      
                     <Mapservice test={Test} style={{ margin: '3rem auto'}}/>
                     
                 </Col>
-                <Col lg={12} xs={24}>
-                    {/* CheckBox */}
-                    <div style={{width:'550px' , height: '400px' , border: '1px solid gray' ,display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Button type='danger' shape='round'>특이사항 보기</Button>
+                <Col lg={12} md={24} xs={24}>
+                    
+                    <div style={{width:'480px' , height: '400px' ,display:'flex', 
+                    justifyContent:'center', alignItems:'center',overflowY : 'scroll'}}>
+                        <div style={{height: '100%'}}>
+                        {props.user && <HospitalList user={props.user} test={Test}/>}
+                        </div>
+                        
                     </div>
                 </Col>
             </Row>
