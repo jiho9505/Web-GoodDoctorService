@@ -2,7 +2,20 @@ const express = require('express');
 const router = express.Router();
 const { Comment } = require("../models/Comment");
 
-router.post("/saveComment", (req, res) => {
+
+router.get("/", (req, res) => {
+
+    Comment.find({ "postId": req.query.id })
+        .populate('writer')
+        .exec((err, comments) => {
+            if (err) return res.status(400).send(err)
+            res.status(200).json({ success: true, comments })
+        })
+
+});
+
+
+router.post("/", (req, res) => {
 
     const comment = new Comment(req.body)
 
@@ -19,18 +32,16 @@ router.post("/saveComment", (req, res) => {
 
 })
 
-router.post("/getComments", (req, res) => {
+router.delete("/", (req, res) => {
 
-    Comment.find({ "postId": req.body.postId })
-        .populate('writer')
-        .exec((err, comments) => {
-            if (err) return res.status(400).send(err)
-            res.status(200).json({ success: true, comments })
-        })
-
-});
-
-
+    Comment.findOneAndDelete({ _id : req.query.id })
+            .exec((err, comments) => {
+                if (err) return res.json({ success: false})
+                res.status(200).json({ success: true })
+                            
+                       })
+                
+            })
 
 
 module.exports = router;

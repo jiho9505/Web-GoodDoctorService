@@ -16,9 +16,6 @@ function DetailBoardPage(props) {
     const [PostInfo, setPostInfo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
 
-    let body = {
-        postId : postId
-    }
     useEffect(() => {
         axios.get(`/api/board?id=${postId}`)
              .then(response => {                        
@@ -30,10 +27,9 @@ function DetailBoardPage(props) {
                  }
                 }
             )
-        axios.post('/api/comment/getComments', body)
+        axios.get(`/api/comment?id=${postId}`)
             .then(response => {
                 if (response.data.success) {
-                    console.log('response.data.comments',response.data.comments)
                     setCommentLists(response.data.comments)
                 } else {
                     alert('댓글 정보를 가져오는데 실패하였습니다')
@@ -134,8 +130,13 @@ function DetailBoardPage(props) {
                 <div style={{display:'flex', justifyContent:'center'}}>
                     <Likes postId={postId} userId={localStorage.getItem('userId')}  />
                 </div>
-            
-                <Comments CommentLists={CommentLists} postId={PostInfo._id} refreshFunction={updateComment} />
+                {
+                    PostInfo.writer && 
+                    <Comments writer={PostInfo.writer} CommentLists={CommentLists} postId={PostInfo._id} 
+                    refreshFunction={updateComment} />
+
+                }
+                
                 
                 
             </div>}    

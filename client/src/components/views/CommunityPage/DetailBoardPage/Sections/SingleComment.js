@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { Comment, Avatar, Button, Input } from 'antd';
+import { Comment, Avatar, Button, Input , Badge } from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
-import { UserOutlined } from '@ant-design/icons';
-
+import { UserOutlined , DeleteOutlined  } from '@ant-design/icons';
+import { withRouter } from "react-router-dom"
 const { TextArea } = Input;
 
 function SingleComment(props) {
     const user = useSelector(state => state.user);
     const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
+    const writer = props.writer
 
     const handleChange = (e) => {
         setCommentValue(e.currentTarget.value)
@@ -30,7 +31,7 @@ function SingleComment(props) {
         }
 
 
-        Axios.post('/api/comment/saveComment', variables)
+        Axios.post('/api/comment', variables)
             .then(response => {
                 if (response.data.success) {
                     setCommentValue("")
@@ -41,15 +42,52 @@ function SingleComment(props) {
                 }
             })
     }
-
+    
     const actions = [
         <span onClick={openReply} key="comment-basic-reply-to">대댓글 달기</span>
     ]
 
+    const deleteHandler = () => {
+        if(window.confirm('이 댓글을 삭제하시겠습니까?')){        
+            Axios.delete(`/api/comment?id=${props.comment._id}&cid=${props.postId}`)
+                 .then(response => {
+                     if(response.data.success){
+                        window.location.reload()
+                     }
+                     else{
+                         alert("댓글 삭제에 실패하였습니다!")
+                     }
+                 })
+        }
+
+    }
+
     return (
         <div>
+            { user && user.userData && props.comment.writer &&
+        <div>
+            
             {props.child ? <Comment style={{padding:'0px'}}
-                author={props.comment.writer.nickname}
+                author={writer.nickname === props.comment.writer.nickname ? 
+                    <span>
+                    {props.comment.writer.nickname}
+                    &nbsp;&nbsp;
+                    <Badge  count='작성자' style={{ backgroundColor: '#52c41a' }} />
+                    {user.userData._id === props.comment.writer._id ? 
+                    <span style={{ fontSize : '15px'}}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <DeleteOutlined  onClick={deleteHandler}/>
+                    </span> : ""}
+                </span> : 
+                <span>{props.comment.writer.nickname}
+                    &nbsp;&nbsp;
+                    {user.userData._id === props.comment.writer._id ? 
+                        <span style={{ fontSize : '15px'}}>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <DeleteOutlined  onClick={deleteHandler} />
+                        </span> : ""}
+                </span>
+                }
                 avatar={
                     <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                 }
@@ -61,7 +99,26 @@ function SingleComment(props) {
             ></Comment>
                 : <Comment
                 actions={actions}
-                author={props.comment.writer.nickname}
+                author={writer.nickname === props.comment.writer.nickname ? 
+                    <span>
+                        {props.comment.writer.nickname}
+                        &nbsp;&nbsp;
+                        <Badge  count='작성자' style={{ backgroundColor: '#52c41a' }} />
+                        {user.userData._id === props.comment.writer._id ? 
+                        <span style={{ fontSize : '15px'}}>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <DeleteOutlined  onClick={deleteHandler}/>
+                        </span> : ""}
+                    </span> : 
+                    <span>{props.comment.writer.nickname}
+                        &nbsp;&nbsp;
+                        {user.userData._id === props.comment.writer._id ? 
+                            <span style={{ fontSize : '15px'}}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <DeleteOutlined  onClick={deleteHandler}/>
+                            </span> : ""}
+                    </span>
+                    }
                 avatar={
                     <Avatar style={{ backgroundColor: '#87d068' }} icon={ <UserOutlined />} />
                 }
@@ -87,7 +144,9 @@ function SingleComment(props) {
             }
 
         </div>
+    }
+        </div>
     )
 }
 
-export default SingleComment
+export default withRouter(SingleComment)

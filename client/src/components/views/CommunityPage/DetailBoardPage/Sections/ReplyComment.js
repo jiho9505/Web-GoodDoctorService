@@ -5,6 +5,7 @@ function ReplyComment(props) {
 
     const [ChildCommentNumber, setChildCommentNumber] = useState(0)
     const [OpenReplyComments, setOpenReplyComments] = useState(false)
+    const writer = props.writer
     useEffect(() => {
 
         let commentNumber = 0;
@@ -23,7 +24,8 @@ function ReplyComment(props) {
             <React.Fragment key={index}>
                 {comment.responseTo === parentCommentId &&
                     <div style={{ width: '80%', marginLeft: '40px' }}>
-                        <SingleComment child comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />                        
+                        <SingleComment writer={writer} child comment={comment} postId={props.postId} 
+                        refreshFunction={props.refreshFunction}/>                        
                     </div>
                 }
             </React.Fragment>

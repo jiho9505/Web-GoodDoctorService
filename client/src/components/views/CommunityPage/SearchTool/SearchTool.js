@@ -6,12 +6,9 @@ const { Option } = Select
 
 function SearchTool(props) {
     
-        const [SearchTerms, setSearchTerms] = useState("")
         
         const onChangeSearch = (value) => {
-            setSearchTerms(value)
-            props.refreshFunction(value )
-    
+            props.refreshFunction(value)
         }
 
         return (

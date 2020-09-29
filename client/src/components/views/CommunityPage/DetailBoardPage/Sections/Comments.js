@@ -10,7 +10,8 @@ const { Title } = Typography;
 function Comments(props) {
     const user = useSelector(state => state.user)
     const [Comment, setComment] = useState("")
-    
+    const writer = props.writer
+
     const handleChange = (e) => {
         setComment(e.currentTarget.value)
     }
@@ -24,7 +25,7 @@ function Comments(props) {
             postId: props.postId
         }
 
-        axios.post('/api/comment/saveComment', variables)
+        axios.post('/api/comment', variables)
             .then(response => {
                 if (response.data.success) {
                     setComment("")
@@ -44,8 +45,10 @@ function Comments(props) {
             {props.CommentLists && props.CommentLists.map((comment, index) => (
                 (!comment.responseTo &&
                     <React.Fragment key={index}>
-                        <SingleComment comment={comment}  postId={props.postId} refreshFunction={props.refreshFunction} />
-                        <ReplyComment CommentLists={props.CommentLists}  postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
+                        <SingleComment writer={writer} comment={comment}  postId={props.postId} 
+                        refreshFunction={props.refreshFunction} />
+                        <ReplyComment writer={writer} CommentLists={props.CommentLists}  postId={props.postId} 
+                        parentCommentId={comment._id} refreshFunction={props.refreshFunction}  />
                     </React.Fragment>
                 )
             ))}
