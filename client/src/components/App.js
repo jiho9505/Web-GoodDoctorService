@@ -15,7 +15,9 @@ import FindPwNextPage from  "./views/LoginPage/FindPassword/FindPwNextPage"
 import ResetPw from  "./views/LoginPage/FindPassword/ResetPw"
 import NotFound from "./views/NotFound/NotFound"
 import Success from "./views/Success/Success"
-import HospitalList from "./views/LandingPage/hospitalList/hospitalList"
+import MyPage from "./views/MyPage/MyPage"
+import Admin from "./views/Admin/Admin"
+
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -37,12 +39,14 @@ function App() {
           <Route exact path="/community" component={Auth(CommunityPage, null)} />
           <Route exact path="/write" component={Auth(Postlist, true)} />
           <Route exact path="/community/:postId" component={Auth(DetailBoardPage, true)} />
+          <Route exact path="/mypage" component={Auth(MyPage, true)} />
+          <Route exact path="/admin" component={Auth(Admin, true, true)} />
           <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
           <Route exact path="/findpwnextpage" component={Auth(FindPwNextPage, false)} />
           <Route exact path="/reset/:tokenId" component={Auth(ResetPw, false)} />
           <Route exact path="/success" component={Auth(Success, null)} />
           <Route exact path="/:notfound" component={Auth(NotFound, null)} />
-          hospitalList
+          
           
         </Switch>
       </div>

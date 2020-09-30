@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { Board } = require("../models/Board");
+const { User } = require("../models/User");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -127,6 +128,15 @@ router.delete('/', (req, res) => {
 })
 
 
+router.post("/info", (req, res) => {
+        Board.find({writer : req.body._id})
+             .sort( { createdAt: -1 } )
+             .exec((err,boardInfo) => {
+                if(err) return res.json({ success: false })
+                return res.json({ success: true, boardInfo })
+             })
+   
+})
 
 
 

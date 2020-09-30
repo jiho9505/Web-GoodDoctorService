@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import { Table } from 'antd';  
+import { Table , Typography } from 'antd';  
 import moment from "moment";
 import axios from 'axios'
 
-function NoticeBoard(props) {
+const {Title} = Typography
+
+function MyPost(props) {
+    
   const [Datas, setDatas] = useState([])
 
   useEffect(() => {
@@ -27,7 +30,6 @@ function NoticeBoard(props) {
           key : index,
           title: list.title,
           date: moment(list.createdAt).format("YYYY-MM-D"),
-          nickname: list.writer.nickname,
           view: list.view,
           like: list.like,
           _id: list._id
@@ -92,13 +94,6 @@ function NoticeBoard(props) {
           align: 'center'
         },
         {
-            title: '닉네임',
-            dataIndex: 'nickname',
-            key: 'nickname',
-            width: 100,
-            align: 'center'
-        },
-        {
             title: '조회수',
             dataIndex: 'view',
             key: 'view',
@@ -120,13 +115,18 @@ function NoticeBoard(props) {
 
 
       ];
-      
-  
     return (
-        <div>
+        <div style = {{ width: '75%', margin: '3rem auto' }} >
+            
+                <br/>
+                <br/>
+                <Title level={4}>내가 쓴 글</Title>
+                <div style={{border : '1px solid #eee'}}></div>
+  
             <Table dataSource={Datas} columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />;
         </div>
+            
     )
 }
 
-export default NoticeBoard
+export default MyPost

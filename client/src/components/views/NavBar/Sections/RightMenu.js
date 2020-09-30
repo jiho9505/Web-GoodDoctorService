@@ -31,13 +31,34 @@ function RightMenu(props) {
       </Menu>
     )
   } else {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>로그아웃</a>
-        </Menu.Item>
-      </Menu>
-    )
+      if (user.userData && user.userData.isAuth && !user.userData.role){
+        return (
+          <Menu mode={props.mode}>
+            <Menu.Item key="mypage">
+              <a href="/mypage">My Page</a>
+            </Menu.Item>
+            <Menu.Item key="logout">
+              <a onClick={logoutHandler}>로그아웃</a>
+            </Menu.Item>
+          </Menu>
+        )
+      }
+      else{
+        return (
+          <Menu mode={props.mode}>
+            <Menu.Item key="admin">
+              <a href="admin">Admin</a>
+            </Menu.Item>
+            <Menu.Item key="mypage">
+              <a href="/mypage">My Page</a>
+            </Menu.Item>
+            <Menu.Item key="logout">
+              <a onClick={logoutHandler}>로그아웃</a>
+            </Menu.Item>
+          </Menu>
+        ) 
+    }
+    
   }
 }
 

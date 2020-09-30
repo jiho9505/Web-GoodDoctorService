@@ -37,6 +37,14 @@ router.post("/register", (req, res) => {
     
 });
 
+router.post("/info", (req, res) => {
+    User.findOne({ _id : req.body._id } , (err,userInfo)=>{
+        if(err) return res.json({ success: false })
+        return res.json({ success: true, userInfo })
+    
+})
+})
+
 router.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
@@ -180,5 +188,23 @@ router.post('/resetpw', (req, res) => {
         })   
     }
 )
+
+router.post("/changepwd", (req, res) => {
+    User.findOne({_id : req.body._id})
+        .exec((err,user)=>{
+            if(err) return res.json({success: false, message:"Error 발생.."})
+
+            user.comparePassword(req.body.prepassword, (err, isMatch) => {
+                if(err) return res.json({success: false, message:"Error 발생.."})
+                if (!isMatch) return res.json({ success: false, message: "현재 비밀번호를 바르게 입력해주세요" });
+            
+                user.password = req.body.password
+                user.save((err,info)=>{
+                        if(err) return res.json({success: false, message:"Error 발생.."})
+                        res.json({success: true, message: "변경에 성공하였습니다!"})
+                        })                    
+                })
+             })
+        })
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Comment } = require("../models/Comment");
-
+const { User } = require("../models/User");
 
 router.get("/", (req, res) => {
 
@@ -43,5 +43,14 @@ router.delete("/", (req, res) => {
                 
             })
 
+router.post("/info", (req, res) => {
+        Comment.find({writer : req.body._id})
+             .populate('postId')
+             .exec((err,CommentInfo) => {
+                if(err) return res.json({ success: false })
+                return res.json({ success: true, CommentInfo })
+             })
+    
+})
 
 module.exports = router;
