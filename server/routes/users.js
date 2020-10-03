@@ -11,14 +11,16 @@ const config = require('../config/dev')
 //=================================
 
 router.get("/auth", auth, (req, res) => {
-    res.status(200).json({
+    res.status(200)
+        .json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
         isAuth: true,
         nickname: req.user.nickname,
         role: req.user.role,
         
-    });
+    })
+
 });
 
 router.post("/register", (req, res) => {
@@ -59,9 +61,7 @@ router.post("/login", (req, res) => {
 
             user.generateToken((err, user) => {
                 if (err) return res.send(err);
-                res.cookie("w_authExp", user.tokenExp);
-                res
-                    .cookie("w_auth", user.token)
+                 res.cookie("w_auth", user.token)
                     .status(200)
                     .json({
                         loginSuccess: true, userId: user._id

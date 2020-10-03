@@ -36,6 +36,9 @@ function HospitalList(props) {
       setvisible(false)
     };
     
+    const clickHandler = (lat,lng) => {
+      props.refreshFunction(lat,lng)
+    }
 
   return (
     <>
@@ -57,7 +60,7 @@ function HospitalList(props) {
               avatar={
                 <Avatar style={{backgroundColor:'white'}} icon={<PlusCircleOutlined style={{fontSize:'25px' ,color:"#52c41a"}}/>} />
               }
-              title={<a href="https://ant.design/index-cn">{item.name + '(' + item.doctor + ')'}</a>}
+              title={<a onClick={() => { clickHandler(item.lat,item.lng)}}>{item.name + '(' + item.doctor + ')'}</a>}
               description={item.location}
             />
           </List.Item>

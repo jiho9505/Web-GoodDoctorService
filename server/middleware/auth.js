@@ -10,9 +10,21 @@ let auth = (req, res, next) => {
         isAuth: false,
         error: true
       });
+    
+    if (Date.now() > user.tokenExp)
+      return res.json({
+        isAuth: false,
+        error: true
+      });
+    
+    user.updateTokenExp((err, user)=>{
+      if (err) throw err;
+    })
 
+   
     req.token = token;
     req.user = user;
+    
     next();
   });
 };
