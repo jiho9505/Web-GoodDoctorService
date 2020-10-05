@@ -45,11 +45,9 @@ function Mapservice(props) {
             ? props.test.map((ele, idx) => {
                 return (
                   <Marker
-                    // icon={""}
                     icon = {{
                       content: '<div class="pulse"/>' ,
                       anchor: {x:12, y:12}
-                    // 중심 좌표 설정
                     }}
                     key={idx}
                     position={{ lat: ele.lat, lng: ele.lng }}
@@ -59,11 +57,9 @@ function Mapservice(props) {
               })
             : null}
           {showHere &&  <Marker
-                    // icon={""}
                     icon = {{
                       content: '<div class="here">Here!</div>' ,
                       anchor: {x:20, y:32}
-                    // 중심 좌표 설정
                     }}
                    
                     position={{ lat: lat, lng: lng }}

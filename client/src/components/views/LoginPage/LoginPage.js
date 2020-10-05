@@ -27,7 +27,6 @@ function LoginPage(props) {
           .email('E-mail을 정확히 입력해주세요')
           .required('이메일을 입력해주세요'),
         password: Yup.string()
-          .min(5, '비밀번호는 최소 5자 이상 입력해주세요')
           .required('비밀번호를 입력해주세요'),
       })}
       onSubmit={(values, { setSubmitting }) => {

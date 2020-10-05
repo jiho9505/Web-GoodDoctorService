@@ -17,6 +17,7 @@ import NotFound from "./views/NotFound/NotFound"
 import Success from "./views/Success/Success"
 import MyPage from "./views/MyPage/MyPage"
 import Admin from "./views/Admin/Admin"
+import MustRead from "./views/MustRead/MustRead"
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -38,13 +39,14 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/community" component={Auth(CommunityPage, null)} />
           <Route exact path="/write" component={Auth(Postlist, true)} />
-          <Route exact path="/community/:postId" component={Auth(DetailBoardPage, true)} />
           <Route exact path="/mypage" component={Auth(MyPage, true)} />
+          <Route exact path="/mustread" component={Auth(MustRead, null)} />
           <Route exact path="/admin" component={Auth(Admin, true, true)} />
           <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
           <Route exact path="/findpwnextpage" component={Auth(FindPwNextPage, false)} />
           <Route exact path="/reset/:tokenId" component={Auth(ResetPw, false)} />
           <Route exact path="/success" component={Auth(Success, null)} />
+          <Route exact path="/community/:postId" component={Auth(DetailBoardPage, true)} />
           <Route exact path="/:notfound" component={Auth(NotFound, null)} />
           
           

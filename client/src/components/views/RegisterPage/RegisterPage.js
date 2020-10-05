@@ -51,20 +51,25 @@ function RegisterPage(props) {
       }}
       validationSchema={Yup.object().shape({
         nickname: Yup.string()
+          .max(8, '닉네임 길이 제한')
           .required('닉네임을 입력해주세요'),
         email: Yup.string()
           .email('유효하지 않습니다')
           .required('E-mail을 입력해주세요'),
         password: Yup.string()
-          .min(5, '비밀번호는 최소 5자 이상 가능합니다')
-          .required('비밀번호를 입력해주세요'),
+          .min(8, '비밀번호는 최소 8자 이상 가능합니다')
+          .required('비밀번호를 입력해주세요')
+          .matches(
+            /^.*(?=.{8,})(?=.*\d)((?=.*[a-zA-Z]){1}).*$/,
+            "영어와 숫자 조합이 필요합니다"
+          ),
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
           .required('비밀번호를 다시 입력해주세요'),
         birth: Yup.string()
-          .min(2, "나이를 입력해주세요")
-          .max(2, "나이를 입력해주세요")
-          .required("나이를 입력해주세요"),
+          .min(8, "생년월일(8자리)을 입력해주세요")
+          .max(8, "생년월일(8자리)을 입력해주세요")
+          .required("생년월일(8자리)을 입력해주세요"),
   
         
       })}
@@ -189,10 +194,10 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="나이">
+              <Form.Item required label="생년월일">
                 <Input
                   id="birth"
-                  placeholder="나이를 입력해주세요"
+                  placeholder="생년월일(8자리)을 입력해주세요"
                   type="number"
                   value={values.birth}
                   onChange={handleChange}

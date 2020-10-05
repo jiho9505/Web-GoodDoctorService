@@ -1,7 +1,7 @@
 import React , {useState,useEffect} from 'react'
 import axios from 'axios'
 import { Input , Typography , List, Avatar , Button , message } from 'antd'
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, AlertTwoTone } from '@ant-design/icons';
 import moment from 'moment'
 import Comments from './Sections/Comments'
 import Likes from './Sections/Likes';
@@ -68,16 +68,45 @@ function DetailBoardPage(props) {
         }
     }
 
+    const alertHandler = () => {
+        if(window.confirm('이 게시물을 신고하시겠습니까?')){
+            let key = window.prompt('신고 사유를 적어주시기 바랍니다')
+            if(key){
+                let body = {
+                    userId:localStorage.getItem('userId'),
+                    postId:postId,
+                    contents:key
+                }
+                axios.post('/api/alert/',body)
+                     .then(response => {
+                         if(response.data.success){
+                            message.config({
+                                top: 100
+                              })
+                            message.success('신고가 접수되었습니다.')
+                         }
+                         else{
+                             alert('Error 발생 - 신고기능 장애')
+                         }
+                        })
+            }
+            
+        }
+    }
+
     return (
         <div>
             {update ? 
                 <Postlist postInfo={PostInfo} /> : 
                 <div style = {{ width: '55%', margin: '3rem auto' }}>
                 {
-                    PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') ?
+                    
+                    PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') 
+                    || props.user &&  props.user.userData && props.user.userData.isAdmin ?
                     <div style={{display:'flex', justifyContent:'flex-end'}}>
                         <Button onClick={updateHandler}>수정</Button>&nbsp;<Button onClick={deleteHandler}>삭제</Button>
-                    </div> : ""
+                    </div> : <div style={{display:'flex', justifyContent:'flex-end'}}>
+                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}}onClick={alertHandler}/></div>
                 }
                 <div style={{color:'yellowgreen'}}>
                     { PostInfo.chooseBoard === 1 ? '완치후기 >' : 

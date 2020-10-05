@@ -137,7 +137,7 @@ function Postlist(props) {
                 <label style={{fontSize : '16px'}}>제목</label>
                 <br />
                
-                <Input onChange={TitleHandler} maxLength={50} value={PostTitle} placeholder='제목을 입력해주세요.(50자 제한)'/>
+                <Input onChange={TitleHandler} maxLength={40} value={PostTitle} placeholder='제목을 입력해주세요.(50자 제한)'/>
                 <br />
                 <br />
                 <label style={{fontSize : '16px'}}>내용</label>

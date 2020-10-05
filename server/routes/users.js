@@ -207,4 +207,25 @@ router.post("/changepwd", (req, res) => {
              })
         })
 
+
+router.post("/remove", (req, res) => {
+    User.findOne({_id : req.body._id})
+        .exec((err,user)=>{
+            if(err) return res.json({success: false, message:"Error 발생.."})
+
+            user.comparePassword(req.body.password, (err, isMatch) => {
+                if(err) return res.json({success: false, message:"Error 발생.."})
+                if (!isMatch) return res.json({ success: false, message: "현재 비밀번호를 바르게 입력해주세요" });
+                
+                //여기부터 유저 관련된 정보 삭제 시작 (alert 고려)
+                
+                User.findOneAndDelete({_id : user._id},(err,result)=>{
+                    if(err) return res.json({success: false, message:"Error 발생.."})
+                    res.json({success : true})
+                })
+               // Board.delete({_id : user._id})
+                //Comment.delete({_id : user._id})               
+                })
+             })
+        })
 module.exports = router;

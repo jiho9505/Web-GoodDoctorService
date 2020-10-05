@@ -30,7 +30,7 @@ const tailFormItemLayout = {
     },
   };
   
-function PwdChange() {
+function RemoveUser(props) {
  
   const [formErrorMessage, setFormErrorMessage] = useState('') 
 
@@ -39,43 +39,31 @@ function PwdChange() {
    
     <Formik
       initialValues={{
-        confirmPassword: '',
         password: '',
-        prepassword: ''
       }}
       validationSchema={Yup.object().shape({
-        confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
-          .required('비밀번호를 다시 입력해주세요'),
+        
         password: Yup.string()
-          .min(8, '비밀번호는 최소 8자 이상 입력해주세요')
-          .required('비밀번호를 입력해주세요')
-          .matches(
-            /^.*(?=.{8,})(?=.*\d)((?=.*[a-zA-Z]){1}).*$/,
-            "영어와 숫자 조합이 필요합니다"
-          ),
-        prepassword: Yup.string()
           .required('비밀번호를 입력해주세요'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
             password: values.password,
-            prepassword: values.prepassword,
             _id : localStorage.getItem('userId')
           };
 
-          axios.post('/api/users/changepwd',dataToSubmit)
+          axios.post('/api/users/remove',dataToSubmit)
                .then(response => {
                  
                   if(response.data.success){
                     message.config({
                         top: 100
                       })
-                    message.success(response.data.message)
+                    message.success('탈퇴가 정상적으로 이루어졌습니다.')
             
                     setTimeout(() => {
-                        window.location.reload()
+                        props.history.push('/')
                     }, 2000)
 
                   }
@@ -110,31 +98,15 @@ function PwdChange() {
 
             
             <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit}>
-                <h3 style={{ display:'flex', justifyContent:'center' ,marginLeft: 70 }}>-비밀번호 변경-</h3>
+                <h3 style={{ display:'flex', justifyContent:'center' ,marginLeft: 70 }}>-회원 탈퇴-</h3>
+                
                 
                 <br></br>
 
-                <Form.Item required label="현재 비밀번호" hasFeedback validateStatus={errors.prepassword && touched.prepassword ? "error" : 'success'}>
-                <Input
-                  id="prepassword"
-                  placeholder="현재 비밀번호를 입력해주세요"
-                  type="password"
-                  value={values.prepassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.prepassword && touched.prepassword ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.prepassword && touched.prepassword && (
-                  <div className="input-feedback">{errors.prepassword}</div>
-                )}
-              </Form.Item>
-
-                <Form.Item required label="새 비밀번호" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
+                <Form.Item required label="비밀번호" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
                     <Input
                     id="password"
-                    placeholder="새 비밀번호를 입력해주세요"
+                    placeholder="비밀번호를 입력해주세요"
                     type="password"
                     value={values.password}
                     onChange={handleChange}
@@ -148,31 +120,14 @@ function PwdChange() {
                     )}
                 </Form.Item>
 
-              <Form.Item required label="비밀번호 확인" hasFeedback>
-                <Input
-                  id="confirmPassword"
-                  placeholder="비밀번호를 다시 입력해주세요."
-                  type="password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <div className="input-feedback">{errors.confirmPassword}</div>
-                )}
-              </Form.Item>
-
               {formErrorMessage && (
                 <label ><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>
               )}
 
 
               <Form.Item {...tailFormItemLayout}>
-                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type="primary" disabled={isSubmitting}>
-                  비밀번호 변경
+                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type='danger' shape='round' disabled={isSubmitting}>
+                  회원 탈퇴
                 </Button>
               </Form.Item>
             </Form>
@@ -184,6 +139,7 @@ function PwdChange() {
   );
 };
 
-export default withRouter(PwdChange);
+export default withRouter(RemoveUser);
+
 
 

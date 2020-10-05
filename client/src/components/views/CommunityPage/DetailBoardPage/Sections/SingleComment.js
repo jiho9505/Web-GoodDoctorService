@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Comment, Avatar, Button, Input , Badge } from 'antd';
+import { Comment, Avatar, Button, Input , Badge , message } from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
-import { UserOutlined , DeleteOutlined  } from '@ant-design/icons';
+import { UserOutlined , DeleteOutlined , AlertTwoTone } from '@ant-design/icons';
 import { withRouter } from "react-router-dom"
+import moment from 'moment'
 const { TextArea } = Input;
 
 function SingleComment(props) {
@@ -44,7 +45,12 @@ function SingleComment(props) {
     }
     
     const actions = [
-        <span onClick={openReply} key="comment-basic-reply-to">대댓글 달기</span>
+        <div style={{ fontSize : '13px' , color : '#979797'}}>
+            <span>{moment(props.comment.createdAt).format("YYYY-MM-D") +' '+ moment(props.comment.createdAt).format('HH:mm')}</span>
+            &nbsp;&nbsp;
+            <span onClick={openReply} key="comment-basic-reply-to">대댓글 달기</span>
+        </div>
+        
     ]
 
     const deleteHandler = () => {
@@ -62,6 +68,34 @@ function SingleComment(props) {
 
     }
 
+    const alertHandler = () => {
+        if(window.confirm('이 댓글을 신고하시겠습니까?')){
+            let key = window.prompt('신고 사유를 적어주시기 바랍니다')
+            if(key){
+                let body = {
+                    userId:user.userData._id,
+                    postId:props.postId,
+                    commentId:props.comment._id,
+                    contents : key
+                }
+                Axios.post('/api/alert/',body)
+                     .then(response => {
+                         if(response.data.success){
+                            message.config({
+                                top: 100
+                              })
+                            message.success('신고가 접수되었습니다.')
+                         }
+                         else{
+                             alert('Error 발생 - 신고기능 장애')
+                         }
+                        })
+            }
+            
+        }
+    }
+
+
     return (
         <div>
             { user && user.userData && props.comment.writer &&
@@ -73,19 +107,25 @@ function SingleComment(props) {
                     {props.comment.writer.nickname}
                     &nbsp;&nbsp;
                     <Badge  count='작성자' style={{ backgroundColor: '#52c41a' }} />
-                    {user.userData._id === props.comment.writer._id ? 
+                    {user.userData._id === props.comment.writer._id || user.userData.isAdmin ? 
                     <span style={{ fontSize : '15px'}}>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <DeleteOutlined  onClick={deleteHandler}/>
-                    </span> : ""}
+                    </span> : <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
+                            </span>}
                 </span> : 
                 <span>{props.comment.writer.nickname}
                     &nbsp;&nbsp;
-                    {user.userData._id === props.comment.writer._id ? 
+                    {user.userData._id === props.comment.writer._id || user.userData.isAdmin ? 
                         <span style={{ fontSize : '15px'}}>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <DeleteOutlined  onClick={deleteHandler} />
-                        </span> : ""}
+                        </span> : <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
+                            </span>}
                 </span>
                 }
                 avatar={
@@ -104,19 +144,25 @@ function SingleComment(props) {
                         {props.comment.writer.nickname}
                         &nbsp;&nbsp;
                         <Badge  count='작성자' style={{ backgroundColor: '#52c41a' }} />
-                        {user.userData._id === props.comment.writer._id ? 
+                        {user.userData._id === props.comment.writer._id || user.userData.isAdmin? 
                         <span style={{ fontSize : '15px'}}>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <DeleteOutlined  onClick={deleteHandler}/>
-                        </span> : ""}
+                        </span> : <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
+                            </span>}
                     </span> : 
                     <span>{props.comment.writer.nickname}
                         &nbsp;&nbsp;
-                        {user.userData._id === props.comment.writer._id ? 
+                        {user.userData._id === props.comment.writer._id || user.userData.isAdmin ? 
                             <span style={{ fontSize : '15px'}}>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <DeleteOutlined  onClick={deleteHandler}/>
-                            </span> : ""}
+                            </span> : <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
+                            </span>}
                     </span>
                     }
                 avatar={

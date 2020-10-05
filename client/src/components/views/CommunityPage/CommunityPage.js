@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
-
+import Notification from './Notification/Notification'
 
 function  CommunityPage() {
     const [Board, setBoard] = useState([])
@@ -50,8 +50,13 @@ function  CommunityPage() {
            
             <br/>
             <br/>
-            <div style={{display:'flex', justifyContent:'flex-end'}}>
-               <a href='/write'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+              <div>
+                <Notification/>
+              </div>
+              <div>
+                <a href='/write'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>                
+              </div>
             </div>
             
             <br/>

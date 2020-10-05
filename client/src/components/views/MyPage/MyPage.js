@@ -6,6 +6,8 @@ import MyComment from './MyComment/MyComment'
 import moment from 'moment'
 import { UserOutlined } from '@ant-design/icons';
 import PwdChange from './PwdChange/PwdChange'
+import RemoveUser from './RemoveUser/RemoveUser'
+
 
 const { Title } = Typography 
 
@@ -17,6 +19,7 @@ function MyPage() {
     const [showPost, setshowPost] = useState(false)
     const [showComment, setshowComment] = useState(false)
     const [showChange, setshowChange] = useState(false)
+    const [showRemove, setshowRemove] = useState(false)
 
     useEffect(() => {
         let body = {
@@ -68,6 +71,12 @@ function MyPage() {
         setshowChange(true)
     }
 
+    const removeHandler = () => {
+        if(window.confirm('회원탈퇴를 하시겠습니까?')){
+            setshow(false)
+            setshowRemove(true)
+        }
+    }
     return (
         <div>
 
@@ -98,11 +107,18 @@ function MyPage() {
                     <br/>
                     <Descriptions.Item label="내가 쓴 댓글보기"><Button onClick={commentHandler}>Click</Button></Descriptions.Item>
                 </Descriptions>
+                <div style={{ border : '1px solid #eee'}}></div>
+                <br/>
+                <div style={{ display:'flex' , justifyContent:'center'}}>
+                    <Button type='danger' shape='round' onClick={removeHandler}>회원탈퇴</Button>
+                </div>
+                
             </div>
           }
           {showPost && <MyPost list={board}/>}
           {showComment && <MyComment list={comment}/>}
           {showChange && <PwdChange/>}
+          {showRemove && <RemoveUser/>}
         </div>
     )
 }

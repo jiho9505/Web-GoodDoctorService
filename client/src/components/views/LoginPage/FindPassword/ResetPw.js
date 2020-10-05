@@ -62,8 +62,12 @@ function ResetPw(props) {
           .oneOf([Yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
           .required('비밀번호를 다시 입력해주세요'),
         password: Yup.string()
-          .min(5, '비밀번호는 최소 5자 이상 입력해주세요')
-          .required('비밀번호를 입력해주세요'),
+          .min(8, '비밀번호는 최소 8자 이상 입력해주세요')
+          .required('비밀번호를 입력해주세요')
+          .matches(
+            /^.*(?=.{8,})(?=.*\d)((?=.*[a-zA-Z]){1}).*$/,
+            "영어와 숫자 조합이 필요합니다"
+          ),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
