@@ -1,6 +1,8 @@
 .here {
   font-weight: bolder;
   font-size:  13px;
+  background-color: white;
+  border : 1px solid black
 }
 .pulse {
   display: block;

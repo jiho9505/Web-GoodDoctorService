@@ -16,9 +16,8 @@ function MyComment(props) {
         array.push( {
           content : list.content,
           key : index,
-          title: list.postId.title,
-          date: moment(list.postId.createdAt).format("YYYY-MM-D"),
-          _id: list.postId
+          date: moment(list.createdAt).format("YYYY-MM-D"),
+          //_id: list.postId._id
         } )
         
     })

@@ -1,14 +1,25 @@
 import React from 'react'
-import {Icon} from 'antd';
 
 function Footer() {
     return (
         <div style={{
             height: '80px', display: 'flex',
             flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', fontSize:'1rem'
+            justifyContent: 'center', fontSize:'12px' , backgroundColor:'black' , color:'white'
         }}>
-           
+               
+           <div>Copyright 2020 findgooddoctor.com All Rights Reserved. Since 2020.XX.XX</div>
+           <div>
+               <span>문의 사항 : findgooddoctor@naver.com</span>
+               &nbsp;&nbsp;
+               <span>|</span>
+               &nbsp;&nbsp;
+               <span>개인정보처리방침</span>
+               &nbsp;&nbsp;
+               <span>|</span>
+               &nbsp;&nbsp;
+               <span>이용약관</span>
+           </div>
         </div>
     )
 }

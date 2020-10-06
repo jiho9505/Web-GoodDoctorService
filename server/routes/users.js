@@ -2,10 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
+const { Comment } = require("../models/Comment")
 const { Tokenauth } = require("../models/Tokenauth")
+const { Board } = require("../models/Board");
+const { Alert } = require("../models/Alert");
+const { Like } = require("../models/Like")
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const config = require('../config/dev')
+const async = require('async');
+
 //=================================
 //             User
 //=================================
@@ -209,6 +215,7 @@ router.post("/changepwd", (req, res) => {
 
 
 router.post("/remove", (req, res) => {
+    
     User.findOne({_id : req.body._id})
         .exec((err,user)=>{
             if(err) return res.json({success: false, message:"Error 발생.."})
@@ -217,15 +224,61 @@ router.post("/remove", (req, res) => {
                 if(err) return res.json({success: false, message:"Error 발생.."})
                 if (!isMatch) return res.json({ success: false, message: "현재 비밀번호를 바르게 입력해주세요" });
                 
-                //여기부터 유저 관련된 정보 삭제 시작 (alert 고려)
-                
-                User.findOneAndDelete({_id : user._id},(err,result)=>{
-                    if(err) return res.json({success: false, message:"Error 발생.."})
-                    res.json({success : true})
-                })
-               // Board.delete({_id : user._id})
-                //Comment.delete({_id : user._id})               
-                })
-             })
-        })
+                async.parallel([
+
+                    function(callback){
+                        User.findOneAndDelete({_id : user._id},(err)=>{
+                            if(err) callback(err)
+                            callback(null)
+                        })
+                    },
+    
+                    function(callback){
+                        Board.deleteMany({writer : user._id})
+                        .exec((err)=>{
+                           if(err) callback(err)
+                           callback(null)
+                        })
+                    },
+                    function(callback){
+                        Comment.deleteMany({writer : user._id}) 
+                        .exec((err)=>{
+                            if(err) callback(err)
+                            callback(null)
+                        })
+                    },
+                    function(callback){
+                        Like.deleteMany({userId : user._id}) 
+                        .exec((err)=>{
+                               if(err) callback(err)
+                               callback(null)
+                        })
+                    },
+                    function(callback){
+                        Alert.deleteMany({userId : user._id}) 
+                        .exec((err)=>{
+                               if(err) callback(err)
+                               callback(null)
+                        })
+                    },
+                    function(callback){
+                        Comment.deleteMany({responseTo : user._id}) 
+                        .exec((err)=>{
+                            if(err) callback(err)
+                            callback(null)
+                                                                })
+                    }
+    
+                    ],
+    
+                    function(err,results){
+                        if(err) return res.json({success: false, message:"Error 발생.."})
+                        return res.json({success: true})
+    });
+
+  })
+  })
+  })
+             
+
 module.exports = router;
