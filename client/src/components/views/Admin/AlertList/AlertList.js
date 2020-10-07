@@ -24,11 +24,9 @@ function AlertList(props) {
                 _id: list.postId._id,
                 button: '삭제',
                 comment: list.commentId._id,
-                alert:list._id
               } )
          }
          else{ 
-           if(list.postId){
               list.chooseBoard = '게시판'
 
               array.push( {
@@ -40,11 +38,8 @@ function AlertList(props) {
                 contents: list.contents,
                 _id: list.postId._id,
                 button: '삭제',
-                alert:list._id,
                 comment:0
               } )
-          }
-
          }
         
     })
@@ -53,9 +48,9 @@ function AlertList(props) {
 
   },[props.list])
   
-        const removeHandler = (value,id,cid) => {
+        const removeHandler = (value,cid) => {
             if(cid){
-                axios.delete(`/api/alert?cid=${cid}&id=${id}`)
+                axios.delete(`/api/alert?cid=${cid}`)
                     .then(response => {
                         if(response.data.success){
                             window.location.reload()
@@ -66,7 +61,7 @@ function AlertList(props) {
                     })
             }
             else{
-                axios.delete(`/api/alert?postid=${value}&id=${id}`)
+                axios.delete(`/api/alert?postid=${value}`)
                     .then(response => {
                         if(response.data.success){
                             window.location.reload()
@@ -124,7 +119,7 @@ function AlertList(props) {
             width: 100,
             align: 'center',render: (text,record) => (
                 
-                    <Button onClick={() => {removeHandler(record._id,record.alert,record.comment)}}>{text}</Button>
+                    <Button onClick={() => {removeHandler(record._id,record.comment)}}>{text}</Button>
             )
           },
         
@@ -147,9 +142,7 @@ function AlertList(props) {
                                                             type: 'checkbox',
                                                             ...rowSelection,
                                                          }} 
-            />
-                                                        }
-                                                
+            /> }                                    
         </div>
     )
 }

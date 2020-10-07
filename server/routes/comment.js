@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Comment } = require("../models/Comment");
-const { User } = require("../models/User");
+const { Alert } = require("../models/Alert");
 
 router.get("/", (req, res) => {
 
@@ -35,9 +35,14 @@ router.post("/", (req, res) => {
 router.delete("/", (req, res) => {
 
     Comment.findOneAndDelete({ _id : req.query.id })
-            .exec((err, comments) => {
+            .exec((err) => {
                 if (err) return res.json({ success: false})
-                res.status(200).json({ success: true })
+                Alert.deleteMany({ commentId : req.query.id})
+                     .exec((err) => {
+                        if (err) return res.json({ success: false})
+                        res.status(200).json({ success: true })
+                     })
+                
                             
                        })
                 

@@ -6,13 +6,11 @@ const tokenauthSchema = mongoose.Schema({
     },
     userId: {
         type:String
-    },
-    ttl: {
-        type:Number
     }
     
 },{ timestamps : true})
 
+tokenauthSchema.index({createdAt: 1},{expireAfterSeconds: 360});
 
 const Tokenauth  = mongoose.model('Tokenauth', tokenauthSchema);
 

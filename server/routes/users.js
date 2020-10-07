@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
-const { Comment } = require("../models/Comment")
 const { Tokenauth } = require("../models/Tokenauth")
 const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
 const { Like } = require("../models/Like")
+const { Comment } = require("../models/Comment")
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const config = require('../config/dev')
@@ -100,7 +100,7 @@ router.post("/findpassword", (req, res) => {
         const data = { // 데이터 정리
             token,
             userId: user._id,
-            ttl: 300000 // ttl 값 설정 (5분)
+            //ttl: 300000 // ttl 값 설정 (5분)
         };
         
         const tokenauth = new Tokenauth(data)
@@ -151,8 +151,7 @@ router.post("/findpassword", (req, res) => {
 
 router.post('/resetpw', (req, res) => {
    Tokenauth.findOne({ token : req.body.tokenId } , (err,info)=>
-    {
-        console.log(err)       
+    {     
         if(err){
             return res.json({
                 success:false,
@@ -178,19 +177,7 @@ router.post('/resetpw', (req, res) => {
                      return res.status(200).json({ success : true})
                  })
                  }) 
-        /*
-        else{
-           
-            if(Date.now() - info.createdAt > info.ttl)
-            {
-                return res.json({
-                    success:false,
-                    message:'유효 시간(5분)이 지났습니다..'
-                })
-                
-    
-            }
-            */        
+
         })   
     }
 )

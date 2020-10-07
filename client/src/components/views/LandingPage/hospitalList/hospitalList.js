@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Drawer, List, Avatar, Divider, Col, Row } from 'antd';
+import { Drawer, List, Avatar, Divider, Col, Row , message} from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 
 function HospitalList(props) {
@@ -28,7 +28,10 @@ function HospitalList(props) {
             setname(item.name)
         }
         else{
-            alert('로그인을 하셔야 사용 가능한 기능입니다!')
+          message.config({
+            top: 100
+          })
+          message.success('로그인을 하셔야 이용할 수 있는 기능입니다.')
        };
     }
     

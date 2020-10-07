@@ -55,7 +55,7 @@ function SingleComment(props) {
 
     const deleteHandler = () => {
         if(window.confirm('이 댓글을 삭제하시겠습니까?')){        
-            Axios.delete(`/api/comment?id=${props.comment._id}&cid=${props.postId}`)
+            Axios.delete(`/api/comment?id=${props.comment._id}`)
                  .then(response => {
                      if(response.data.success){
                         window.location.reload()

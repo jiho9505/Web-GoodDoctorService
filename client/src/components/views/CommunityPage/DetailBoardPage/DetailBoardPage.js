@@ -101,8 +101,8 @@ function DetailBoardPage(props) {
                 <div style = {{ width: '55%', margin: '3rem auto' }}>
                 {
                     
-                    PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') 
-                    || props.user &&  props.user.userData && props.user.userData.isAdmin ?
+                    ( PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') ) 
+                    || ( props.user &&  props.user.userData && props.user.userData.isAdmin ) ? 
                     <div style={{display:'flex', justifyContent:'flex-end'}}>
                         <Button onClick={updateHandler}>수정</Button>&nbsp;<Button onClick={deleteHandler}>삭제</Button>
                     </div> : <div style={{display:'flex', justifyContent:'flex-end'}}>

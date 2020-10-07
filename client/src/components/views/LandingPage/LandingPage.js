@@ -5,7 +5,6 @@ import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
 import { Test } from './Test'
 import HospitalList from './hospitalList/hospitalList'
-import Axios from 'axios'
 
 
 function LandingPage(props) {

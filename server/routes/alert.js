@@ -3,6 +3,8 @@ const router = express.Router();
 const { Alert } = require("../models/Alert");
 const { Comment } = require("../models/Comment");
 const { Board } = require("../models/Board");
+const { Like } = require("../models/Like")
+const async = require('async');
 
 
 router.get("/", (req, res) => {
@@ -37,9 +39,9 @@ router.delete("/", (req, res) => {
     const postid = req.query.postid
 
     if(cid){
-        Alert.findOneAndDelete({_id : req.query.id}, (err,notresult)=>{
+        Alert.deleteMany({commentId : cid}, (err)=>{
             if(err) res.json({ success: false })
-            Comment.findOneAndDelete({_id : cid}, (err,doc)=>{
+            Comment.findOneAndDelete({_id : cid}, (err)=>{
                 if(err) res.json({ success: false })
                 return res.json({ success : true})
             })
@@ -47,13 +49,44 @@ router.delete("/", (req, res) => {
         
     }
     else{
-        Alert.findOneAndDelete({_id : req.query.id}, (err,notresult)=>{
-            if(err) res.json({ success: false })
-            Board.findOneAndDelete({_id : postid}, (err,doc)=>{
-                if(err) res.json({ success: false })
-                return res.json({ success : true})
-            })
-        })
+        
+        async.parallel([
+
+            function(callback){
+                Board.findOneAndDelete({_id:postid})
+                    .exec((err)=>{
+                    if(err) callback(err)
+                    callback(null)
+                })
+            },
+            function(callback){
+                Comment.deleteMany({postId: postid}) 
+                        .exec((err)=>{
+                            if(err) callback(err)
+                            callback(null)
+                })
+            },
+            
+            function(callback){
+                Like.deleteMany({postId: postid}) 
+                .exec((err)=>{
+                       if(err) callback(err)
+                       callback(null)
+                })
+            },
+            function(callback){
+                Alert.deleteMany({postId: postid})
+                .exec((err)=>{
+                       if(err) callback(err)
+                       callback(null)
+                })
+            }
+            ],
+    
+            function(err){
+                if(err) return res.json({success: false})
+                return res.json({success: true})
+    }); 
     }
 
 })

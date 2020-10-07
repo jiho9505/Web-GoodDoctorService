@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { Board } = require("../models/Board");
-const { User } = require("../models/User");
+const { Alert } = require("../models/Alert");
+const { Like } = require("../models/Like")
+const { Comment } = require("../models/Comment")
+const async = require('async');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -115,15 +118,44 @@ router.patch('/', (req, res) => {
 router.delete('/', (req, res) => {
 
     var postId = req.query.id
-    var body = {}
-    body._id = postId
     
-    Board.findOneAndDelete(body,(err,result)=>{
+    async.parallel([
+
+        function(callback){
+            Board.findOneAndDelete({_id:postId})
+                .exec((err)=>{
+                if(err) callback(err)
+                callback(null)
+            })
+        },
+        function(callback){
+            Comment.deleteMany({postId: postId}) 
+                    .exec((err)=>{
+                        if(err) callback(err)
+                        callback(null)
+            })
+        },
         
-        if(err) return res.json({success:false})
-        return res.json({success:true})
-    })
-    
+        function(callback){
+            Like.deleteMany({postId: postId}) 
+            .exec((err)=>{
+                   if(err) callback(err)
+                   callback(null)
+            })
+        },
+        function(callback){
+            Alert.deleteMany({postId: postId})
+            .exec((err)=>{
+                   if(err) callback(err)
+                   callback(null)
+            })
+        }
+        ],
+
+        function(err,results){
+            if(err) return res.json({success: false})
+            return res.json({success: true})
+}); 
 
 })
 
