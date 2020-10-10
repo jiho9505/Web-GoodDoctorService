@@ -26,7 +26,7 @@ import MustRead from "./views/MustRead/MustRead"
 function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
-      <NavBar /> 
+       
       
       
       <div style={{ minHeight: 'calc(100vh - 80px)' }}>
@@ -54,6 +54,7 @@ function App() {
       </div>
       <Footer />
     </Suspense>
+  
   );
 }
 
