@@ -18,7 +18,7 @@ function LandingPage(props) {
         setlng(lng)
     }
     return (
-        <div style = {{ width: '75%', margin: '3rem auto' }}>
+        <div style = {{ width: '75%' , margin: '3rem auto' }}>
             
            
             <br/>    

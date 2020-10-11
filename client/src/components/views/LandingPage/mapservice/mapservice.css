@@ -2,7 +2,7 @@
   font-weight: bolder;
   font-size:  13px;
   background-color: white;
-  border : 1px solid black
+  border : 1px dotted black;
 }
 .pulse {
   display: block;

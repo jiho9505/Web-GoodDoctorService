@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import Auth from "../hoc/auth";
 import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
-import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import CommunityPage from "./views/CommunityPage/CommunityPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
@@ -18,7 +17,8 @@ import Success from "./views/Success/Success"
 import MyPage from "./views/MyPage/MyPage"
 import Admin from "./views/Admin/Admin"
 import MustRead from "./views/MustRead/MustRead"
-
+import Privacy from "./views/Privacy/Privacy"
+import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -26,7 +26,7 @@ import MustRead from "./views/MustRead/MustRead"
 function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
-       
+       <NavBar/>
       
       
       <div style={{ minHeight: 'calc(100vh - 80px)' }}>
@@ -36,8 +36,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
-          <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/community" component={Auth(CommunityPage, null)} />
+          <Route exact path="/register" component={Auth(BeforeRegister, false)} />
+          <Route exact path="/privacy" component={Auth(Privacy, null)} />
           <Route exact path="/write" component={Auth(Postlist, true)} />
           <Route exact path="/mypage" component={Auth(MyPage, true)} />
           <Route exact path="/mustread" component={Auth(MustRead, null)} />

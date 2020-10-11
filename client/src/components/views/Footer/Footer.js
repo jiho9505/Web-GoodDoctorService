@@ -14,11 +14,8 @@ function Footer() {
                &nbsp;&nbsp;
                <span>|</span>
                &nbsp;&nbsp;
-               <span>개인정보처리방침</span>
+               <a href='/privacy'><span>개인정보처리방침</span></a>
                &nbsp;&nbsp;
-               <span>|</span>
-               &nbsp;&nbsp;
-               <span>이용약관</span>
            </div>
         </div>
     )

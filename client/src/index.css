@@ -38,6 +38,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.privacy {
+  font-size: 17px;
+  text-decoration: underline;
+}
+
+
+
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
