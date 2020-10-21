@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { Table } from 'antd';  
-import moment from "moment";
-import axios from 'axios'
+
 
 function BRtable() {
   
@@ -10,7 +9,7 @@ function BRtable() {
     {
       key: '1',
       purpose: '이용자 식별 및 본인여부 확인',
-      list: '이메일,비밀번호',
+      list: '비밀번호,이메일',
       time: '회원 탈퇴 시까지',
     },
     {
@@ -49,7 +48,7 @@ function BRtable() {
   
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} pagination={false} size='small' bordered={true} />;
+            <Table dataSource={dataSource} columns={columns} pagination={false}  size='small' bordered={true} />;
         </div>
     )
 }

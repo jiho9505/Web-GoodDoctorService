@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Drawer, List, Avatar, Divider, Col, Row , message} from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
+import { withRouter } from "react-router-dom"
 
 function HospitalList(props) {
     useEffect(() => {
@@ -32,6 +33,10 @@ function HospitalList(props) {
             top: 100
           })
           message.success('로그인을 하셔야 이용할 수 있는 기능입니다.')
+          setTimeout(() => {
+            props.history.push('/login')
+          }, 1000);
+          
        };
     }
     
@@ -52,25 +57,29 @@ function HospitalList(props) {
         bordered
         renderItem={item => (
           <List.Item
+            style={{paddingLeft:'5px', paddingRight:'5px'}}
             key={item.id}
             actions={[
               <a onClick={()=>{showDrawer(item)}} key={`a-${item.id}`}>
-                특이사항 확인
+                특이사항
               </a>,
             ]}
           >
             <List.Item.Meta
               avatar={
-                <Avatar style={{backgroundColor:'white'}} icon={<PlusCircleOutlined style={{fontSize:'25px' ,color:"#52c41a"}}/>} />
+                <Avatar style={{marginTop:'20px',marginLeft:'5px',backgroundColor:'white'}} icon={<PlusCircleOutlined style={{fontSize:'25px' ,color:"#52c41a"}}/>} />
               }
-              title={<a onClick={() => { clickHandler(item.lat,item.lng)}}>{item.name + '(' + item.doctor + ')'}</a>}
+              title={<a onClick={() => { clickHandler(item.lat,item.lng)}}>
+                        <span>{item.name}</span>
+                        <div>{item.doctor}</div>
+                    </a>}
               description={item.location}
             />
           </List.Item>
         )}
       />
-      <Drawer
-        width={640}
+      <Drawer        
+        width={300}
         placement="right"
         closable={false}
         onClose={onClose}
@@ -164,5 +173,5 @@ function HospitalList(props) {
     </>
   )}
 
-export default HospitalList
+export default withRouter(HospitalList)
 

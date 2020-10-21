@@ -31,10 +31,7 @@ function Mapservice(props) {
       >
         <NaverMap
           id='maps-getting-started-controlled'
-          style={{
-            width: 520, // 네이버지도 가로 길이
-            height: 400 // 네이버지도 세로 길이
-          }}
+          
           defaultCenter={{ lat: 36.417382, lng: 128.158876}} // 지도 초기 위치
           center={{lat: lat, lng: lng }}
           zoom={zoom} 

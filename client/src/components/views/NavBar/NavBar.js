@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
 import { Drawer, Button, Icon } from 'antd';
+import {PlusCircleOutlined } from '@ant-design/icons';
 import './Sections/Navbar.css';
 
 function NavBar() {
@@ -18,7 +19,8 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div className="menu__logo" style={{width: '200px'}} >
-        <a style={{ fontSize : '20px', fontFamily : 'Noto Sans' , color:'#ffa940'}} href="/">숨은 명의 찾기</a>
+        <PlusCircleOutlined style={{fontSize:'20px',color:"#ffa940",paddingTop:'3px',marginTop:'5px'}}/>
+        <a style={{fontSize : '20px', fontFamily : 'Noto Sans' , color:'#ffa940' , paddingLeft:'8px'}} href="/">숨은 명의 찾기</a>
       </div>
       <div className="menu__container">
         <div className="menu_left">
@@ -35,7 +37,7 @@ function NavBar() {
           <Icon type="align-right" />
         </Button>
         <Drawer
-          title="Find Good Doctor"
+          title="Find Good Doctors"
           placement="right"
           className="menu_drawer"
           closable={false}

@@ -22,8 +22,7 @@ function Notification() {
             visible={visible}
         >
             <p>20.10.05 - 공지사항 test</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            <p>의료법때문에 특정 병원 직접적인 언급 및 비판 X</p>
         </Drawer>
         </>
     );

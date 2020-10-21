@@ -112,9 +112,8 @@ function ResetPw(props) {
           <div className="app">
 
             
-            <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit}>
-                <h3 style={{ display:'flex', justifyContent:'center' ,marginLeft: 70 }}>새로운 비밀번호를 입력해주세요
-                <ExclamationCircleOutlined style={{ marginTop: 5 }} /></h3>
+            <Form onSubmit={handleSubmit}>
+                <h3>-새로운 비밀번호를 입력해주세요-</h3>
                 
                 <br></br>
             <Form.Item required label="비밀번호" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
@@ -157,7 +156,7 @@ function ResetPw(props) {
 
 
               <Form.Item {...tailFormItemLayout}>
-                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button className='reset_button' onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   비밀번호 변경
                 </Button>
               </Form.Item>

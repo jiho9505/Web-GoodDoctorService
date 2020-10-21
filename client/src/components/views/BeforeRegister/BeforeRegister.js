@@ -31,7 +31,7 @@ function BeforeRegister() {
         <div>
             
             {showBR && 
-            <div style = {{ width: '50%' , margin: '3rem auto' }}>
+            <div className='in_BR'>
                 <div>
                     
                     <Form onSubmit={submitHandler}>
@@ -42,7 +42,7 @@ function BeforeRegister() {
                         <div style={{border : '1px solid #eee'}}></div>
                                 
                         
-
+                
                         <BRtable/>
                         
 

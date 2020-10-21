@@ -25,12 +25,13 @@ import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
 
 function App() {
   return (
+ 
     <Suspense fallback={(<div>Loading...</div>)}>
-       <NavBar/>
+      <NavBar/>
       
       
       <div style={{ minHeight: 'calc(100vh - 80px)' }}>
-        <div style={{ paddingTop: '140px'}}>
+        <div className='logo'>
           <Logo/>
         </div>
         <Switch>
@@ -52,7 +53,9 @@ function App() {
           
           
         </Switch>
+        
       </div>
+      <div className='space'></div>
       <Footer />
     </Suspense>
   

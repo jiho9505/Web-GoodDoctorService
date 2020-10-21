@@ -24,6 +24,8 @@
   line-height: 1.66667;
 }
 
+ 
+
 .site-description-item-profile-p-label {
   display: inline-block;
   margin-right: 8px;
@@ -38,13 +40,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.landing {
+  width : 75%;
+  margin: 3rem auto;
+}
+
+.mypage {
+  width: 40%;
+  margin: 3rem auto
+}
+
 .privacy {
   font-size: 17px;
   text-decoration: underline;
 }
 
+.in_Privacy {
+  width: 75%;
+  margin: 3rem auto;
+}
 
-
+.in_BR {
+  width: 50%;
+  margin: 3rem auto;
+}
 
 
 code {
@@ -68,6 +87,14 @@ body {
   height: 75vh;
 }
 
+.app_ {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
 input.error {
   border-color: red;
 }
@@ -77,4 +104,176 @@ input.error {
   color: red;
   height: 5px;
   margin-top: -12px;
+}
+
+.register {
+  min-width: 375px;
+  margin-right: 75px;
+}
+
+.reg_button{
+  margin-left: 50px;
+}
+
+.reset_button{
+  margin-right: 20px;
+  margin-left: -20px;
+}
+
+.pwd_form{
+  width: 400px;
+}
+
+.pwd_button{
+  margin-left: 10px;
+}
+
+.logo{
+  padding-top: 140px
+}
+
+.hospital{
+  display:flex;
+  width:380px;
+  height:400px;
+  justify-content:center;
+  align-items:center;
+  overflow-y : scroll
+}
+
+::-webkit-scrollbar {
+  width: 10px;  /* 세로축 스크롤바 길이 */
+  height: 20px;  /* 가로축 스크롤바 길이 */
+  }
+  ::-webkit-scrollbar-track {
+    background-color: lightblue;
+  }
+  ::-webkit-scrollbar-track-piece {
+    background-color: gainsboro;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: black;
+  }
+
+  .postlist{
+    width: 75%;
+    margin: 3rem auto
+  }
+
+  .mustread{
+    width: 55%;
+    margin: 3rem auto
+  }
+  
+@media (max-width: 767px) {
+  .mustread{
+    width: 90%;
+    margin: 3rem auto
+  }
+
+  .postlist{
+    width: 100%;
+    margin: 3rem auto
+  }
+
+  .landing {
+    width : 100%;
+    margin: 0px auto;
+  }
+
+  .mypage {
+    width: 90%;
+    margin: 3rem auto
+  }
+
+  .in_mypage {
+    display: none;
+  }
+
+  .up_down {
+    display: flex;
+    justify-content: center;
+  }
+
+  .in_Privacy {
+    width: 90%;
+    margin: 3rem auto;
+  }
+  
+  .in_BR {
+    width: 90%;
+    margin: 3rem auto;
+  }
+
+
+  .app_ {
+    height: 70%;
+    margin-left: 75px;
+  }
+
+  .reg_title {
+    margin-right: 75px; 
+  }
+
+  .register {
+    min-width: 250px;
+    margin-top: 10;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+  
+}
+
+  .reg_button{
+    margin-left: 80px;
+  }
+
+  .reset_button{
+    margin-right: 0px;
+    margin-left: 60px;
+  }
+  .pwd_form{
+    width: 300px;
+  }
+  .pwd_button{
+    margin-left: 95px;
+  }
+  .row{
+    margin-top: 50px;
+    width: 100%;
+  }
+
+  .center{
+    display: flex;
+    justify-content: center;
+  }
+
+  .hospital{
+    display:flex;
+    width:300px;
+    height:300px;
+    justify-content:center;
+    align-items:center;
+    overflow-y : scroll
+  }
+ 
+  .space{
+    height:50px;
+ }
+
+ ::-webkit-scrollbar {
+  width: 10px;  /* 세로축 스크롤바 길이 */
+  height: 20px;  /* 가로축 스크롤바 길이 */
+  }
+  ::-webkit-scrollbar-track {
+    background-color: lightblue;
+  }
+  ::-webkit-scrollbar-track-piece {
+    background-color: gainsboro;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: black;
+  }
 }

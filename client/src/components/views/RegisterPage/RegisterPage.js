@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom"
 
 import {
   Form,
@@ -116,12 +117,13 @@ function RegisterPage(props) {
           handleSubmit,
         } = props;
         return (
-          <div className="app">
+          <div className="app_">
             <br/>
             <br/>
-            <Title level={3}>회원 가입</Title>
+            <Title className='reg_title' level={3}>회원 가입</Title>
             <br/>
-            <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit} >
+            <div className="register">
+            <Form  {...formItemLayout} onSubmit={handleSubmit} >
 
 
             <Form.Item required label="E-mail" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
@@ -214,11 +216,12 @@ function RegisterPage(props) {
              
 
               <Form.Item {...tailFormItemLayout}>
-                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button className='reg_button' onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   가입하기
                 </Button>
               </Form.Item>
             </Form>
+            </div>
           </div>
         );
       }}
@@ -227,4 +230,4 @@ function RegisterPage(props) {
 };
 
 
-export default RegisterPage
+export default withRouter(RegisterPage)

@@ -126,7 +126,7 @@ function Postlist(props) {
                  />
             </div>
              :
-             <div style = {{ width: '75%', margin: '3rem auto' }}>
+             <div className='postlist'>
             <Form onSubmit={submitHandler}>
                 
                 <Select value={ChooseBoard}  style={{ width: 150 }}  onChange={ChooseBoardHandler}>

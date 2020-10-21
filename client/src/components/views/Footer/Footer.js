@@ -8,9 +8,13 @@ function Footer() {
             justifyContent: 'center', fontSize:'12px' , backgroundColor:'black' , color:'white'
         }}>
                
-           <div>Copyright 2020 findgooddoctor.com All Rights Reserved. Since 2020.XX.XX</div>
            <div>
-               <span>문의 사항 : findgooddoctor@naver.com</span>
+               <span>Copyright 2020 findgooddoctors.com All Rights Reserved.</span> 
+               &nbsp;
+               <span className='up_down'>Since 2020.XX.XX</span>
+            </div>
+           <div>
+               <span>문의 사항 : findgooddoctors@naver.com</span>
                &nbsp;&nbsp;
                <span>|</span>
                &nbsp;&nbsp;

@@ -56,7 +56,7 @@ function MyPost(props) {
           title: '구분',
           dataIndex: 'chooseBoard',
           key: 'chooseBoard',
-          width: 100,
+          //width: 100,
           align: 'center',
           filters: [
             {
@@ -80,7 +80,7 @@ function MyPost(props) {
           title: '제목',
           dataIndex: 'title',
           key: 'title',
-          width: 480,
+          //width: 480,
           align: 'center',
           render: (text,record) => (
             <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}</a>
@@ -90,14 +90,14 @@ function MyPost(props) {
           title: '날짜',
           dataIndex: 'date',
           key: 'date',
-          width: 100,
+          //width: 100,
           align: 'center'
         },
         {
             title: '조회수',
             dataIndex: 'view',
             key: 'view',
-            width: 70,
+           // width: 70,
             align: 'center', 
             sorter: (a, b) => a.view - b.view,
             sortDirections: ['descend']
@@ -106,7 +106,7 @@ function MyPost(props) {
             title: '좋아요',
             dataIndex: 'like',
             key: 'like',
-            width: 70,
+           // width: 70,
             align: 'center',
             sorter: (a, b) => a.like - b.like,
             sortDirections: ['descend']
@@ -116,7 +116,7 @@ function MyPost(props) {
 
       ];
     return (
-        <div style = {{ width: '75%', margin: '3rem auto' }} >
+        <div style = {{ width: '80%', margin: '3rem auto' }} >
             
                 <br/>
                 <br/>

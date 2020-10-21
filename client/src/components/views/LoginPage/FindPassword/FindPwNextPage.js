@@ -12,7 +12,11 @@ function FindPwNextPage() {
             </div>
 
             <div style={{ display:'flex' , justifyContent:'center'}}>
-            <p>E-mail에서 안내하는 절차를 따라 비밀번호 수정 후 로그인 해주시기 바랍니다.</p>
+            <p>
+                <span>E-mail에서 안내하는 절차를 따라 비밀번호 수정 후</span>
+                &nbsp;
+                <span className='up_down'>로그인 해주시기 바랍니다.</span> 
+            </p>
             </div>
 
             <div style={{ display:'flex' , justifyContent:'center', color:'red'  }}>

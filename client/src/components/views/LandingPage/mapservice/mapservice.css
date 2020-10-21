@@ -16,6 +16,11 @@
   animation: pulse 1.7s infinite;
 }
 
+#maps-getting-started-controlled{
+  width: 520px;
+  height: 400px;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(204, 49, 44, 0.4);
@@ -47,5 +52,18 @@
   100% {
     box-shadow: 0 0 0 0 rgba(204, 49, 44, 0);
     -moz-box-shadow: 0 0 0 0 rgba(204, 49, 44, 0);
+  }
+}
+@media (min-width: 768px) and (max-width: 1300px) {
+  #maps-getting-started-controlled{
+  width: 400px;
+  height: 400px;
+  }
+}
+@media (max-width: 767px) {
+  #maps-getting-started-controlled{
+    width: 300px;
+    height: 250px;
+  
   }
 }

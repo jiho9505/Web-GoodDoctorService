@@ -81,7 +81,7 @@ function MyPage() {
         <div>
 
           {show &&
-            <div style = {{ width: '40%', margin: '3rem auto' }}>
+            <div className='mypage'>
                 <div style = {{ display:'flex' , justifyContent:'center' }}>
                     <Title level={4}>My Page</Title>
                 </div>
@@ -102,9 +102,10 @@ function MyPage() {
                 </Descriptions>
                 <div style={{border : '1px solid #eee'}}></div>
                 <Descriptions title="내가 쓴 글 | 댓글">
-                    <Descriptions.Item label="내가 쓴 글보기"><Button onClick={postHandler}>Click</Button></Descriptions.Item>
-                    <br/>
-                    <br/>
+                    
+                    <Descriptions.Item label="내가 쓴 글보기"><Button  onClick={postHandler}>Click</Button></Descriptions.Item>
+                    <div className='in_mypage'></div>
+                    <div className='in_mypage'></div>
                     <Descriptions.Item label="내가 쓴 댓글보기"><Button onClick={commentHandler}>Click</Button></Descriptions.Item>
                 </Descriptions>
                 <div style={{ border : '1px solid #eee'}}></div>

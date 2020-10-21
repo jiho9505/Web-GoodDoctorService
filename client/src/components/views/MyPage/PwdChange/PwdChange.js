@@ -108,9 +108,9 @@ function PwdChange() {
         return (
           <div className="app">
 
-            
-            <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit}>
-                <h3 style={{ display:'flex', justifyContent:'center' ,marginLeft: 70 }}>-비밀번호 변경-</h3>
+            <h3 style={{ display:'flex', justifyContent:'center' }}>-비밀번호 변경-</h3>
+            <Form className="pwd_form" {...formItemLayout} onSubmit={handleSubmit}>
+                
                 
                 <br></br>
 
@@ -171,7 +171,7 @@ function PwdChange() {
 
 
               <Form.Item {...tailFormItemLayout}>
-                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button className='pwd_button' onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   비밀번호 변경
                 </Button>
               </Form.Item>

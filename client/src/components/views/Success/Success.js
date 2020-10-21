@@ -6,7 +6,7 @@ function Success() {
         <div style={{marginTop : 50}}>
             <Result
                 status="success"
-                title="비밀번호 변경에 성공하였습니다!"
+                title="비밀번호 변경 성공!"
                 extra={[
                 <a href='/login'><Button type="primary" key="console">
                     Login
