@@ -33,14 +33,12 @@ function MyComment(props) {
           title: '날짜',
           dataIndex: 'date',
           key: 'date',
-          width: 70,
           align: 'center'
         },
         {
             title: '댓글 내용',
             dataIndex: 'content',
             key: 'content',
-            width: 480,
             align: 'center', 
             render: (text,record) => (
                 <a href={`community/${record._id}`}>{text}</a>
@@ -50,7 +48,7 @@ function MyComment(props) {
 
       ];
     return (
-        <div style = {{ width: '75%', margin: '3rem auto' }} >
+        <div className='postlist' >
              <br/>
                 <br/>
                 <Title level={4}>내가 쓴 댓글</Title>

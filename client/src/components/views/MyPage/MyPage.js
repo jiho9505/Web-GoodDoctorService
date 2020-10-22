@@ -7,7 +7,7 @@ import moment from 'moment'
 import { UserOutlined } from '@ant-design/icons';
 import PwdChange from './PwdChange/PwdChange'
 import RemoveUser from './RemoveUser/RemoveUser'
-
+import MobileMyPost from './MyPost/MobileMyPost'
 
 const { Title } = Typography 
 
@@ -116,8 +116,17 @@ function MyPage() {
                 
             </div>
           }
-          {showPost && <MyPost list={board}/>}
-          {showComment && <MyComment list={comment}/>}
+          {showPost && 
+          <div>
+            <div className='web_board'>
+                <MyPost list={board}/>
+            </div>
+            <div className='mobile_board'>
+                <MobileMyPost />
+            </div>
+          </div>}
+          {showComment && <MyComment  list={comment}/>
+          }
           {showChange && <PwdChange/>}
           {showRemove && <RemoveUser/>}
         </div>

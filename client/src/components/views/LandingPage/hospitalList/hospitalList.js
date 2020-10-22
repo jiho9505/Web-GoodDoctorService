@@ -79,8 +79,8 @@ function HospitalList(props) {
         )}
       />
       <Drawer        
-        width={300}
-        placement="right"
+        height={400}
+        placement="top"
         closable={false}
         onClose={onClose}
         visible={visible}

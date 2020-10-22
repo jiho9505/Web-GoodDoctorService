@@ -78,14 +78,12 @@ function AlertList(props) {
           title: '구분',
           dataIndex: 'chooseBoard',
           key: 'chooseBoard',
-          width: 100,
           align: 'center',        
         },
         {
           title: '댓글내용',
           dataIndex: 'title',
           key: 'title',
-          width: 300,
           align: 'center',
           render: (text,record) => (
             <a  href={`community/${record._id}`}>{text}</a>
@@ -95,28 +93,24 @@ function AlertList(props) {
             title: '신고사유',
             dataIndex: 'contents',
             key: 'contents',
-            width: 300,
             align: 'center',        
         },
         {
           title: '신고날짜',
           dataIndex: 'date',
           key: 'date',
-          width: 100,
           align: 'center'
         },
         {
             title: '신고자',
             dataIndex: 'nickname',
             key: 'nickname',
-            width: 100,
             align: 'center'
         },
         {
             title: '삭제',
             dataIndex: 'button',
             key: 'button',
-            width: 100,
             align: 'center',render: (text,record) => (
                 
                     <Button onClick={() => {removeHandler(record._id,record.comment)}}>{text}</Button>

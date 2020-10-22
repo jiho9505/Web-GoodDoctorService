@@ -5,7 +5,7 @@ import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
 import Notification from './Notification/Notification'
-
+import Mobile_Detail from './DetailBoardPage/Mobile_Detail'
 function  CommunityPage() {
     const [Board, setBoard] = useState([])
     const [SearchTerms, setSearchTerms] = useState("")
@@ -45,22 +45,31 @@ function  CommunityPage() {
 }
 
     return (
-        <div style = {{ width: '75%', margin: '3rem auto' }}>
+        <div className='postlist'>
             
            
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'space-between'}}>
-              <div>
+              <div style={{marginLeft:'10px'}}>
                 <Notification/>
               </div>
-              <div>
+              <div style={{marginRight:'10px'}}>
                 <a href='/write'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>                
               </div>
             </div>
             
             <br/>
-            {Board && <NoticeBoard list={Board}/>}
+            <div className='web_board'>
+              {Board && <NoticeBoard  list={Board}/>}
+            </div>
+            <div className='mobile_board'>
+              <Mobile_Detail/>
+            </div>
+            
+            <div className='spacing'></div>
+            <div className='spacing'></div>
+            
             <SearchTool refreshFunction={updateSearchTerms}/>
 
         </div>

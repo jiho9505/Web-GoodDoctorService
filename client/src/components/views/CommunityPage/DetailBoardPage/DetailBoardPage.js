@@ -98,7 +98,7 @@ function DetailBoardPage(props) {
         <div>
             {update ? 
                 <Postlist postInfo={PostInfo} /> : 
-                <div style = {{ width: '55%', margin: '3rem auto' }}>
+                <div className='mustread'>
                 {
                     
                     ( PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') ) 
@@ -154,7 +154,7 @@ function DetailBoardPage(props) {
                 <div style={{border : '1px solid #eee'}}></div>
                 <br/>
                 <div style={{display:'flex', justifyContent:'center'}}>
-                    <p>이 게시물이 마음에 드신다면 아래의 엄지를 눌러주세요!</p>
+                    <p>이 게시물이 마음에 드신다면 엄지를 눌러주세요!</p>
                 </div>
                 <div style={{display:'flex', justifyContent:'center'}}>
                     <Likes postId={postId} userId={localStorage.getItem('userId')}  />

@@ -96,9 +96,9 @@ function RemoveUser(props) {
         return (
           <div className="app">
 
-            
-            <Form style={{ minWidth: '375px',marginRight: 75 }} {...formItemLayout} onSubmit={handleSubmit}>
-                <h3 style={{ display:'flex', justifyContent:'center' ,marginLeft: 70 }}>-회원 탈퇴-</h3>
+            <h3 style={{ display:'flex', justifyContent:'center' }}>-회원 탈퇴-</h3>
+            <Form className='RemoveUserForm' {...formItemLayout} onSubmit={handleSubmit}>
+                
                 
                 
                 <br></br>
@@ -126,7 +126,7 @@ function RemoveUser(props) {
 
 
               <Form.Item {...tailFormItemLayout}>
-                <Button style={{ marginLeft: 50 }} onClick={handleSubmit} type='danger' shape='round' disabled={isSubmitting}>
+                <Button className='RemoveUserButton' onClick={handleSubmit} type='danger' shape='round' disabled={isSubmitting}>
                   회원 탈퇴
                 </Button>
               </Form.Item>

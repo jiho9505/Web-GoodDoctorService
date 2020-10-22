@@ -165,11 +165,44 @@ input.error {
     width: 55%;
     margin: 3rem auto
   }
+
+  .mobile_board{
+    display: none
+  }
+  .spacing{
+    height: 0px;
+  }
+
+  .RemoveUserForm{
+    width: 320px;
+  }
+  .RemoveUserButton{
+    margin-left: 7px;
+  }
   
 @media (max-width: 767px) {
+  .RemoveUserButton{
+    margin-left: 115px;
+  }
+  .spacing{
+    height: 10px;
+  }
+
+  .web_board{
+    display: none;
+  }
+
+  .mobile_board{
+    display: block
+  }
+
   .mustread{
     width: 90%;
     margin: 3rem auto
+  }
+
+  .demo-loadmore-list {
+    min-height: 350px;
   }
 
   .postlist{

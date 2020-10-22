@@ -124,7 +124,7 @@ function NoticeBoard(props) {
   
     return (
         <div>
-            <Table dataSource={Datas} tableLayout='fixed' columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />;
+            <Table dataSource={Datas} columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />;
         </div>
     )
 }

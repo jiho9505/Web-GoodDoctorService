@@ -162,6 +162,7 @@ router.delete('/', (req, res) => {
 
 router.post("/info", (req, res) => {
         Board.find({writer : req.body._id})
+             .populate('writer')
              .sort( { createdAt: -1 } )
              .exec((err,boardInfo) => {
                 if(err) return res.json({ success: false })

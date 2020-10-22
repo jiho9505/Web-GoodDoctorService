@@ -185,7 +185,10 @@ function SingleComment(props) {
                         placeholder="댓글을 작성해주세요"
                     />
                     <br />
-                    <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>댓글 등록</Button>
+                    <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>
+                        <div className='web_board'>댓글 등록</div>
+                        <div className='mobile_board'>등록</div>
+                    </Button>
                 </form>
             }
 

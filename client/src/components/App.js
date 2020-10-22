@@ -19,6 +19,7 @@ import Admin from "./views/Admin/Admin"
 import MustRead from "./views/MustRead/MustRead"
 import Privacy from "./views/Privacy/Privacy"
 import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
+
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
