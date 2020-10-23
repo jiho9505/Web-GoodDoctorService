@@ -21,6 +21,7 @@ function NavBar() {
       <div className="menu__logo" style={{width: '200px'}} >
         <PlusCircleOutlined style={{fontSize:'20px',color:"#ffa940",paddingTop:'3px',marginTop:'5px'}}/>
         <a style={{fontSize : '20px', fontFamily : 'Noto Sans' , color:'#ffa940' , paddingLeft:'8px'}} href="/">숨은 명의 찾기</a>
+        
       </div>
       <div className="menu__container">
         <div className="menu_left">

@@ -161,6 +161,23 @@ router.delete('/', (req, res) => {
 
 
 router.post("/info", (req, res) => {
+    
+    let limit = parseInt(req.body.limit)
+    let skip = parseInt(req.body.skip)
+
+    if(req.body.loadMore)
+    {
+        Board.find({writer : req.body._id})
+        .populate('writer')
+        .sort( { createdAt: -1 } )
+        .skip(skip)
+        .limit(limit)
+        .exec((err,boardInfo) => {
+           if(err) return res.json({ success: false })
+           return res.json({ success: true, boardInfo, postSize: boardInfo.length })
+        })
+    }
+    else{
         Board.find({writer : req.body._id})
              .populate('writer')
              .sort( { createdAt: -1 } )
@@ -168,9 +185,44 @@ router.post("/info", (req, res) => {
                 if(err) return res.json({ success: false })
                 return res.json({ success: true, boardInfo })
              })
-   
+        }
 })
 
+router.get('/mobile', (req, res) => {
+    var term = req.query.term
+    let limit = parseInt(req.query.limit)
+    let skip = parseInt(req.query.skip);
+    console.log(term)
+    if(term){
+            Board.find()
+            .find({ $text: { $search: term } })
+            .populate('writer')
+            .sort( { createdAt: -1 } )
+            .skip(skip)
+            .limit(limit)
+            .exec((err,result)=>{
+                    
+                if(err)  return res.json({ success: false ,err })
+                return res.status(200).json({ success: true, result , postSize: result.length })
+                })
+        }
+          
+    
+    else{
+        Board.find()
+            .populate('writer')
+            .sort( { createdAt: -1 } )
+            .skip(skip)
+            .limit(limit)
+            .exec((err,result)=>{
+                    
+                if(err)  return res.json({ success: false ,err })
+                if(result.length === 0) return res.json({ success: false })
+                return res.status(200).json({ success: true, result , postSize: result.length })
+                })
+            
+    }
+})
 
 
 module.exports = router;

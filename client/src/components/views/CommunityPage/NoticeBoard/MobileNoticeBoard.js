@@ -4,23 +4,12 @@ import Axios from 'axios'
 import moment from 'moment'
 
 
-function Mobile_Detail() {
+function MobileNoticeBoard(props) {
 
-    useEffect(() => {
-        Axios.get('/api/board')
-         .then(response => {
-           if(response.data.success){
-              setlist(response.data.result)
-            }
-            else{
-              alert("게시판 목록을 불러오는데 실패하였습니다.")
-            }
-          }
-        )
-         
-    }, [])
+    const list = props.list
+    
 
-    const [list, setlist] = useState([])
+    
     
     const clickHandler = (id) => {
         let body = {
@@ -35,7 +24,8 @@ function Mobile_Detail() {
       }
       
   return (
-    <>
+    <div>
+      { list && list.length>0 && 
       <List
         dataSource={
             list
@@ -58,7 +48,7 @@ function Mobile_Detail() {
           >
             <List.Item.Meta
               title={<a style={{fontWeight:'bolder'}} onClick={()=>clickHandler(item._id)} href={`community/${item._id}`}>
-                        <span>[{item.chooseBoard === 1 ? '완치' : item.chooseBoard === 2 ? '정보' : '고민'}]{' '+item.title}</span>
+                        <span>{item.title}</span>
                         &nbsp;
                     </a>}
               description={item.writer.nickname+' | '+moment(item.createdAt).format("YYYY-MM-D")+' | 조회수:'+item.view+' | 추천:'+item.like}
@@ -66,8 +56,9 @@ function Mobile_Detail() {
           </List.Item>
         )}
       />
-    </>
+          }
+    </div>
   )}
 
-export default Mobile_Detail
+export default MobileNoticeBoard
 

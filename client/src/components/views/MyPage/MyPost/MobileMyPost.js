@@ -8,15 +8,25 @@ const {Title} = Typography
 
 function MobileMyPost() {
 
+    const [Skip, setSkip] = useState(0)
+    const [Limit, setLimit] = useState(8)
+    const [PostSize, setPostSize] = useState(0)
+    const [list, setlist] = useState([])
+
     useEffect(() => {
         let body = {
-            _id : localStorage.getItem("userId")
+            _id : localStorage.getItem("userId"),
+            loadMore : true,
+            skip : Skip,
+            limit : Limit
         }
              
         axios.post('/api/board/info', body)
             .then(response => { 
                 if(response.data.success){
                 setlist(response.data.boardInfo)
+                setPostSize(response.data.postSize)
+
                 }
                 else{
                     alert('글 정보를 가져오는데 실패하였습니다')
@@ -25,7 +35,32 @@ function MobileMyPost() {
          
     }, [])
 
-    const [list, setlist] = useState([])
+    
+
+    const onLoadMore = () => {
+      let skip = Skip + Limit;
+      
+      let body = {
+            _id : localStorage.getItem("userId"),
+            loadMore : true,
+            skip : skip,
+            limit : Limit
+     }
+         
+      axios.post('/api/board/info', body)
+          .then(response => { 
+              if(response.data.success){
+              setlist([...list,...response.data.boardInfo])
+              setPostSize(response.data.postSize)
+              }
+              else{
+                  alert('글 정보를 가져오는데 실패하였습니다')
+              }
+          })
+
+      setSkip(skip)
+    }
+  
     
     const clickHandler = (id) => {
         let body = {
@@ -75,6 +110,16 @@ function MobileMyPost() {
           </List.Item>
         )}
       />
+        
+        <div className='spacing'></div>
+        <div className='spacing'></div>
+        
+        {PostSize >= Limit &&
+                <div className='mobile_board_up'>
+                    <button onClick={onLoadMore} style={{width: '300px', borderRadius:'5px' , border:'0px', height:'30px'}}>더보기</button>
+                </div>
+         }
+
     </>
   )}
 

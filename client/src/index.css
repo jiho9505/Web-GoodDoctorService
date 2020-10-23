@@ -179,8 +179,25 @@ input.error {
   .RemoveUserButton{
     margin-left: 7px;
   }
+
+  .com_spacing{
+    height: 20px;
+  }
   
+  .mobile_board_up{
+    display: none;
+  }
+
 @media (max-width: 767px) {
+  
+  .mobile_board_up{
+    display: flex;
+    justify-content: center;
+  }
+  .com_spacing{
+    height: 0px;
+  }
+
   .RemoveUserButton{
     margin-left: 115px;
   }

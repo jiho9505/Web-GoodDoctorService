@@ -59,7 +59,7 @@ function DetailBoardPage(props) {
                         message.success('삭제가 되었습니다!')
                         setTimeout(() => {
                             props.history.push('/community')
-                        }, 3000);
+                        }, 2000);
                     }
                     else{
                         alert('삭제 기능 Error..')

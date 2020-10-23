@@ -8,8 +8,24 @@ const async = require('async');
 
 
 router.get("/", (req, res) => {
-
-    Alert.find()
+    let skip = parseInt(req.query.skip)
+    let limit = parseInt(req.query.limit)
+    
+    if(limit){
+        Alert.find()
+        .sort( { createdAt: -1 } )
+        .populate('userId')
+        .populate('postId')
+        .populate('commentId')
+        .skip(skip)
+        .limit(limit)
+        .exec((err,alertInfo) => {
+        if(err) return res.json({ success: false })
+        return res.json({ success: true, alertInfo , postSize:alertInfo.length})
+        })
+    }
+    else{
+        Alert.find()
         .sort( { createdAt: -1 } )
         .populate('userId')
         .populate('postId')
@@ -18,6 +34,9 @@ router.get("/", (req, res) => {
         if(err) return res.json({ success: false })
         return res.json({ success: true, alertInfo })
         })
+    }
+
+    
 
 
     

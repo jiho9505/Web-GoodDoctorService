@@ -1,12 +1,46 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import { List } from 'antd';
 import axios from 'axios'
 import moment from 'moment'
 import RemoveButton from './RemoveButton'
 
-function MobileAlertList(props) {
+function MobileAlertList() {
 
-    const list = props.list
+    const [alertInfo, setalertInfo] = useState([])
+    const [Skip, setSkip] = useState(0)
+    const [Limit, setLimit] = useState(8)
+    const [PostSize, setPostSize] = useState(0)
+    
+    useEffect(() => {
+    axios.get(`/api/alert?skip=${Skip}&limit=${Limit}`) 
+        .then(response => {
+            if(response.data.success){
+                setalertInfo(response.data.alertInfo)
+                setPostSize(response.data.postSize)
+            }
+            else{
+                alert("Alert 정보를 가져오는데 실패하였습니다")
+            }
+        })
+        }, [])
+
+    const onLoadMore = () => {
+      let skip = Skip + Limit;
+      
+      axios.get(`/api/alert?skip=${skip}&limit=${Limit}`) 
+        .then(response => {
+            if(response.data.success){
+                setalertInfo([...alertInfo,...response.data.alertInfo])
+                setPostSize(response.data.postSize)
+              
+            }
+            else{
+                alert("Alert 정보를 가져오는데 실패하였습니다")
+            }
+        })
+
+      setSkip(skip)
+    }
 
     const clickHandler = (id) => {
         let body = {
@@ -25,7 +59,7 @@ function MobileAlertList(props) {
     <div>
       <List
         dataSource={
-            list
+            alertInfo
         }
         bordered
         renderItem={item => (
@@ -50,6 +84,15 @@ function MobileAlertList(props) {
           </List.Item>
         )}
       />
+
+      <div className='spacing'></div>
+      <div className='spacing'></div>
+        
+        {PostSize >= Limit &&
+                <div className='mobile_board_up'>
+                    <button onClick={onLoadMore} style={{width: '300px', borderRadius:'5px' , border:'0px', height:'30px'}}>더보기</button>
+                </div>
+         }
     
 
     </div>

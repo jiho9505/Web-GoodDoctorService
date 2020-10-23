@@ -34,7 +34,7 @@ function Admin() {
                 <AlertList list={alertInfo}/>
             </div>
             <div className='mobile_board'>
-                <MobileAlertList list={alertInfo}/>
+                <MobileAlertList/>
             </div>
             
             

@@ -33,7 +33,8 @@ const boardSchema = mongoose.Schema({
 
 boardSchema.index({ 
     title:'text',
-    description: 'text'
+    description: 'text',
+
 }, {
     weights: {
         title: 3,
