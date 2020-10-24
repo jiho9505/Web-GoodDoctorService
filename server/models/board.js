@@ -27,6 +27,10 @@ const boardSchema = mongoose.Schema({
     images : {
         type: Array,
         default: []
+    },
+    commentCount : {
+        type: Number,
+        default: 0
     }
 },{ timestamps : true })
 

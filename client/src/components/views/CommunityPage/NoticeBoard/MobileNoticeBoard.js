@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
-import { List, Badge } from 'antd';
+import React from 'react'
+import { List, Badge, Empty } from 'antd';
 import Axios from 'axios'
 import moment from 'moment'
+
 
 
 function MobileNoticeBoard(props) {
@@ -25,7 +26,7 @@ function MobileNoticeBoard(props) {
       
   return (
     <div>
-      { list && list.length>0 && 
+      { list && list.length>0 ?
       <List
         dataSource={
             list
@@ -56,7 +57,7 @@ function MobileNoticeBoard(props) {
           </List.Item>
         )}
       />
-          }
+        : <Empty/>  }
     </div>
   )}
 

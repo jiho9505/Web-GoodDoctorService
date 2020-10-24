@@ -55,6 +55,7 @@ router.get('/', (req, res) => {
     if(postId){
         body._id = postId
     }
+    
     if(term){
             Board.find()
             .find({ $text: { $search: term } })

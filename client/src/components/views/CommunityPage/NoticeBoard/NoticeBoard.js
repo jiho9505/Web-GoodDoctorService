@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Table } from 'antd';  
+import { Empty, Table } from 'antd';  
 import moment from "moment";
 import axios from 'axios'
 
@@ -123,8 +123,14 @@ function NoticeBoard(props) {
       
   
     return (
+      
         <div>
-            <Table dataSource={Datas} columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />;
+          {props.list && props.list.length>0 ?
+            <Table dataSource={Datas} columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />
+        : <div>
+            <Empty/>
+            <br/><br/>
+          </div>}
         </div>
     )
 }

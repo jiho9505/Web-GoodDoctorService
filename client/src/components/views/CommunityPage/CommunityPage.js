@@ -30,7 +30,7 @@ function  CommunityPage() {
           }
         )
 
-    Axios.get(`/api/board/mobile?skip=${Skip}&limit=${Limit}&term=${SearchTerms}`)
+    Axios.get(`/api/board/mobile?skip=${Skip}&limit=${Limit}`)
         .then(response => {
           if(response.data.success){
              setMobileBoard(response.data.result)
@@ -74,6 +74,7 @@ function  CommunityPage() {
          .then(response => {
             if(response.data.success){
               setBoard(response.data.result)
+              console.log(response.data.result)
             }
             else{
               alert("게시판 목록을 불러오는데 실패하였습니다.")
