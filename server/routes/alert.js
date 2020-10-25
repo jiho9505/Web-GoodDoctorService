@@ -61,6 +61,7 @@ router.delete("/", (req, res) => {
         Alert.deleteMany({commentId : cid}, (err)=>{
             if(err) res.json({ success: false })
             Comment.findOneAndDelete({_id : cid}, (err)=>{
+                //
                 if(err) res.json({ success: false })
                 return res.json({ success : true})
             })
@@ -79,6 +80,7 @@ router.delete("/", (req, res) => {
                 })
             },
             function(callback){
+                //
                 Comment.deleteMany({postId: postid}) 
                         .exec((err)=>{
                             if(err) callback(err)

@@ -19,6 +19,9 @@ const hospitalSchema = mongoose.Schema({
     cafe : {
         type: String,
     },
+    cafeName : {
+        type: String,
+    },
     lat :{
         type: Number
     },

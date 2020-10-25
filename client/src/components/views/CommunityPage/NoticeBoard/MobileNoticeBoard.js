@@ -39,7 +39,7 @@ function MobileNoticeBoard(props) {
             actions={[
                 <a onClick={()=>clickHandler(item._id)} href={`community/${item._id}`}>
                     <span style={{color:'#00000073'}}>댓글</span>
-                    <Badge className="site-badge-count-109" count={109} style={{ backgroundColor: '#52c41a' }}>
+                    <Badge className="site-badge-count-109" count={item.commentCount} style={{ backgroundColor: '#52c41a' }}>
                     
                 </Badge>
                 </a>

@@ -8,6 +8,23 @@ import Notification from './Notification/Notification'
 import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
 
+const list = [{
+  _id : 0,
+  name : '전체'
+},
+{
+  _id : 1,
+  name : '완치'
+},
+{
+  _id : 2,
+  name : '정보'
+},
+{
+  _id : 3,
+  name : '고민'
+}]
+
 function  CommunityPage() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
@@ -15,6 +32,7 @@ function  CommunityPage() {
     const [Board, setBoard] = useState([])
     const [MobileBoard, setMobileBoard] = useState([])
     const [SearchTerms, setSearchTerms] = useState("")
+    const [Category, setCategory] = useState(0)
 
     useEffect(() => {
     
@@ -35,7 +53,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+             console.log(response.data.array)
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -50,7 +68,7 @@ function  CommunityPage() {
   const onLoadMore = () => {
     let skip = Skip + Limit;
 
-    Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}`)
+    Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${Category}`)
         .then(response => {
           if(response.data.success){
              setMobileBoard([...MobileBoard,...response.data.result])
@@ -82,7 +100,7 @@ function  CommunityPage() {
           }
         )
 
-   Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${newSearchTerm}`)
+   Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${newSearchTerm}&choose=${Category}`)
         .then(response => {
           if(response.data.success){
              setMobileBoard(response.data.result)
@@ -98,17 +116,75 @@ function  CommunityPage() {
 }
 
   const refresh = (value) => {
-    if(value === 'a'){
+    let skip = 0
 
+    if(value === 1){
+      setCategory(value)
+
+      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
+        .then(response => {
+          if(response.data.success){
+             setMobileBoard(response.data.result)
+             setPostSize(response.data.postSize)
+             console.log(response.data.result)
+           }
+           else{
+             alert("게시판 목록을 불러오는데 실패하였습니다.")
+           }
+         }
+       )
+    setSkip(skip)
     }
-    else if(value === 'b'){
+    else if(value === 2){
+      setCategory(value)
 
+      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
+        .then(response => {
+          if(response.data.success){
+             setMobileBoard(response.data.result)
+             setPostSize(response.data.postSize)
+             console.log(response.data.result)
+           }
+           else{
+             alert("게시판 목록을 불러오는데 실패하였습니다.")
+           }
+         }
+       )
+    setSkip(skip)
     }
-    else if(value === 'c'){
+    else if(value === 3){
+      setCategory(value)
 
+      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
+        .then(response => {
+          if(response.data.success){
+             setMobileBoard(response.data.result)
+             setPostSize(response.data.postSize)
+             console.log('곰',response.data.result)
+           }
+           else{
+             alert("게시판 목록을 불러오는데 실패하였습니다.")
+           }
+         }
+       )
+    setSkip(skip)
     }
     else{
+      setCategory(value)
 
+      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
+        .then(response => {
+          if(response.data.success){
+             setMobileBoard(response.data.result)
+             setPostSize(response.data.postSize)
+             console.log(response.data.result)
+           }
+           else{
+             alert("게시판 목록을 불러오는데 실패하였습니다.")
+           }
+         }
+       )
+    setSkip(skip)
     }
   }
 
@@ -129,7 +205,7 @@ function  CommunityPage() {
             <div className='spacing'></div>
             <div className='spacing'></div>
             <div className='mobile_board'>
-              <MobileCategory refresh={refresh}/>
+              <MobileCategory list={list} refresh={refresh}/>
             </div>
             <div className='com_spacing'></div>
             

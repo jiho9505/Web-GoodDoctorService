@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
 
     comment.save((err, comment) => {
         if (err) return res.json({ success: false, err })
-
+//
         Comment.find({ '_id': comment._id })
             .populate('writer')
             .exec((err, result) => {
@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
 })
 
 router.delete("/", (req, res) => {
-
+//
     Comment.findOneAndDelete({ _id : req.query.id })
             .exec((err) => {
                 if (err) return res.json({ success: false})

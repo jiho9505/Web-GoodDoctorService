@@ -193,9 +193,17 @@ router.get('/mobile', (req, res) => {
     var term = req.query.term
     let limit = parseInt(req.query.limit)
     let skip = parseInt(req.query.skip);
-    console.log(term)
+    let value = parseInt(req.query.choose)
+    let body = {}
+    
+    if(value){
+        body.chooseBoard = value
+    }
+
     if(term){
-            Board.find()
+        
+    
+            Board.find(body)
             .find({ $text: { $search: term } })
             .populate('writer')
             .sort( { createdAt: -1 } )
@@ -210,16 +218,17 @@ router.get('/mobile', (req, res) => {
           
     
     else{
-        Board.find()
+
+        Board.find(body)
             .populate('writer')
             .sort( { createdAt: -1 } )
             .skip(skip)
             .limit(limit)
             .exec((err,result)=>{
-                    
+                
+                
                 if(err)  return res.json({ success: false ,err })
-                if(result.length === 0) return res.json({ success: false })
-                return res.status(200).json({ success: true, result , postSize: result.length })
+                return res.status(200).json({ success: true, result , postSize: result.length})
                 })
             
     }
