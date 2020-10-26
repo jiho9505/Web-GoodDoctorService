@@ -54,17 +54,50 @@ router.post("/", (req, res) => {
 })
 
 router.delete("/", (req, res) => {
+
+    
+                
+
     const cid = req.query.cid
     const postid = req.query.postid
 
     if(cid){
         Alert.deleteMany({commentId : cid}, (err)=>{
             if(err) res.json({ success: false })
-            Comment.findOneAndDelete({_id : cid}, (err)=>{
-                //
-                if(err) res.json({ success: false })
-                return res.json({ success : true})
-            })
+
+            Comment.findOneAndDelete({ _id : cid })
+                    .exec((err,resultInfo) => {
+                        if (err) return res.json({ success: false})
+
+                        if(resultInfo.responseTo){
+                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
+                                    (err)=> {
+                                        if (err) return res.json({ success: false })
+                                        return res.json({ success: true })
+                            
+                                })
+                        }
+                        else{
+                            Comment.find({ responseTo : resultInfo._id})
+                                    .exec((err,comlength)=>{
+                                    let count = (comlength.length * -1) - 1;
+                                    if (err) return res.json({ success: false})
+
+                                    Comment.deleteMany({ responseTo : resultInfo._id})
+                                            .exec((err)=>{
+                                                if (err) return res.json({ success: false})
+                                            })
+
+                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
+                                    (err)=> {
+                                        if (err) return res.status(400).json({ success: false })
+                                        res.status(200).json({ success: true })
+                            
+                                })
+                                
+                            })
+                        }         
+                            })
         })
         
     }
@@ -80,7 +113,7 @@ router.delete("/", (req, res) => {
                 })
             },
             function(callback){
-                //
+                
                 Comment.deleteMany({postId: postid}) 
                         .exec((err)=>{
                             if(err) callback(err)

@@ -48,10 +48,10 @@ function MobileNoticeBoard(props) {
             ]}
           >
             <List.Item.Meta
-              title={<a style={{fontWeight:'bolder'}} onClick={()=>clickHandler(item._id)} href={`community/${item._id}`}>
+              title={<a style={{fontWeight:'bolder' , fontFamily : 'Noto Sans'}} onClick={()=>clickHandler(item._id)} href={`community/${item._id}`}>
                         <span>{item.title}</span>
-                        &nbsp;
-                    </a>}
+                       
+                     </a>}
               description={item.writer.nickname+' | '+moment(item.createdAt).format("YYYY-MM-D")+' | 조회수:'+item.view+' | 추천:'+item.like}
             />
           </List.Item>

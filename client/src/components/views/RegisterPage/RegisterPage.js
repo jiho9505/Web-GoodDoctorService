@@ -94,7 +94,7 @@ function RegisterPage(props) {
                 message.success("회원가입 성공!")
                 setTimeout(() => {
                   props.history.push('/login')
-                }, 3000);
+                }, 1000);
               
             } else {
         

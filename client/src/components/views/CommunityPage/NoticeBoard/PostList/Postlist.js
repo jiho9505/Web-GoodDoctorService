@@ -95,7 +95,7 @@ function Postlist(props) {
                 
                         setTimeout(() => {
                             props.history.push('/community')
-                        }, 2000)
+                        }, 1000)
                     } else {
                         alert('글을 게시하는데 실패했습니다.')
                     }

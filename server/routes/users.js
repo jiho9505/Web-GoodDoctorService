@@ -228,11 +228,52 @@ router.post("/remove", (req, res) => {
                         })
                     },
                     function(callback){
-                        Comment.deleteMany({writer : user._id}) 
-                        .exec((err)=>{
-                            if(err) callback(err)
-                            callback(null)
-                        })
+                        Comment.find({writer : user._id})
+                                .exec((err,results) => {
+                                    if(err) callback(err)
+                                    
+                                
+                                    results.forEach(resultInfo=>{
+                                        if(resultInfo.responseTo){
+                                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
+                                                    (err)=> {
+                                                        if(err) callback(err)
+                                                })
+                                            Comment.deleteOne({_id : resultInfo._id}) 
+                                                .exec((err)=>{
+                                                    if(err) callback(err)
+                        
+                                                })
+                                        }
+                                        
+                                        else{
+                                            Comment.find({ responseTo : resultInfo._id})
+                                                    .exec((err,comlength)=>{
+                                                    let count = (comlength.length * -1) - 1;
+                                                    if(err) callback(err)
+
+                                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
+                                                    (err)=> {
+                                                        if(err) callback(err)
+                                                })
+                                            Comment.deleteOne({_id : resultInfo._id}) 
+                                                .exec((err)=>{
+                                                    if(err) callback(err)
+                        
+                                                })
+                                            Comment.deleteMany({responseTo : resultInfo._id}) 
+                                                .exec((err)=>{
+                                                    if(err) callback(err)
+                                                })                                                
+                                            })
+                                        }
+                                    })
+
+                                    
+                                    callback(null)
+                                })        
+                                
+                                                        
                     },
                     function(callback){
                         Like.deleteMany({userId : user._id}) 
@@ -247,18 +288,11 @@ router.post("/remove", (req, res) => {
                                if(err) callback(err)
                                callback(null)
                         })
-                    },
-                    function(callback){
-                        Comment.deleteMany({responseTo : user._id}) 
-                        .exec((err)=>{
-                            if(err) callback(err)
-                            callback(null)
-                                                                })
                     }
     
                     ],
     
-                    function(err,results){
+                    function(err){
                         if(err) return res.json({success: false, message:"Error 발생.."})
                         return res.json({success: true})
     });
@@ -269,3 +303,8 @@ router.post("/remove", (req, res) => {
              
 
 module.exports = router;
+/*
+                        
+                       */
+/*
+                                         */     

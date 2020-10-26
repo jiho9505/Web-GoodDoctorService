@@ -30,7 +30,8 @@ function NoticeBoard(props) {
           nickname: list.writer.nickname,
           view: list.view,
           like: list.like,
-          _id: list._id
+          _id: list._id,
+          comCount: list.commentCount
         } )
         
     })
@@ -81,7 +82,12 @@ function NoticeBoard(props) {
           width: 480,
           align: 'center',
           render: (text,record) => (
-            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}</a>
+            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}
+              { record.comCount > 0 && 
+                <span style={{color: 'red'}}>
+                  {' '+'['+record.comCount+']'}
+                </span> }
+            </a>
           )
         },
         {
