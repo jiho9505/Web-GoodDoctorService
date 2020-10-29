@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
    
     nickname: {
         type:String,
-        maxlength:10
+        maxlength:8
     },
     email: {
         type:String,

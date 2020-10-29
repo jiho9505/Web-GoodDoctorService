@@ -8,6 +8,16 @@
   background-color: white;
 }
 
+#components-dropdown-demo-arrow .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+.ant-row-rtl #components-dropdown-demo-arrow .ant-btn {
+  margin-right: 0;
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+
 .menu__logo {
   width: 150px;
   float: left;
@@ -47,6 +57,16 @@
 
 .menu__container .menu_rigth {
   float: right;
+}
+
+.menu__container .menu_rigth_bell{
+  float: right;
+}
+
+.bell{
+  font-size:20px;
+  margin-top:20px;
+  margin-right:25px;
 }
 
 .menu__mobile-button {
@@ -94,5 +114,9 @@
     padding: 10px 20px;
   }
 
-
+  .bell{
+    font-size:20px;
+    margin-top:9px;
+    margin-right:20px;
+  }
 }

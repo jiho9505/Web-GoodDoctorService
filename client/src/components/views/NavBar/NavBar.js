@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
+import Alarm from './Sections/Alarm';
 import { Drawer, Button, Icon } from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 import './Sections/Navbar.css';
+import axios from 'axios'
 
 function NavBar() {
+  
+  const [alarmInfo, setalarmInfo] = useState([])
+
+  useEffect(() => {
+    let body = {
+      userId : localStorage.getItem('userId')
+    }
+
+    axios.post('/api/alarm/', body)
+         .then(response => {
+           if(response.data.success){
+              setalarmInfo(response.data.result)
+           }
+           else{
+              alert('알림 기능 Error 발생')
+           }
+         })    
+  }, [])
+  
+  
   const [visible, setVisible] = useState(false)
 
   const showDrawer = () => {
@@ -27,9 +49,11 @@ function NavBar() {
         <div className="menu_left">
           <LeftMenu mode="horizontal" />
         </div>
-        <div className="menu_rigth">
+        
+        <div className="menu_rigth" >
           <RightMenu mode="horizontal" />
         </div>
+
         <Button
           className="menu__mobile-button"
           type="primary"
@@ -37,6 +61,11 @@ function NavBar() {
         >
           <Icon type="align-right" />
         </Button>
+
+        <div className="menu_rigth_bell" >    
+          <Alarm mode="horizontal" info={alarmInfo}/>
+        </div>
+
         <Drawer
           title="Find Good Doctors"
           placement="right"

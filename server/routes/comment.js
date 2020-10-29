@@ -3,7 +3,7 @@ const router = express.Router();
 const { Comment } = require("../models/Comment");
 const { Alert } = require("../models/Alert");
 const { Board } = require("../models/Board");
-
+const { Alarm } = require("../models/Alarm");
 
 router.get("/", (req, res) => {
 
@@ -23,10 +23,45 @@ router.post("/", (req, res) => {
 
     comment.save((err, comment) => {
         if (err) return res.json({ success: false, err })
-
+        console.log(comment)
+  
         Comment.findOne({ '_id': comment._id })
+            .populate('postId')
             .populate('writer')
             .exec((err, result) => {
+                if(err) return res.json({ success: false, err })
+
+                console.log(result)
+                
+                if(result.responseTo)
+                {
+                    let variables = {  
+                        userId : result.postId.writer,
+                        postId : result.postId._id,
+                        toWhom : result.writer,
+                        choice : true
+                    }
+                    const alarm = new Alarm(variables)
+                    alarm.save((err,doc) => {
+                        if(err) return res.json({ success: false, err })
+                        console.log(doc)
+                    })
+                }
+                else{
+                    let variables = {  
+                        userId : result.postId.writer,
+                        postId : result.postId._id,
+                        toWhom : result.writer,
+                    }
+                    const alarm = new Alarm(variables)
+                    alarm.save((err,doc) => {
+                        if(err) return res.json({ success: false, err })
+                        console.log(doc)
+                     })
+                }
+              
+
+                
 
                 Board.findOneAndUpdate({_id : result.postId},{ $inc: { "commentCount": 1 } },
                         (err)=> {                         
