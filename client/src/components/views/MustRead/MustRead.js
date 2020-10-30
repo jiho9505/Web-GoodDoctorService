@@ -19,8 +19,10 @@ function MustRead() {
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>명의 목록 기준</Title>
             <p>1.네이버에서 회원 수 많은 카페들의 추천 병원(90%)</p>
-            <p>2.EBS 명의에 출연하신 분들(7%)</p>
+            <p>2.EBS 명의에 출연하신 분들(10%)</p>
+            {/*
             <p>3.기타-네이버 검색하면서 수집했던 분들(3%)</p>
+            */}
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>사용법</Title>
             <p>맵 아래의 리스트의 <span style={{color:'orange'}}>병원명을 클릭</span> 할 시 해당 병원의 <span style={{color:'orange'}}>위치로 이동</span> 합니다</p>

@@ -4,6 +4,7 @@ const { Comment } = require("../models/Comment");
 const { Alert } = require("../models/Alert");
 const { Board } = require("../models/Board");
 const { Alarm } = require("../models/Alarm");
+const { User } = require("../models/User");
 
 router.get("/", (req, res) => {
 
@@ -23,28 +24,31 @@ router.post("/", (req, res) => {
 
     comment.save((err, comment) => {
         if (err) return res.json({ success: false, err })
-        console.log(comment)
   
         Comment.findOne({ '_id': comment._id })
             .populate('postId')
             .populate('writer')
             .exec((err, result) => {
                 if(err) return res.json({ success: false, err })
-
-                console.log(result)
-                
+    
                 if(result.responseTo)
                 {
-                    let variables = {  
-                        userId : result.postId.writer,
-                        postId : result.postId._id,
-                        toWhom : result.writer,
-                        choice : true
-                    }
-                    const alarm = new Alarm(variables)
-                    alarm.save((err,doc) => {
-                        if(err) return res.json({ success: false, err })
-                        console.log(doc)
+                    Comment.findOne({ _id: result.responseTo })
+                       .populate('writer')
+                       .exec((err, results) => {
+                            if(err) return res.json({ success: false, err })
+                            let variables = {  
+                                userId : results.writer,
+                                postId : result.postId._id,
+                                toWhom : result.writer,
+                                choice : true
+                               }
+                            if(results.writer.nickname !== result.writer.nickname){
+                                const alarm = new Alarm(variables)
+                                            alarm.save((err) => {
+                                                if(err) return res.json({ success: false, err })
+                                            })
+                            }                  
                     })
                 }
                 else{
@@ -53,11 +57,18 @@ router.post("/", (req, res) => {
                         postId : result.postId._id,
                         toWhom : result.writer,
                     }
-                    const alarm = new Alarm(variables)
-                    alarm.save((err,doc) => {
-                        if(err) return res.json({ success: false, err })
-                        console.log(doc)
-                     })
+                    
+                    User.findOne({_id:result.postId.writer})
+                        .exec((err,userInfo)=>{
+                            if(err) return res.json({ success: false, err })
+                            if(userInfo.nickname !== result.writer.nickname){
+                                const alarm = new Alarm(variables)
+                                alarm.save((err) => {
+                                    if(err) return res.json({ success: false, err })
+                                })
+                                    }
+                                })
+     
                 }
               
 

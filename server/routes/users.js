@@ -7,6 +7,7 @@ const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
 const { Like } = require("../models/Like")
 const { Comment } = require("../models/Comment")
+const { Alarm } = require("../models/Alarm")
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const config = require('../config/dev')
@@ -277,6 +278,13 @@ router.post("/remove", (req, res) => {
                     },
                     function(callback){
                         Like.deleteMany({userId : user._id}) 
+                        .exec((err)=>{
+                               if(err) callback(err)
+                               callback(null)
+                        })
+                    },
+                    function(callback){
+                        Alarm.deleteMany({userId : user._id}) 
                         .exec((err)=>{
                                if(err) callback(err)
                                callback(null)

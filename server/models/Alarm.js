@@ -10,10 +10,6 @@ const alarmSchema = mongoose.Schema({
        type: Schema.Types.ObjectId,
        ref: 'Board'
    },
-   commentId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'  
-   },
    toWhom: {
         type: Schema.Types.ObjectId,
         ref: 'User'
