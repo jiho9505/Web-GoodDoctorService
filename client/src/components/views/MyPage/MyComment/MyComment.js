@@ -22,7 +22,7 @@ function MyComment(props) {
         
     })
     setDatas(array)
-    console.log(array)
+  
   }
 
   },[props.list])

@@ -55,7 +55,7 @@ function Postlist(props) {
     const submitHandler = (e) => {
         
         e.preventDefault();
-        console.log(props)
+        
         if (!PostTitle || !Description || !ChooseBoard) {
             return alert("게시판 선택,제목,내용 부분을 입력했는지 확인해주세요.")
         }

@@ -76,7 +76,6 @@ router.get('/', (req, res) => {
             .exec((err,result)=>{
                     
                 if(err)  return res.json({ success: false ,err })
-                if(result.length === 0) return res.json({ success: false })
                 return res.status(200).json({ success: true, result })
                 })
             

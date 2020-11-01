@@ -3,8 +3,8 @@ import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
 import Alarm from './Sections/Alarm';
 import { Drawer, Button, Icon } from 'antd';
-import {PlusCircleOutlined } from '@ant-design/icons';
 import './Sections/Navbar.css';
+import logo from './Title.PNG';
 
 function NavBar() {
   const [visible, setVisible] = useState(false)
@@ -19,9 +19,10 @@ function NavBar() {
 
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
-      <div className="menu__logo" style={{width: '200px'}} >
-        <PlusCircleOutlined style={{fontSize:'20px',color:"#ffa940",paddingTop:'3px',marginTop:'5px'}}/>
-        <a style={{fontSize : '20px', fontFamily : 'Noto Sans' , color:'#ffa940' , paddingLeft:'8px'}} href="/">숨은 명의 찾기</a>
+      <div>
+        <a href="/">
+          <img  className='logoimg' src={logo} />
+        </a>
         
       </div>
       <div className="menu__container">

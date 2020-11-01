@@ -25,7 +25,11 @@ function Comments(props) {
             postId: props.postId
         }
 
-        axios.post('/api/comment', variables)
+        if(Comment.length === 0){
+            alert('1글자 이상 입력을 해주셔야 등록이 가능합니다')
+        }
+        else{
+            axios.post('/api/comment', variables)
             .then(response => {
                 if (response.data.success) {
                     setComment("")
@@ -34,6 +38,8 @@ function Comments(props) {
                     alert('댓글 저장 실패!')
                 }
             })
+        }
+ 
     }
 
     return (

@@ -3,20 +3,8 @@ import { withRouter } from "react-router-dom";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Input, Button } from 'antd';
-import { ExclamationCircleOutlined} from '@ant-design/icons';
 import axios from 'axios'
 
-
-const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 8 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 },
-    },
-  };
   
 const tailFormItemLayout = {
     wrapperCol: {

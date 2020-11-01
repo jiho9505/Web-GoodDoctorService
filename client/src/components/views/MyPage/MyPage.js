@@ -48,7 +48,7 @@ function MyPage() {
             .then(response => { 
                 if(response.data.success){
                 setcomment(response.data.CommentInfo)
-                console.log(response.data.CommentInfo)
+               
                 }
                 else{
                     alert('댓글 정보를 가져오는데 실패하였습니다')

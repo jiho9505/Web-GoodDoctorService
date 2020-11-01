@@ -76,7 +76,7 @@ function MobileAlertList() {
               title={<a onClick={()=>clickHandler(item.postId._id)} href={`community/${item.postId._id}`}>
                         <span style={{color:'red'}}>[{item.commentId ? '댓글' : '게시판'}-신고]</span>
                         <span style={{fontWeight:'bolder'}}>{' '+item.contents}</span>
-                        {console.log(item)}
+                       
                         
                     </a>}
               description={'신고자명 : '+item.userId.nickname+' | '+moment(item.createdAt).format("YYYY-MM-D")}

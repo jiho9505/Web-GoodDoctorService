@@ -269,7 +269,8 @@ router.post("/remove", (req, res) => {
                                             })
                                         }
                                     })
-
+                                    // deleteMany가 너무 많은 일을 하면 callback(null)이 먼저 발생할듯?
+                                    // 시스템엔 영향은 없긴 한데...
                                     
                                     callback(null)
                                 })        
@@ -311,8 +312,3 @@ router.post("/remove", (req, res) => {
              
 
 module.exports = router;
-/*
-                        
-                       */
-/*
-                                         */     

@@ -6,6 +6,7 @@ import axios from 'axios'
 function NoticeBoard(props) {
   const [Datas, setDatas] = useState([])
 
+
   useEffect(() => {
     let array = []
     if(props.list && props.list.length>0){
@@ -50,6 +51,7 @@ function NoticeBoard(props) {
                }
              })
       }
+
       const columns = [
         {
           title: '구분',
@@ -131,12 +133,14 @@ function NoticeBoard(props) {
     return (
       
         <div>
+          
           {props.list && props.list.length>0 ?
             <Table dataSource={Datas} columns={columns} pagination={{defaultPagesize : 15, Pagesize: 15}}  size='small' bordered={true} />
         : <div>
             <Empty/>
             <br/><br/>
           </div>}
+
         </div>
     )
 }

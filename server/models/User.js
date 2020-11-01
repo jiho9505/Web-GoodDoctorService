@@ -40,7 +40,7 @@ userSchema.pre('save', function( next ) {
     var user = this;
     
     if(user.isModified('password')){    
-        // console.log('password changed')
+        
         bcrypt.genSalt(saltRounds, function(err, salt){
             if(err) return next(err);
     
@@ -88,7 +88,7 @@ userSchema.statics.findByToken = function (token, cb) {
 
 userSchema.methods.updateTokenExp = function(cb) {
     var user = this;
-    var oneHour = moment().add(1, 'hour').valueOf();
+    var oneHour = moment().add(24, 'hour').valueOf();
 
     user.tokenExp = oneHour;
     user.save(function (err, user){

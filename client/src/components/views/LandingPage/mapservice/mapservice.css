@@ -67,3 +67,10 @@
   
   }
 }
+@media (max-width: 290px) {
+  #maps-getting-started-controlled{
+    width: 220px;
+    height: 200px;
+  
+  }
+}

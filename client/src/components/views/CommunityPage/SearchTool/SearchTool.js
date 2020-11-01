@@ -8,7 +8,7 @@ function SearchTool(props) {
         
         const onChangeSearch = (value) => {
             props.refreshFunction(value)
-            console.log(value)
+          
         }
 
         return (

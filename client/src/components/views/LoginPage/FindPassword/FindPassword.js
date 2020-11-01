@@ -28,7 +28,7 @@ function FindPassword(props) {
           };
           axios.post('/api/users/findpassword',dataToSubmit)
                .then(response => {
-                 console.log(response.data)
+               
                  if(!response.data.success){
                    setFormErrorMessage(response.data.message)
                   setTimeout(() => {

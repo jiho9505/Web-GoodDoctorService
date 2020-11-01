@@ -25,13 +25,14 @@ function MustRead() {
             */}
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>사용법</Title>
+            <p>수술 할 정도가 아니면 대학병원보단 일반병원 선택 추천 </p>
             <p>맵 아래의 리스트의 <span style={{color:'orange'}}>병원명을 클릭</span> 할 시 해당 병원의 <span style={{color:'orange'}}>위치로 이동</span> 합니다</p>
             <p>리스트의 이름 옆에 <span style={{color:'orange'}}>특이사항을 클릭</span> 할 시 해당 병원의 <span style={{color:'orange'}}>상세 정보</span> 및 더 상세한 정보를 볼 수 있는 <span style={{color:'orange'}}>카페링크</span>가 달려있습니다.</p>
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>기타</Title>
             <p>-버그는 맨 아래 이메일로 문의주세요.</p>
             <p>-해당 의사분의 불평이 메일로 계속 올 시 수정할 것 </p>
-            <p>-galaxy fold는 추후에 호환이 되도록 업데이트할 것</p>
+            
 
             
             

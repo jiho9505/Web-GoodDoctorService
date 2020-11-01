@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from 'react'
-import { Drawer, List, Avatar, Divider, Col, Row , message} from 'antd';
+import React, {useState} from 'react'
+import { Drawer, List, Avatar, Divider, Col, Row , message , Button} from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom"
 
 function HospitalList(props) {
-    useEffect(() => {
-        let newlist = []
-        props.test && props.test.map((test) => {
-            newlist.push(test)
-        })
-        setlist(newlist)
-    }, [])
-
-    const [list, setlist] = useState([])
+  
+    const list = props.test
     const [visible, setvisible] = useState(false)
     const [name, setname] = useState("")
-    
+    const [doctor, setdoctor] = useState("")
+    const [location, setlocation] = useState("")
+    const [part, setpart] = useState("")
+    const [description, setdescription] = useState("")
+    const [hospitalUrl, sethospitalUrl] = useState("")
+    const [cafe, setcafe] = useState("")
+    const [cafeName, setcafeName] = useState("")
+
     const DescriptionItem = ({ title, content }) => (
         <div className="site-description-item-profile-wrapper">
           <p className="site-description-item-profile-p-label">{title}:</p>
@@ -27,6 +27,13 @@ function HospitalList(props) {
         if(props.user.userData._id){
             setvisible(true)
             setname(item.name)
+            setdoctor(item.doctor)
+            setlocation(item.location)
+            setpart(item.part)
+            setdescription(item.descripiton)
+            sethospitalUrl(item.hospital)
+            setcafe(item.cafe)
+            setcafeName(item.cafeName)
         }
         else{
           message.config({
@@ -88,87 +95,48 @@ function HospitalList(props) {
         <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
           {name}
         </p>
-        <p className="site-description-item-profile-p">Personal</p>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Full Name" content="Lily" />
+            <DescriptionItem title="의사" content={doctor} />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="Account" content="AntDesign@example.com" />
+            <DescriptionItem title="부위" content={part} />
           </Col>
         </Row>
         <Row>
-          <Col span={12}>
-            <DescriptionItem title="City" content="HangZhou" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Country" content="China🇨🇳" />
+        <Col span={24}>
+            <DescriptionItem title="위치" content={location} />
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="Birthday" content="February 2,1900" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Website" content="-" />
+        <Row span={24}>
+          <Col>
+            <DescriptionItem title="특이사항" content={description} />
           </Col>
         </Row>
-        <Row>
-          <Col span={24}>
-            <DescriptionItem
-              title="Message"
-              content="Make things as simple as possible but no simpler."
-            />
+        <Row span={24}>
+          <Col>
+            <DescriptionItem title="병원홈페이지" content={<a target='_blank' href={hospitalUrl}><Button>이동하기</Button></a>} />
           </Col>
         </Row>
         <Divider />
-        <p className="site-description-item-profile-p">Company</p>
+        <p className="site-description-item-profile-p">출처 카페</p>
         <Row>
-          <Col span={12}>
-            <DescriptionItem title="Position" content="Programmer" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Responsibilities" content="Coding" />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="Department" content="XTech" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Supervisor" content={<a>Lin</a>} />
+          <Col span={24}>
+            <p>더 많은 정보를 보길 원하면 해당 카페 방문!</p>
           </Col>
         </Row>
         <Row>
           <Col span={24}>
-            <DescriptionItem
-              title="Skills"
-              content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-            />
-          </Col>
-        </Row>
-        <Divider />
-        <p className="site-description-item-profile-p">Contacts</p>
-        <Row>
-          <Col span={12}>
-            <DescriptionItem title="Email" content="AntDesign@example.com" />
-          </Col>
-          <Col span={12}>
-            <DescriptionItem title="Phone Number" content="+86 181 0000 0000" />
+            <DescriptionItem title="카페이름" content={cafeName} />
           </Col>
         </Row>
         <Row>
           <Col span={24}>
-            <DescriptionItem
-              title="Github"
-              content={
-                <a href="http://github.com/ant-design/ant-design/">
-                  github.com/ant-design/ant-design/
-                </a>
-              }
-            />
+            <DescriptionItem title="카페홈페이지" content={<a target='_blank'  href={cafe}><Button>이동하기</Button></a>} />
           </Col>
         </Row>
+        
+       
       </Drawer>
     </>
   )}

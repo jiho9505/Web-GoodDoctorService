@@ -8,6 +8,7 @@ import Notification from './Notification/Notification'
 import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
 
+
 const list = [{
   _id : 0,
   name : '전체'
@@ -33,14 +34,14 @@ function  CommunityPage() {
     const [MobileBoard, setMobileBoard] = useState([])
     const [SearchTerms, setSearchTerms] = useState("")
     const [Category, setCategory] = useState(0)
-
+    
     useEffect(() => {
     
     Axios.get('/api/board')
          .then(response => {
            if(response.data.success){
               setBoard(response.data.result)
-              console.log(response.data.result)
+             
             }
             else{
               alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -53,16 +54,14 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.array)
+            
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
            }
          }
        )
-         
-      
-          
+  
   }, [])
 
   const onLoadMore = () => {
@@ -73,7 +72,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard([...MobileBoard,...response.data.result])
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+      
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -92,7 +91,7 @@ function  CommunityPage() {
          .then(response => {
             if(response.data.success){
               setBoard(response.data.result)
-              console.log(response.data.result)
+            
             }
             else{
               alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -105,7 +104,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+          
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -126,7 +125,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+       
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -143,7 +142,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+           
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -160,7 +159,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log('곰',response.data.result)
+           
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -177,7 +176,7 @@ function  CommunityPage() {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-             console.log(response.data.result)
+        
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
@@ -227,7 +226,7 @@ function  CommunityPage() {
             <div className='spacing'></div>
             <div className='spacing'></div>
             <SearchTool refreshFunction={updateSearchTerms}/>
-
+            
         </div>
     )
 }

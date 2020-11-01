@@ -121,7 +121,7 @@ function AlertList(props) {
       
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          
         },
         getCheckboxProps: record => ({
           name: record.name,

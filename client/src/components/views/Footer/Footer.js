@@ -11,7 +11,7 @@ function Footer() {
            <div>
                <span>Copyright 2020 findgooddoctors.com All Rights Reserved.</span> 
                &nbsp;
-               <span className='up_down'>Since 2020.XX.XX</span>
+               <span className='up_down'>Since 2020.11.03</span>
             </div>
            <div>
                <span>문의 사항 : findgooddoctors@naver.com</span>

@@ -10,17 +10,26 @@ const hospitalSchema = mongoose.Schema({
     location: {
         type: String
     },
+    location_: {
+        type: Number
+    },
     part: {
         type: String
     },
-    description : {
+    part_: {
+        type: Number
+    },
+    descripiton : {
+        type: String
+    },
+    hospital : {
         type: String
     },
     cafe : {
-        type: String,
+        type: String
     },
     cafeName : {
-        type: String,
+        type: String
     },
     lat :{
         type: Number
