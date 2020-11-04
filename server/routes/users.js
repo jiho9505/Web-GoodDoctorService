@@ -11,7 +11,7 @@ const { Comment } = require("../models/Comment")
 const { Alarm } = require("../models/Alarm")
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const config = require('../config/dev')
+const config = require('../config/key')
 const async = require('async');
 
 //=================================
