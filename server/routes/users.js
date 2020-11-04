@@ -143,7 +143,7 @@ router.post("/findpassword", (req, res) => {
               <p>(만약 실수로 변경신청을 하셨다면 이 이메일을 무시해 주세요)</p>
               <p>본인이 맞으시다면 비밀번호 초기화를 위해서 아래의 '버튼'을 클릭하여 주세요.</p>
               <br></br>
-              <a href=http://localhost:3000/reset/${token} || findgooddoctors.herokuapp.com:3000/reset/${token}><button>비밀번호 초기화</button></a></div>`
+              <a href=http://localhost:3000/reset/${token} || heroku-findgooddoctors.herokuapp.com:3000/reset/${token}><button>비밀번호 초기화</button></a></div>`
             
             };
             transporter.sendMail(emailOptions, res); //전송
