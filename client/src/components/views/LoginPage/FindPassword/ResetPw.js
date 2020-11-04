@@ -26,7 +26,7 @@ function ResetPw(props) {
   let body =  {
     token : tokenId
   }
-
+/*
   useEffect(()=>{
     axios.post('/api/tokenauth',body)
          .then(response => {
@@ -35,7 +35,7 @@ function ResetPw(props) {
            }
          })
   },[])
-    
+  */  
 
   return (
    

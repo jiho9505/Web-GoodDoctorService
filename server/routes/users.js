@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
-const { Tokenauth } = require("../models/Tokenauth")
+
+//const { Tokenauth } = require("../models/Tokenauth")
 const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
 const { Like } = require("../models/Like")
@@ -103,7 +104,7 @@ router.post("/findpassword", (req, res) => {
             userId: user._id,
             //ttl: 300000 // ttl 값 설정 (5분)
         };
-        
+        /*
         const tokenauth = new Tokenauth(data)
         
         tokenauth.save((err,doc)=>{
@@ -117,7 +118,7 @@ router.post("/findpassword", (req, res) => {
                 success: true
             })
         })
-        
+        */
         const transporter = nodemailer.createTransport({
             service: 'Naver',
             host: 'smtp.naver.com',

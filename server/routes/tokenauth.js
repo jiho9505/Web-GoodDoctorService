@@ -1,3 +1,4 @@
+{/*
 const express = require('express');
 const router = express.Router();
 const { Tokenauth } = require("../models/Tokenauth");
@@ -17,3 +18,4 @@ router.post("/", (req, res) => {
 
 
 module.exports = router;
+*/}
