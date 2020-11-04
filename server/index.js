@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/hospital', require('./routes/hospital'));
 app.use('/api/board', require('./routes/board'));
-//app.use('/api/tokenauth', require('./routes/tokenauth'));
+app.use('/api/tokenauth', require('./routes/tokenauth'));
 app.use('/api/comment', require('./routes/comment'));
 app.use('/api/like', require('./routes/like'));
 app.use('/api/alert', require('./routes/alert'));
