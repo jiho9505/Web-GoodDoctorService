@@ -142,7 +142,7 @@ function DetailBoardPage(props) {
                     {PostInfo.images.map((image, index) => (
                         <div key={index}>
                             <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
-                                src={`http://localhost:5000/${image}`|| `heroku-findgooddoctors.herokuapp.com:5000/${image}`} alt={index}
+                                src={`http://localhost:5000/${image}`|| `https://findgooddoctors.co.kr/${image}`} alt={index}
                             />
                             
                         </div>
