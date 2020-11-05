@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const target = 'http://localhost:5000'||'heroku-findgooddoctors.herokuapp.com:5000'
+const target = 'http://localhost:5000'||'https://findgooddoctors.co.kr'
 module.exports = function (app) {
     app.use(
         '/api',
