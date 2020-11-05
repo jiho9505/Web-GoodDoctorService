@@ -20,6 +20,14 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>숨은명의찾기</title>
+    <script>
+      const domain1 = "www.findgooddoctors.co.kr";
+      const domain2 = "findgooddoctors.co.kr";
+      const host = window.location.host;
+      if ((domain === host || domain2 === host) && (window.location.protocol !== "https:")){
+        window.location.href = "https://www.findgooddoctors.co.kr";
+      }
+      </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
