@@ -129,7 +129,7 @@ function DetailBoardPage(props) {
                 <div style={{border : '1px solid #eee'}}></div>
                 <br />
             
-                <TextArea  value={PostInfo.description} style={{height:400}} />
+                <TextArea  value={PostInfo.description} style={{height:'400px' , overflowY: 'auto' }} />
         
                 <br />
                 <br />
@@ -142,7 +142,7 @@ function DetailBoardPage(props) {
                     {PostInfo.images.map((image, index) => (
                         <div key={index}>
                             <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
-                                src={`http://localhost:5000/${image}`|| `https://findgooddoctors.co.kr/${image}`} alt={index}
+                                src={image} alt={index}
                             />
                             
                         </div>

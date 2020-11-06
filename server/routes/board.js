@@ -1,19 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const multerS3 = require('multer-s3')
+const AWS = require("aws-sdk");
+const async = require('async');
+const config = require('../config/key')
 const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
 const { Like } = require("../models/Like")
 const { Comment } = require("../models/Comment")
-const async = require('async');
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'storeImages/')
+const s3 = new AWS.S3({ 
+    accessKeyId: config.accessKeyId,
+    secretAccessKey: config.secretAccessKey,
+    region: config.region
+});
+
+const storage = multerS3({ 
+    s3: s3,
+    bucket: 'fgd-storeimage',
+    contentType: multerS3.AUTO_CONTENT_TYPE, 
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+        cb(null, { fieldName: file.fieldname }) 
     },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}_${file.originalname}`)
-    }
+    key: function (req, file, cb) { 
+        cb(null, `storeImages/${Date.now()}_${file.originalname}`)
+    },
 })
 
 var upload = multer({ storage: storage }).single("file")
@@ -25,7 +38,7 @@ router.post('/image', (req, res) => {
             return res.json({ success: false, err })
         }
         
-        return res.json({ success: true, filePath: res.req.file.path })
+        return res.json({ success: true, filePath: res.req.file.location })
     })
 
 })
