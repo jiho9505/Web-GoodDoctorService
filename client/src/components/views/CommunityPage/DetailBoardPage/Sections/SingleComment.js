@@ -53,6 +53,13 @@ function SingleComment(props) {
         
     ]
 
+    const actions_child = [
+        <div style={{ fontSize : '13px' , color : '#979797'}}>
+            <span>{moment(props.comment.createdAt).format("YYYY-MM-D") +' '+ moment(props.comment.createdAt).format('HH:mm')}</span>
+        </div>
+        
+    ]
+
     const deleteHandler = () => {
         if(window.confirm('이 댓글을 삭제하시겠습니까?')){        
             Axios.delete(`/api/comment?id=${props.comment._id}`)
@@ -102,6 +109,7 @@ function SingleComment(props) {
         <div>
             
             {props.child ? <Comment style={{padding:'0px'}}
+                actions={actions_child}
                 author={writer.nickname === props.comment.writer.nickname ? 
                     <span>
                     {props.comment.writer.nickname}
