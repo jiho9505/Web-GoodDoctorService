@@ -8,11 +8,17 @@
   </a>
 </p>
 
-> 환자들의 명의를 선택할 권리를 넓히기 위해 만들었다. 명의 기준은 EBS 명의 출연 혹은 네이버 회원수 많은 카페 기준 추천 명의 리스트 이용 
+## 프로젝트 개발내용
+> 프론트는 REACT 이용 / 백은 EXPRESS 이용 / DB는 MONGO DB 이용
+> CSR 방식
 
-### 🏠 [Homepage](https://github.com/jiho9505/project#README)
+## 프로젝트 개발동기
+> 환자들의 명의를 선택할 권리를 넓히기 위해 만들었다. 
+> 명의 기준은 EBS 명의 출연 혹은 네이버 회원수 많은 카페 기준이 되었고 
+> 카페 공식 추천 명의 리스트를 이용하였다. 
+> 명의는 관절,인대,힘줄 관련된 명의들로 구성하였다.
 
-### ✨ [Demo](https://www.findgooddoctors.co.kr/)
+### 🏠 [Homepage](https://www.findgooddoctors.co.kr/)
 
 ## Install
 
@@ -38,9 +44,6 @@ npm run dev
 
 * Github: [@jiho9505](https://github.com/jiho9505)
 
-## Show your support
-
-Give a ⭐️ if this project helped you!
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
