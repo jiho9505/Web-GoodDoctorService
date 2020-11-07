@@ -39,6 +39,7 @@ function MyPage() {
             .then(response => { 
                 if(response.data.success){
                 setboard(response.data.boardInfo)
+                console.log(response.data.boardInfo)
                 }
                 else{
                     alert('글 정보를 가져오는데 실패하였습니다')

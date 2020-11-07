@@ -32,7 +32,8 @@ function MyPost(props) {
           date: moment(list.createdAt).format("YYYY-MM-D"),
           view: list.view,
           like: list.like,
-          _id: list._id
+          _id: list._id,
+          comCount: list.commentCount
         } )
         
     })
