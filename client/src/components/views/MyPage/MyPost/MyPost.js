@@ -81,7 +81,12 @@ function MyPost(props) {
           key: 'title',
           align: 'center',
           render: (text,record) => (
-            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}</a>
+            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}
+              { record.comCount > 0 && 
+                <span style={{color: 'red'}}>
+                  {' '+'['+record.comCount+']'}
+                </span> }
+            </a>
           )
         },
         {

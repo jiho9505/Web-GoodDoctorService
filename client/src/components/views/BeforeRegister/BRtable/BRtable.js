@@ -18,7 +18,7 @@ function BRtable() {
         list: '생년월일',
         time: '회원 탈퇴 시까지',
     },
-  ];
+  ]
       const columns = [
        
         {
@@ -48,7 +48,7 @@ function BRtable() {
   
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} pagination={false}  size='small' bordered={true} />;
+            <Table dataSource={dataSource} columns={columns} pagination={false}  size='small' bordered={true} />
         </div>
     )
 }
