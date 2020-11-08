@@ -72,7 +72,7 @@ function LoginPage(props) {
         return (
           <div className="app">
 
-            <Title level={2} style={{paddingBottom:30}}>로그인</Title>
+            <Title level={3} style={{paddingBottom:30}}>로그인</Title>
             <form onSubmit={handleSubmit} style={{ width: '350px' }}>
 
               <Form.Item required>
