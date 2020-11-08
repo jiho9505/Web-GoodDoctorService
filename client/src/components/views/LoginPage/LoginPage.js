@@ -73,7 +73,7 @@ function LoginPage(props) {
           <div className="app">
 
             <Title level={3} style={{paddingBottom:30}}>로그인</Title>
-            <Form onSubmit={handleSubmit} style={{ width: '350px' }}>
+            <form onSubmit={handleSubmit} style={{ width: '350px' }}>
 
               <Form.Item required>
                 <Input
@@ -129,7 +129,7 @@ function LoginPage(props) {
                   비밀번호 찾기
                   </a>
               </Form.Item>
-            </Form>
+            </form>
           </div>
         );
       }}

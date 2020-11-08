@@ -129,7 +129,7 @@ input.error {
 }
 
 .logo{
-  padding-top: 120px
+  padding-top: 140px
 }
 
 .hospital{
@@ -256,6 +256,9 @@ input.error {
     margin: 3rem auto;
   }
 
+  .app {
+    height: 85vh;
+  }
 
   .app_ {
     height: 70%;
@@ -395,6 +398,9 @@ input.error {
     margin: 3rem auto;
   }
 
+  .app {
+    height: 85vh
+  }
 
   .app_ {
     height: 70%;
