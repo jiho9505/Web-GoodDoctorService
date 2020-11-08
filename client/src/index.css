@@ -189,11 +189,7 @@ input.error {
   }
 
 @media (max-width: 767px) {
-  
-  .logo{
-    padding-top: 140px;
-    height: 25vh;
-  }
+ 
   .mobile_board_up{
     display: flex;
     justify-content: center;
@@ -261,7 +257,7 @@ input.error {
   }
 
   .app {
-    height: 75vh;
+    height: 600px;
   }
 
   .app_ {
@@ -403,7 +399,7 @@ input.error {
   }
 
   .app {
-    height: 85vh
+    height: 600px
   }
 
   .app_ {

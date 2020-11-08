@@ -21,7 +21,7 @@ function NavBar() {
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div>
         <a href="/">
-          <img  className='logoimg' src={logo} />
+          <img  className='logoimg' src={logo} alt='숨은명의찾기' />
         </a>
         
       </div>
