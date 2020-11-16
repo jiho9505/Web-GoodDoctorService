@@ -60,7 +60,7 @@ function LandingPage(props) {
             <br/>    
             <br/>
         <div className='center'>
-           <Row className='row' gutter={[64,64]}>
+           <Row className='row' gutter={[64,32]}>
                 <Col  lg={12} xs={24}>
                     {/* CheckBox */}
                     <CheckBox list={location} handleFilters={filters => handleFilters(filters, "location_")}/>

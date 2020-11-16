@@ -69,7 +69,8 @@ router.post("/login", (req, res) => {
 
             user.generateToken((err, user) => {
                 if (err) return res.send(err);
-                 res.cookie("w_auth", user.token , { httpOnly: true , secure: true })
+            
+                 res.cookie("w_auth", user.token , { httpOnly: true , secure: true  })
                     .status(200)
                     .json({
                         loginSuccess: true, userId: user._id

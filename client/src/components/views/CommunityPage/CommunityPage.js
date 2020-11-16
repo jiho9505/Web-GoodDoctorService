@@ -1,12 +1,13 @@
 import React , {useEffect,useState} from 'react'
-import { EditOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { EditOutlined , LoadingOutlined} from '@ant-design/icons';
+import { Button , Spin } from 'antd';
 import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
 import Notification from './Notification/Notification'
 import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
+
 
 
 const list = [{
@@ -27,6 +28,7 @@ const list = [{
 }]
 
 function  CommunityPage() {
+
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
@@ -34,6 +36,7 @@ function  CommunityPage() {
     const [MobileBoard, setMobileBoard] = useState([])
     const [SearchTerms, setSearchTerms] = useState("")
     const [Category, setCategory] = useState(0)
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     
     useEffect(() => {
     
@@ -209,10 +212,18 @@ function  CommunityPage() {
             <div className='com_spacing'></div>
             
             <div className='web_board'>
-              {Board && <NoticeBoard  list={Board}/>}
+      
+              {Board && Board.length > 0 ? <NoticeBoard  list={Board}/> : 
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', paddingBottom:'30px'}}>
+                <Spin indicator={antIcon} />
+              </div>}
             </div>
             <div className='mobile_board'>
-              {MobileBoard && <MobileNoticeBoard  list={MobileBoard}/>}
+     
+              {MobileBoard && MobileBoard.length > 0 ? <MobileNoticeBoard  list={MobileBoard}/>  : 
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: '30px'}}>
+              <Spin indicator={antIcon} />
+            </div>}
             </div>
             
             <div className='spacing'></div>

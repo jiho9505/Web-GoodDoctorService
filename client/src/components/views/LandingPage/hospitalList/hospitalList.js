@@ -1,7 +1,11 @@
-import React, {useState} from 'react'
-import { Drawer, List, Avatar, Divider, Col, Row , message , Button} from 'antd';
-import {PlusCircleOutlined } from '@ant-design/icons';
+import React, {useState , useEffect} from 'react'
+import { Drawer, List, Avatar, Divider, Col, Row , message , Button, Spin} from 'antd';
+import {PlusCircleOutlined, LoadingOutlined  } from '@ant-design/icons';
 import { withRouter } from "react-router-dom"
+
+
+
+
 
 function HospitalList(props) {
   
@@ -15,6 +19,14 @@ function HospitalList(props) {
     const [hospitalUrl, sethospitalUrl] = useState("")
     const [cafe, setcafe] = useState("")
     const [cafeName, setcafeName] = useState("")
+    const [Show, setShow] = useState(false)
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+    useEffect(() => {
+      if(list.length > 0){
+        setShow(true)
+      } 
+    }, [props.test])
 
     const DescriptionItem = ({ title, content }) => (
         <div className="site-description-item-profile-wrapper">
@@ -56,13 +68,15 @@ function HospitalList(props) {
     }
 
   return (
-    <>
+    <div> 
+      {Show ? 
       <List
         dataSource={
             list
         }
         bordered
         renderItem={item => (
+
           <List.Item
             style={{paddingLeft:'5px', paddingRight:'5px'}}
             key={item.id}
@@ -83,8 +97,13 @@ function HospitalList(props) {
               description={item.location}
             />
           </List.Item>
+          
         )}
       />
+          : 
+         <div style={{marginTop: '150px'}}>
+            <Spin indicator={antIcon} size="large" />
+         </div> }
       <Drawer        
         height={400}
         placement="top"
@@ -138,7 +157,8 @@ function HospitalList(props) {
         
        
       </Drawer>
-    </>
+ 
+    </div>
   )}
 
 export default withRouter(HospitalList)

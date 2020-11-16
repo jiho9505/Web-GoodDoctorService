@@ -3,8 +3,8 @@ import { Menu, Dropdown , Empty } from 'antd';
 import { NotificationOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import moment from 'moment';
 import axios from 'axios'
+import AlarmItem from './AlarmItem'
 
 function Alarm() {
     
@@ -29,6 +29,8 @@ function Alarm() {
                  if(response.data.success){ 
                     setalarmInfo([...alarmInfo,...response.data.result])
                     setPostSize(response.data.postSize)
+                 
+
                  }
                  else{
                     alert('알림 기능 Error 발생')
@@ -51,16 +53,8 @@ function Alarm() {
             {alarmInfo && alarmInfo.map((item,index) => (
                 
                 <Menu.Item key={index}>
-                    <a href={`/community/${item.postId._id}`}>
-                        <span style={{fontSize:'12px'}}> 
-                            '{item.toWhom.nickname}'님이 당신의 {item.choice === true ? '댓글' : '게시글'}에 댓글을 남겼습니다
-                        </span>
-                        <br/>
-                        <span style={{fontSize:'12px'}}> 
-                            {moment(item.createdAt).format("YYYY-MM-D") +' '+ moment(item.createdAt).format('LT')} 
-                        </span>
-                        <span style={{float:'right',fontSize:'12px'}}>Click !</span>  
-                    </a>        
+                    <AlarmItem item={item}/>
+                         
                 </Menu.Item>
             ))}
             {PostSize >= Limit &&
@@ -93,8 +87,10 @@ function Alarm() {
     }
 
     if (user.userData && user.userData.isAuth) {
+        
         return (
             <div className='bell'>
+                
                 <Dropdown overlay={menu} trigger={['click']} placement="bottomCenter" arrow>
                     <NotificationOutlined  onClick={clickHandler} rotate={180}/>  
                 </Dropdown>
