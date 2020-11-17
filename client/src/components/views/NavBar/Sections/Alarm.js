@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
-import { Menu, Dropdown , Empty } from 'antd';
-import { NotificationOutlined } from '@ant-design/icons';
+import { Menu, Dropdown , Empty , Spin} from 'antd';
+import { NotificationOutlined , LoadingOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import axios from 'axios'
 import AlarmItem from './AlarmItem'
+
 
 function Alarm() {
     
@@ -12,7 +13,8 @@ function Alarm() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(5)
     const [PostSize, setPostSize] = useState(0)
-
+    const [Loading, setLoading] = useState(true)
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     const user = useSelector(state => state.user)
 
     const onLoadMore = () => {
@@ -46,17 +48,23 @@ function Alarm() {
                 &nbsp;&nbsp;알림
             </div>
             <div style={{border : '1px solid #eee'}}></div>
-            {alarmInfo.length === 0 && 
-                <Menu.Item>
-                    <Empty/>
-                </Menu.Item>}
-            {alarmInfo && alarmInfo.map((item,index) => (
+            
+            {Loading ? 
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop:'50px', width:'300px'}}>
+                <Spin indicator={antIcon} />
+            </div> : 
+            alarmInfo && alarmInfo.length > 0 ? alarmInfo.map((item,index) => (
                 
                 <Menu.Item key={index}>
-                    <AlarmItem item={item}/>
-                         
+                    <AlarmItem item={item}/>     
                 </Menu.Item>
-            ))}
+            )) : 
+                <Menu.Item>
+                    <Empty/>
+                </Menu.Item> }
+            
+            
+            
             {PostSize >= Limit &&
                 <div style={{display:'flex', justifyContent:'center'}}>
                     <button onClick={onLoadMore} style={{borderRadius:'5px' , border:'0px'}}>더보기</button>
@@ -77,7 +85,7 @@ function Alarm() {
                  if(response.data.success){ 
                     setalarmInfo(response.data.result)
                     setPostSize(response.data.postSize)
-                    
+                    setLoading(false)
                  }
                  else{
                     alert('알림 기능 Error 발생')

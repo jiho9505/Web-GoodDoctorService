@@ -35,6 +35,10 @@ function App() {
         <div className='logo'>
           <Logo/>
         </div>
+        <div className='mobilelogo'>
+          <div style={{ height: '40px' }}>
+          </div>
+        </div>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
@@ -57,6 +61,7 @@ function App() {
         
       </div>
       <div className='space'></div>
+  
       <Footer />
     </Suspense>
   

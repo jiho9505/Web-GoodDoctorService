@@ -188,8 +188,18 @@ input.error {
     display: none;
   }
 
+  .mobilelogo{
+    display: none;
+  }
+
 @media (max-width: 767px) {
- 
+  .mobilelogo{
+    display: block;
+  }
+  
+  .logo{
+    display: none;
+  }
   .mobile_board_up{
     display: flex;
     justify-content: center;
@@ -332,6 +342,14 @@ input.error {
 }
 
 @media (max-width: 290px) {
+  .mobilelogo{
+    display: block;
+  }
+
+  .logo{
+    display: none;
+  }
+  
   .mobile_board_up{
     display: flex;
     justify-content: center;
