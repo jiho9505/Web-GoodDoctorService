@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
-
 const { Tokenauth } = require("../models/Tokenauth")
 const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
@@ -288,6 +287,13 @@ router.post("/remove", (req, res) => {
                     },
                     function(callback){
                         Alarm.deleteMany({userId : user._id}) 
+                        .exec((err)=>{
+                               if(err) callback(err)
+                               callback(null)
+                        })
+                    },
+                    function(callback){
+                        Alarm.deleteMany({toWhom : user._id}) 
                         .exec((err)=>{
                                if(err) callback(err)
                                callback(null)

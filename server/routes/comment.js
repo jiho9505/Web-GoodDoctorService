@@ -97,6 +97,7 @@ router.delete("/", (req, res) => {
                         })  
 
                 if(resultInfo.responseTo){
+
                     Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
                             (err)=> {
                                 if (err) return res.json({ success: false })

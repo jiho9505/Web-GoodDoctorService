@@ -4,6 +4,7 @@ const { Alert } = require("../models/Alert");
 const { Comment } = require("../models/Comment");
 const { Board } = require("../models/Board");
 const { Like } = require("../models/Like")
+const { Alarm } = require("../models/Alarm")
 const async = require('async');
 
 
@@ -115,6 +116,13 @@ router.delete("/", (req, res) => {
             function(callback){
                 
                 Comment.deleteMany({postId: postid}) 
+                        .exec((err)=>{
+                            if(err) callback(err)
+                            callback(null)
+                })
+            },
+            function(callback){
+                Alarm.deleteMany({postId: postid}) 
                         .exec((err)=>{
                             if(err) callback(err)
                             callback(null)

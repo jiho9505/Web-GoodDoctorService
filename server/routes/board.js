@@ -9,6 +9,7 @@ const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
 const { Like } = require("../models/Like")
 const { Comment } = require("../models/Comment")
+const { Alarm } = require("../models/Alarm")
 
 const s3 = new AWS.S3({ 
     accessKeyId: config.accessKeyId,
@@ -143,6 +144,13 @@ router.delete('/', (req, res) => {
         },
         function(callback){
             Comment.deleteMany({postId: postId}) 
+                    .exec((err)=>{
+                        if(err) callback(err)
+                        callback(null)
+            })
+        },
+        function(callback){
+            Alarm.deleteMany({postId: postId}) 
                     .exec((err)=>{
                         if(err) callback(err)
                         callback(null)
