@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
-import Alarm from './Sections/Alarm';
+import Alarm from './Sections/Alarm/Alarm';
 import { Drawer, Button, Icon } from 'antd';
 import './Sections/Navbar.css';
 import logo from './Title.PNG';

@@ -38,6 +38,7 @@ const tailFormItemLayout = {
   },
 };
 
+
 function RegisterPage(props) {
   const dispatch = useDispatch();
   return (
@@ -53,7 +54,12 @@ function RegisterPage(props) {
       validationSchema={Yup.object().shape({
         nickname: Yup.string()
           .max(8, '닉네임 길이 제한')
-          .required('닉네임을 입력해주세요'),
+          .min(2, '닉네임 길이 최소 2자 이상')
+          .required('닉네임을 입력해주세요')
+          .matches(
+            /^[가-힣a-zA-Z0-9]+$/,
+            "특수문자 입력은 불가능합니다"
+          ),
         email: Yup.string()
           .email('유효하지 않습니다')
           .required('E-mail을 입력해주세요'),
@@ -76,6 +82,8 @@ function RegisterPage(props) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
+          
+
 
           let dataToSubmit = {
             email: values.email,

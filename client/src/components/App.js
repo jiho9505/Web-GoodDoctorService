@@ -19,6 +19,7 @@ import Admin from "./views/Admin/Admin"
 import MustRead from "./views/MustRead/MustRead"
 import Privacy from "./views/Privacy/Privacy"
 import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
+import AdfitWebComponent from 'react-adfit-web-component'
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -61,7 +62,9 @@ function App() {
         
       </div>
       <div className='space'></div>
-  
+      <AdfitWebComponent
+             adUnit="DAN-jCvwBeZvnWTQuTOM"
+            />
       <Footer />
     </Suspense>
   
