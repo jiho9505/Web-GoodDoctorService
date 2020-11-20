@@ -192,7 +192,18 @@ input.error {
     display: none;
   }
 
+  .ad{
+    display: block;
+  }
+
+
 @media (max-width: 767px) {
+
+  .ad{
+    display: block;
+  }
+
+
   .mobilelogo{
     display: block;
   }
@@ -342,6 +353,11 @@ input.error {
 }
 
 @media (max-width: 290px) {
+
+  .ad{
+    display: none;
+  }
+
   .mobilelogo{
     display: block;
   }

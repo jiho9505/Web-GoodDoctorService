@@ -62,9 +62,17 @@ function App() {
         
       </div>
       <div className='space'></div>
-      <AdfitWebComponent
-             adUnit="DAN-jCvwBeZvnWTQuTOM"
-            />
+
+
+      <div className='ad'>
+        <AdfitWebComponent
+              adUnit="DAN-V9d7WCyIzwR4YHec"
+              />
+        <AdfitWebComponent
+              adUnit="DAN-jCvwBeZvnWTQuTOM"
+              />
+      </div>
+      
       <Footer />
     </Suspense>
   
