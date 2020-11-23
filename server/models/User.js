@@ -90,7 +90,7 @@ userSchema.statics.findByToken = function (token, cb) {
 userSchema.methods.updateTokenExp = function(cb) {
     var user = this;
     var oneHour = moment().add(24, 'hour').valueOf();
-
+    
     user.tokenExp = oneHour;
     user.save(function (err, user){
         if(err) return cb(err)

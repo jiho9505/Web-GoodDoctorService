@@ -68,7 +68,11 @@ function RemoveUser(props) {
 
                   }
                   else{
-                    alert(response.data.message)
+                    message.config({
+                        top: 100
+                      })
+                    message.warn(response.data.message)
+                    
 
                   }
                 }          

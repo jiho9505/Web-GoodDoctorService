@@ -69,7 +69,7 @@ router.post("/login", (req, res) => {
             user.generateToken((err, user) => {
                 if (err) return res.send(err);
      
-                 res.cookie("w_auth", user.token , { httpOnly: true , secure: true  })
+                 res.cookie("w_auth", user.token , { httpOnly: true ,  secure: process.env.NODE_ENV === 'production'  })
                     .status(200)
                     .json({
                         loginSuccess: true, userId: user._id
@@ -204,14 +204,21 @@ router.post("/changepwd", (req, res) => {
 
 
 router.post("/remove", (req, res) => {
-    
+
+    const min = 1000 * 60
+    const hour = min * 60
+    const hour24 = hour * 24
+
+
     User.findOne({_id : req.body._id})
         .exec((err,user)=>{
             if(err) return res.json({success: false, message:"Error 발생.."})
-
+            
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if(err) return res.json({success: false, message:"Error 발생.."})
                 if (!isMatch) return res.json({ success: false, message: "현재 비밀번호를 바르게 입력해주세요" });
+                if(Date.now() < user.createdAt.valueOf() + hour24) 
+                return res.json({ success: false, message: "가입 후 24시간 이후에 탈퇴 가능합니다" });
                 
                 async.parallel([
 
@@ -318,3 +325,168 @@ router.post("/remove", (req, res) => {
              
 
 module.exports = router;
+
+
+    /*
+    const myPromise = () => {
+         return new Promise((resolve, reject) => {
+        
+            User.findOne({_id : req.body._id})
+                .exec((err,user)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve(user)
+          
+         })
+       })}
+
+    const myPromise2 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            user.comparePassword(req.body.password, (err, isMatch) => {
+                if(err) reject(new Error("Error 발생.."))
+                if(!isMatch) reject(new Error("현재 비밀번호를 바르게 입력해주세요"))
+                if(Date.now() < user.createdAt.valueOf() + hour24) reject(new Error("가입 후 24시간 이후에 탈퇴 가능합니다"))
+                resolve(isMatch)
+          
+        })
+      })}
+
+      const myPromise3 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            User.findOneAndDelete({_id : user._id},(err)=>{
+                if(err) reject(new Error("Error 발생.."))
+                resolve()
+            })
+          
+        })
+      }
+
+      const myPromise4 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Board.deleteMany({writer : user._id})
+                    .exec((err)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve()
+        })  
+          
+        })
+      }
+
+      const myPromise5 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Like.deleteMany({userId : user._id}) 
+                    .exec((err)=>{
+                        if(err) reject(new Error("Error 발생.."))
+                        resolve()
+        })
+        })  
+          
+      }
+
+      const myPromise6 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Alarm.deleteMany({userId : user._id}) 
+                .exec((err)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve()
+                })
+          
+        })
+      }
+
+      const myPromise7 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Alarm.deleteMany({toWhom : user._id}) 
+                .exec((err)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve()
+                })
+          
+        })
+      }
+
+      const myPromise8 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Alert.deleteMany({userId : user._id}) 
+                .exec((err)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve()
+                })
+          
+        })
+      }
+
+      const myPromise9 = (user) => {
+        return new Promise((resolve, reject) => {
+       
+            Comment.find({writer : user._id})
+                    .exec((err,results) => {
+                        if(err) callback(err)
+                        
+                    
+                        results.forEach(resultInfo=>{
+                            if(resultInfo.responseTo){
+                                Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
+                                        (err)=> {
+                                            if(err) callback(err)
+                                    })
+                                Comment.deleteOne({_id : resultInfo._id}) 
+                                    .exec((err)=>{
+                                        if(err) callback(err)
+
+                                    })
+                            }
+                            
+                            else{
+                                Comment.find({ responseTo : resultInfo._id})
+                                        .exec((err,comlength)=>{
+                                        let count = (comlength.length * -1) - 1;
+                                        if(err) callback(err)
+
+                                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
+                                        (err)=> {
+                                            if(err) callback(err)
+                                    })
+                                Comment.deleteOne({_id : resultInfo._id}) 
+                                    .exec((err)=>{
+                                        if(err) callback(err)
+
+                                    })
+                                Comment.deleteMany({responseTo : resultInfo._id}) 
+                                    .exec((err)=>{
+                                        if(err) callback(err)
+                                    })                                                
+                                })
+                            }
+                        })
+                        
+                        callback(null)
+                    })        
+                    
+                        
+                        })
+                    }
+
+ 
+      const callMyPromise = async () => { 
+          
+        const result = await myPromise();
+        const result2 = await myPromise2(result);
+
+        Promise.all(myPromise3(result),myPromise4(result),
+        myPromise5(result),myPromise6(result),myPromise7(result),myPromise8(result),myPromise9(result))
+               .then()
+        
+
+        return resultblah;
+       };
+
+       callMyPromise.then
+
+*/
