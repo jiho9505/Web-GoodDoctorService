@@ -209,126 +209,7 @@ router.post("/remove", (req, res) => {
     const hour = min * 60
     const hour24 = hour * 24
 
-
-    User.findOne({_id : req.body._id})
-        .exec((err,user)=>{
-            if(err) return res.json({success: false, message:"Error 발생.."})
-            
-            user.comparePassword(req.body.password, (err, isMatch) => {
-                if(err) return res.json({success: false, message:"Error 발생.."})
-                if (!isMatch) return res.json({ success: false, message: "현재 비밀번호를 바르게 입력해주세요" });
-                if(Date.now() < user.createdAt.valueOf() + hour24) 
-                return res.json({ success: false, message: "가입 후 24시간 이후에 탈퇴 가능합니다" });
-                
-                async.parallel([
-
-                    function(callback){
-                        User.findOneAndDelete({_id : user._id},(err)=>{
-                            if(err) callback(err)
-                            callback(null)
-                        })
-                    },
-    
-                    function(callback){
-                        Board.deleteMany({writer : user._id})
-                        .exec((err)=>{
-                           if(err) callback(err)
-                           callback(null)
-                        })
-                    },
-                    function(callback){
-                        Comment.find({writer : user._id})
-                                .exec((err,results) => {
-                                    if(err) callback(err)
-                                    
-                                
-                                    results.forEach(resultInfo=>{
-                                        if(resultInfo.responseTo){
-                                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
-                                                    (err)=> {
-                                                        if(err) callback(err)
-                                                })
-                                            Comment.deleteOne({_id : resultInfo._id}) 
-                                                .exec((err)=>{
-                                                    if(err) callback(err)
-                        
-                                                })
-                                        }
-                                        
-                                        else{
-                                            Comment.find({ responseTo : resultInfo._id})
-                                                    .exec((err,comlength)=>{
-                                                    let count = (comlength.length * -1) - 1;
-                                                    if(err) callback(err)
-
-                                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
-                                                    (err)=> {
-                                                        if(err) callback(err)
-                                                })
-                                            Comment.deleteOne({_id : resultInfo._id}) 
-                                                .exec((err)=>{
-                                                    if(err) callback(err)
-                        
-                                                })
-                                            Comment.deleteMany({responseTo : resultInfo._id}) 
-                                                .exec((err)=>{
-                                                    if(err) callback(err)
-                                                })                                                
-                                            })
-                                        }
-                                    })
-                                  
-                                    callback(null)
-                                })        
-                                
-                                                        
-                    },
-                    function(callback){
-                        Like.deleteMany({userId : user._id}) 
-                        .exec((err)=>{
-                               if(err) callback(err)
-                               callback(null)
-                        })
-                    },
-                    function(callback){
-                        Alarm.deleteMany({userId : user._id}) 
-                        .exec((err)=>{
-                               if(err) callback(err)
-                               callback(null)
-                        })
-                    },
-                    function(callback){
-                        Alarm.deleteMany({toWhom : user._id}) 
-                        .exec((err)=>{
-                               if(err) callback(err)
-                               callback(null)
-                        })
-                    },
-                    function(callback){
-                        Alert.deleteMany({userId : user._id}) 
-                        .exec((err)=>{
-                               if(err) callback(err)
-                               callback(null)
-                        })
-                    }
-    
-                    ],
-    
-                    function(err){
-                        if(err) return res.json({success: false, message:"Error 발생.."})
-                        return res.json({success: true})
-    });
-
-  })
-  })
-  })
-             
-
-module.exports = router;
-
-
-    /*
-    const myPromise = () => {
+    const uIPromise = () => {
          return new Promise((resolve, reject) => {
         
             User.findOne({_id : req.body._id})
@@ -339,19 +220,19 @@ module.exports = router;
          })
        })}
 
-    const myPromise2 = (user) => {
+    const pwdPromise = (user) => {
         return new Promise((resolve, reject) => {
-       
+          
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if(err) reject(new Error("Error 발생.."))
                 if(!isMatch) reject(new Error("현재 비밀번호를 바르게 입력해주세요"))
-                if(Date.now() < user.createdAt.valueOf() + hour24) reject(new Error("가입 후 24시간 이후에 탈퇴 가능합니다"))
-                resolve(isMatch)
+                if(Date.now() > user.createdAt.valueOf() + hour24) reject(new Error("가입 후 24시간 이후에 탈퇴 가능합니다"))
+                resolve()
           
         })
       })}
 
-      const myPromise3 = (user) => {
+      const DBPromise_1 = (user) => {
         return new Promise((resolve, reject) => {
        
             User.findOneAndDelete({_id : user._id},(err)=>{
@@ -362,7 +243,7 @@ module.exports = router;
         })
       }
 
-      const myPromise4 = (user) => {
+      const DBPromise_2 = (user) => {
         return new Promise((resolve, reject) => {
        
             Board.deleteMany({writer : user._id})
@@ -374,19 +255,20 @@ module.exports = router;
         })
       }
 
-      const myPromise5 = (user) => {
+      const DBPromise_3 = (user) => {
         return new Promise((resolve, reject) => {
        
             Like.deleteMany({userId : user._id}) 
                     .exec((err)=>{
                         if(err) reject(new Error("Error 발생.."))
                         resolve()
+            // 게시물 자체 Like를 삭제해야하지만 시스템에 이상은 없음 (DB만 남음)
         })
         })  
           
       }
 
-      const myPromise6 = (user) => {
+      const DBPromise_4 = (user) => {
         return new Promise((resolve, reject) => {
        
             Alarm.deleteMany({userId : user._id}) 
@@ -398,7 +280,7 @@ module.exports = router;
         })
       }
 
-      const myPromise7 = (user) => {
+      const DBPromise_5 = (user) => {
         return new Promise((resolve, reject) => {
        
             Alarm.deleteMany({toWhom : user._id}) 
@@ -410,7 +292,7 @@ module.exports = router;
         })
       }
 
-      const myPromise8 = (user) => {
+      const DBPromise_6 = (user) => {
         return new Promise((resolve, reject) => {
        
             Alert.deleteMany({userId : user._id}) 
@@ -422,71 +304,70 @@ module.exports = router;
         })
       }
 
-      const myPromise9 = (user) => {
+      const DBPromise_7 = (user) => {
         return new Promise((resolve, reject) => {
        
-            Comment.find({writer : user._id})
+             Comment.find({writer : user._id})
                     .exec((err,results) => {
-                        if(err) callback(err)
-                        
-                    
-                        results.forEach(resultInfo=>{
-                            if(resultInfo.responseTo){
-                                Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
-                                        (err)=> {
-                                            if(err) callback(err)
-                                    })
-                                Comment.deleteOne({_id : resultInfo._id}) 
-                                    .exec((err)=>{
-                                        if(err) callback(err)
-
-                                    })
-                            }
-                            
-                            else{
-                                Comment.find({ responseTo : resultInfo._id})
-                                        .exec((err,comlength)=>{
-                                        let count = (comlength.length * -1) - 1;
-                                        if(err) callback(err)
-
-                                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
-                                        (err)=> {
-                                            if(err) callback(err)
-                                    })
-                                Comment.deleteOne({_id : resultInfo._id}) 
-                                    .exec((err)=>{
-                                        if(err) callback(err)
-
-                                    })
-                                Comment.deleteMany({responseTo : resultInfo._id}) 
-                                    .exec((err)=>{
-                                        if(err) callback(err)
-                                    })                                                
-                                })
-                            }
-                        })
-                        
-                        callback(null)
-                    })        
-                    
-                        
-                        })
-                    }
-
- 
-      const callMyPromise = async () => { 
+                        if(err) reject(new Error("Error 발생.."))
+                        resolve(results)
+                })
           
-        const result = await myPromise();
-        const result2 = await myPromise2(result);
+        })
+      }
 
-        Promise.all(myPromise3(result),myPromise4(result),
-        myPromise5(result),myPromise6(result),myPromise7(result),myPromise8(result),myPromise9(result))
-               .then()
+      const DBPromise_8 = async (results) => {
+       
+        await Promise.all(
+            results.map((resultInfo)=>{
+                
+                if(resultInfo.responseTo){                   
+                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }).exec()    
+                        Comment.deleteOne({_id : resultInfo._id}).exec()
+                        }
+                 else{
+                        Comment.find({ responseTo : resultInfo._id})
+                               .exec((comlength)=>{
+                                    if(comlength){
+                                        let count = (comlength.length * -1) - 1;
+                                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } }).exec()
+                                    }
+                                    else{
+                                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }).exec()
+                                    }
+                                    
+                        Comment.deleteOne({_id : resultInfo._id}).exec()
+                        Comment.deleteMany({responseTo : resultInfo._id}).exec()   
+                        // if와 else 둘의 실행순서가 보장되야할듯                                   
+                                })
+                            }}
+        ))
+                    .catch(()=>{throw new Error("Error 발생..")})
+    } 
+               
+
+      const callMyPromise = async () => { 
+        
+        try{
+        const userInfo = await uIPromise();
+        
+        await pwdPromise(userInfo);
+        const DBresult = await DBPromise_7(userInfo)
+        await DBPromise_8(DBresult)
+        await Promise.all([DBPromise_1(userInfo),DBPromise_2(userInfo),DBPromise_3(userInfo),
+            DBPromise_4(userInfo),DBPromise_5(userInfo),DBPromise_6(userInfo)])
+        
+        return res.json({success: true})
+        }
+        catch(err){
+            return res.json({success: false, message:err.toString()})
+        }
         
 
-        return resultblah;
        };
 
-       callMyPromise.then
+       callMyPromise()
+  })
+             
 
-*/
+module.exports = router;

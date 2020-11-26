@@ -55,7 +55,7 @@ function RemoveUser(props) {
 
           axios.post('/api/users/remove',dataToSubmit)
                .then(response => {
-                 
+                 console.log(response.data)
                   if(response.data.success){
                     message.config({
                         top: 100

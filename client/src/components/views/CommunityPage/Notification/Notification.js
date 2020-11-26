@@ -21,7 +21,7 @@ function Notification() {
             onClose={onClose}
             visible={visible}
         >
-            <p>20.11.04 - 공지사항</p>
+            <p>20.11.20 - 공지사항</p>
             <p>의료법때문에 특정 병원 직접적인 언급 및 비판 X</p>
         </Drawer>
         </>

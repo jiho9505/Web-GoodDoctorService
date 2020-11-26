@@ -1,14 +1,20 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "숨은명의찾기",
+  "name": "숨은명의찾기",
   "icons": [
     {
-      "src": "favicon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon32.PNG",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+    ,
+    {
+      "src": "favicon196.PNG",
+      "sizes": "196x196",
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://www.findgooddoctors.co.kr/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

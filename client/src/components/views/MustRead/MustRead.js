@@ -6,16 +6,11 @@ const { Title } = Typography
 function MustRead() {
     return (
         <div className='mustread'>
+            <p><span style={{color:'red'}}>구글플레이스토어</span>에 <span style={{color:'red'}}>'숨은명의찾기' 앱</span> 출시</p>
+            <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>숨은 명의 찾기</Title>
             <p>관절,인대,힘줄 관련 명의들로 구성되어있습니다.</p>
             <p>- 다른 부위에 대한 문의가 많아지면 추가할게요 :) -</p>
-            {/*
-            <p>저도 1년 넘게 관절염증(인대,힘줄 포함)을 앓게 되면서 깨달은게 많은데 </p>
-            <p>1년동안 30개 가까이 되는 병원을 다녀보면서 돌팔이도 많고 인터넷엔 병원 광고글들이 가득한 것에 대해 불만이 있었습니다.</p>
-            <p>그래서 환자들도 제대로 된 의사를 찾을 권리가 필요하다고 생각하고</p>
-            <p>무엇보다도 적절한 시기에 제대로 된 분한테 가서 치료받는게 제일 중요하다고 생각돼서</p>
-            <p>컴퓨터 관련 과 학생으로서 공익적 목적으로 만들었습니다.</p>
-            */}
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>명의 목록 기준</Title>
             <p>1.네이버에서 회원 수 많은 카페들의 추천 병원(90%)</p>
