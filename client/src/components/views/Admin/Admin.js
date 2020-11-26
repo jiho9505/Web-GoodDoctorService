@@ -30,11 +30,11 @@ const clickHandler = () => {
     axios.post('/api/hospital/add', variables)
          .then(response => {
              if(response.data.success){
-                alert('성공')
+                alert('데이터 추가 SUCCESS')
                 
              }
              else{
-                 alert("Alert 정보를 가져오는데 실패하였습니다")
+                 alert("데이터 추가 ERROR")
              }
          })
 }

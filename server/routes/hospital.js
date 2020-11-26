@@ -1,30 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const { Hospital } = require("../models/Hospital");
-const async = require('async');
 
 router.post("/add", (req, res) => {
     const variable = req.body.id
 
-
-     async.parallel([
-
-        function(callback){
-            variable.forEach(item => {
-                
+    const callMyPromise = async () => { 
+        
+        try{
+        await Promise.all(
+            variable.map(item => {         
                 let hospital = new Hospital(item);
                 hospital.save((err) => {
-                    if (err) callback(err)
+                    if (err) throw err
             })
-        }
-        )}
-        ],
-        //callback(err) 대신 callback(null)로 해놨었는데 true가 오진 않지만 데이터를 넣는건 문제 없음.
-        function(err){
-            if(err) return res.json({success: false})
+        }))
             return res.json({success: true})
-}); 
-
+        }
+        catch(err){
+            return res.json({success: false})
+        }
+       };
+       callMyPromise()
 });
 
 router.post("/info", (req, res) => {
