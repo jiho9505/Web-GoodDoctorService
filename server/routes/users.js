@@ -221,7 +221,7 @@ router.post("/remove", (req, res) => {
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if(err) reject(new Error("Error 발생.."))
                 if(!isMatch) reject(new Error("현재 비밀번호를 바르게 입력해주세요"))
-                if(Date.now() > user.createdAt.valueOf() + hour24) reject(new Error("가입 후 24시간 이후에 탈퇴 가능합니다"))
+                if(Date.now() < user.createdAt.valueOf() + hour24) reject(new Error("가입 후 24시간 이후에 탈퇴 가능합니다"))
                 resolve()
           
         })
