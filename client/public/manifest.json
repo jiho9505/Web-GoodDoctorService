@@ -3,13 +3,13 @@
   "name": "숨은명의찾기",
   "icons": [
     {
-      "src": "favicon32.PNG",
+      "src": "favicon32.png",
       "sizes": "32x32",
       "type": "image/png"
     }
     ,
     {
-      "src": "favicon196.PNG",
+      "src": "favicon196.png",
       "sizes": "196x196",
       "type": "image/png"
     }
