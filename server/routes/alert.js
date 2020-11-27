@@ -5,7 +5,6 @@ const { Comment } = require("../models/Comment");
 const { Board } = require("../models/Board");
 const { Like } = require("../models/Like")
 const { Alarm } = require("../models/Alarm")
-const async = require('async');
 
 
 router.get("/", (req, res) => {
@@ -56,101 +55,61 @@ router.post("/", (req, res) => {
 
 router.delete("/", (req, res) => {
 
-    
-                
-
     const cid = req.query.cid
     const postid = req.query.postid
 
-    if(cid){
-        Alert.deleteMany({commentId : cid}, (err)=>{
-            if(err) res.json({ success: false })
-
-            Comment.findOneAndDelete({ _id : cid })
-                    .exec((err,resultInfo) => {
-                        if (err) return res.json({ success: false})
-
-                        if(resultInfo.responseTo){
-                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
-                                    (err)=> {
-                                        if (err) return res.json({ success: false })
-                                        return res.json({ success: true })
-                            
-                                })
-                        }
-                        else{
-                            Comment.find({ responseTo : resultInfo._id})
-                                    .exec((err,comlength)=>{
-                                    let count = (comlength.length * -1) - 1;
-                                    if (err) return res.json({ success: false})
-
-                                    Comment.deleteMany({ responseTo : resultInfo._id})
-                                            .exec((err)=>{
-                                                if (err) return res.json({ success: false})
-                                            })
-
-                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
-                                    (err)=> {
-                                        if (err) return res.status(400).json({ success: false })
-                                        res.status(200).json({ success: true })
-                            
-                                })
-                                
-                            })
-                        }         
-                            })
-        })
-        
-    }
-    else{
-        
-        async.parallel([
-
-            function(callback){
-                Board.findOneAndDelete({_id:postid})
-                    .exec((err)=>{
-                    if(err) callback(err)
-                    callback(null)
-                })
-            },
-            function(callback){
-                
-                Comment.deleteMany({postId: postid}) 
-                        .exec((err)=>{
-                            if(err) callback(err)
-                            callback(null)
-                })
-            },
-            function(callback){
-                Alarm.deleteMany({postId: postid}) 
-                        .exec((err)=>{
-                            if(err) callback(err)
-                            callback(null)
-                })
-            },
+    const PromiseFunc = async (cid) =>{
+        try{
+        if(cid){
             
-            function(callback){
-                Like.deleteMany({postId: postid}) 
-                .exec((err)=>{
-                       if(err) callback(err)
-                       callback(null)
-                })
-            },
-            function(callback){
-                Alert.deleteMany({postId: postid})
-                .exec((err)=>{
-                       if(err) callback(err)
-                       callback(null)
-                })
+            const resultInfo = await Comment.findOneAndDelete({ _id : cid }).exec() 
+            
+            if(resultInfo.responseTo){
+                    await Promise.all([
+                        Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }),
+                        Alert.deleteMany({commentId : cid}).exec()
+                    ])         
             }
-            ],
-    
-            function(err){
-                if(err) return res.json({success: false})
-                return res.json({success: true})
-    }); 
+            else{
+                    const comlength = await Comment.find({ responseTo : resultInfo._id}).exec()
+                    if(comlength){
+                        let count = (comlength.length * -1) - 1;
+                        await Promise.all([
+                            Comment.deleteMany({ responseTo : resultInfo._id}).exec(),
+                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } }).exec(),
+                            Alert.deleteMany({commentId : cid}).exec()
+                        ])      
+                    }
+                    else{
+                        let count = -1
+                        await Promise.all([
+                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } }).exec(),
+                            Alert.deleteMany({commentId : cid}).exec()
+                        ])
+                    }                  
+                    }
+                }         
+                                
+        else{
+            await Promise.all([
+                Board.findOneAndDelete({_id: postid}).exec(),
+                Comment.deleteMany({postId: postid}).exec(),
+                Alarm.deleteMany({postId: postid}).exec(),
+                Like.deleteMany({postId: postid}).exec(),
+                Alert.deleteMany({postId: postid}).exec()
+            ])
+            }
+        
+        return res.json({success: true})    
+        }
+        
+        catch(err){
+            return res.json({success: false})
+        }
+      
     }
 
+       PromiseFunc(cid)
 })
 
 module.exports = router;
