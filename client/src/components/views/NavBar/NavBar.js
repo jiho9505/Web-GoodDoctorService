@@ -5,6 +5,7 @@ import Alarm from './Sections/Alarm/Alarm';
 import { Drawer, Button, Icon } from 'antd';
 import './Sections/Navbar.css';
 import logo from './Title.PNG';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   const [visible, setVisible] = useState(false)
@@ -20,9 +21,10 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div>
-        <a href="/">
+        
+        <Link to="/">
           <img  className='logoimg' src={logo} alt='숨은명의찾기' />
-        </a>
+        </Link>
         
       </div>
       <div className="menu__container">

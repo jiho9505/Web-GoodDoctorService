@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
@@ -18,7 +19,8 @@ function Footer() {
                &nbsp;&nbsp;
                <span>|</span>
                &nbsp;&nbsp;
-               <a href='/privacy'><span>개인정보처리방침</span></a>
+               <Link to="/privacy"><span>개인정보처리방침</span></Link>
+               
                &nbsp;&nbsp;
            </div>
         </div>

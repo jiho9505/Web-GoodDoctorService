@@ -1,9 +1,8 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Menu } from 'antd';
 import axios from 'axios';
 import { USER_SERVER } from '../../../../Config/Config';
-import { withRouter } from 'react-router-dom';
+import { withRouter,  Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 function RightMenu(props) {
@@ -23,10 +22,12 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
-          <a href="/login">로그인</a>
+          <Link to="/login">로그인</Link>
+        
         </Menu.Item>
         <Menu.Item key="app">
-          <a href="/register">회원 가입</a>
+          <Link to="/register">회원 가입</Link>
+        
         </Menu.Item>
       </Menu>
     )
@@ -35,10 +36,12 @@ function RightMenu(props) {
         return (
           <Menu mode={props.mode}>
             <Menu.Item key="mypage">
-              <a href="/mypage">My Page</a>
+              <Link to="/mypage">My Page</Link>
+              
             </Menu.Item>
             <Menu.Item key="logout">
-              <a onClick={logoutHandler}>로그아웃</a>
+              <Link to="/mypage" onClick={logoutHandler}>로그아웃</Link>
+      
             </Menu.Item>
           </Menu>
         )
@@ -47,13 +50,13 @@ function RightMenu(props) {
         return (
           <Menu mode={props.mode}>
             <Menu.Item key="admin">
-              <a href="/admin">Admin</a>
+              <Link to="/admin">Admin</Link>
             </Menu.Item>
             <Menu.Item key="mypage">
-              <a href="/mypage">My Page</a>
+              <Link to="/mypage">My Page</Link>
             </Menu.Item>
             <Menu.Item key="logout">
-              <a onClick={logoutHandler}>로그아웃</a>
+             <Link to="/mypage" onClick={logoutHandler}>로그아웃</Link>
             </Menu.Item>
           </Menu>
         ) 

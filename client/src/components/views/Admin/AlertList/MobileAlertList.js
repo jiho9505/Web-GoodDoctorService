@@ -3,6 +3,8 @@ import { List } from 'antd';
 import axios from 'axios'
 import moment from 'moment'
 import RemoveButton from './RemoveButton'
+import { Link } from 'react-router-dom';
+
 
 function MobileAlertList() {
 
@@ -73,12 +75,12 @@ function MobileAlertList() {
             <List.Item.Meta
             //[게시글-신고] 내용
             // 신고자명 날짜
-              title={<a onClick={()=>clickHandler(item.postId._id)} href={`community/${item.postId._id}`}>
+              title={<Link onClick={()=>clickHandler(item.postId._id)} to={`community/${item.postId._id}`}>
                         <span style={{color:'red'}}>[{item.commentId ? '댓글' : '게시판'}-신고]</span>
                         <span style={{fontWeight:'bolder'}}>{' '+item.contents}</span>
                        
                         
-                    </a>}
+                    </Link>}
               description={'신고자명 : '+item.userId.nickname+' | '+moment(item.createdAt).format("YYYY-MM-D")}
             />
           </List.Item>

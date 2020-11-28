@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Empty, Table } from 'antd';  
 import moment from "moment";
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 function NoticeBoard(props) {
   const [Datas, setDatas] = useState([])
@@ -84,12 +85,12 @@ function NoticeBoard(props) {
           width: 480,
           align: 'center',
           render: (text,record) => (
-            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}
+            <Link onClick={()=>clickHandler(record._id)} to={`community/${record._id}`}>{text}
               { record.comCount > 0 && 
                 <span style={{color: 'red'}}>
                   {' '+'['+record.comCount+']'}
                 </span> }
-            </a>
+            </Link>
           )
         },
         {

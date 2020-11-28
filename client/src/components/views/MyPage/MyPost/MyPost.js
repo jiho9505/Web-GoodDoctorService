@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Table , Typography } from 'antd';  
 import moment from "moment";
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const {Title} = Typography
 
@@ -82,12 +83,12 @@ function MyPost(props) {
           key: 'title',
           align: 'center',
           render: (text,record) => (
-            <a onClick={()=>clickHandler(record._id)} href={`community/${record._id}`}>{text}
+            <Link onClick={()=>clickHandler(record._id)} to={`community/${record._id}`}>{text}
               { record.comCount > 0 && 
                 <span style={{color: 'red'}}>
                   {' '+'['+record.comCount+']'}
                 </span> }
-            </a>
+            </Link>
           )
         },
         {

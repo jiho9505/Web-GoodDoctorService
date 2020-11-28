@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom"
 
 
 
-
 function HospitalList(props) {
   
     const list = props.test

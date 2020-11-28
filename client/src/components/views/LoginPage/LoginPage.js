@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Icon, Input, Button,  Typography } from 'antd';
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 
 
 const { Title } = Typography;
@@ -125,10 +126,11 @@ function LoginPage(props) {
                     로그인
                 </Button>
                 </div>
-                <a href="/register">회원가입</a>
-                <a className="login-form-forgot" href="/findpassword" style={{ float: 'right' }}>
-                  비밀번호 찾기
-                  </a>
+                  <Link to="/register">회원가입</Link>
+                
+                  <Link className="login-form-forgot" to="/findpassword" style={{ float: 'right' }}>
+                    비밀번호 찾기
+                  </Link>
               </Form.Item>
             </form>
           </div>

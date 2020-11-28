@@ -7,7 +7,7 @@ import Axios from 'axios'
 import Notification from './Notification/Notification'
 import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
-
+import { Link } from 'react-router-dom';
 
 
 const list = [{
@@ -200,7 +200,8 @@ function  CommunityPage() {
                 <Notification/>
               </div>
               <div >
-                <a href='/write'><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></a>                
+                <Link to="/write"><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></Link>
+                  
               </div>
             </div>
             <div className='spacing'></div>

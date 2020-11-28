@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Table , Typography } from 'antd';  
 import moment from "moment";
+import { Link } from 'react-router-dom';
 
 const {Title} = Typography
 
@@ -41,7 +42,8 @@ function MyComment(props) {
             key: 'content',
             align: 'center', 
             render: (text,record) => (
-                <a href={`community/${record._id}`}>{text}</a>
+              <Link to={`community/${record._id}`}>{text}</Link>
+                 
               )
           }
 

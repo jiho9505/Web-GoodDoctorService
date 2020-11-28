@@ -15,12 +15,13 @@ function DetailBoardPage(props) {
     const [update, setupdate] = useState(false)
     const [PostInfo, setPostInfo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
-
+   
     useEffect(() => {
         axios.get(`/api/board?id=${postId}`)
              .then(response => {                        
                  if(response.data.success){
                      setPostInfo(response.data.result[0])
+                     
                  }
                  else{
                      props.history.push('/notfound')
@@ -93,7 +94,6 @@ function DetailBoardPage(props) {
             
         }
     }
-
     return (
         <div>
             {update ? 
@@ -130,7 +130,7 @@ function DetailBoardPage(props) {
                 <br />
             
                 <TextArea  value={PostInfo.description} style={{height:'400px' , overflowY: 'auto' }} />
-        
+               
                 <br />
                 <br />
                 <div style={{border : '1px solid #eee'}}></div>

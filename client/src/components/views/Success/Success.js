@@ -1,5 +1,6 @@
 import React from 'react'
 import { Result, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 function Success() {
     return (
@@ -8,10 +9,10 @@ function Success() {
                 status="success"
                 title="비밀번호 변경 성공!"
                 extra={[
-                <a href='/login'><Button type="primary" key="console">
+                <Link to='/login'><Button type="primary" key="console">
                     Login
                 </Button>
-                </a>
+                </Link>
                 ]}
   />
         </div>

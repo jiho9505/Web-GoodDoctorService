@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Input, Button, Select , Form , message, Result} from 'antd'
 import PictureUpload from './PictureUpload/PictureUpload'
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const { Option } = Select;
 const {TextArea} = Input
@@ -52,6 +54,7 @@ function Postlist(props) {
         ))
     )
     
+
     const submitHandler = (e) => {
         
         e.preventDefault();
@@ -118,10 +121,10 @@ function Postlist(props) {
                     title="게시물 수정에 성공하였습니다!"
                     subTitle="해당 게시물로 다시 돌아가려면 아래의 버튼을 클릭해주세요!"
                     extra={[
-                    <a href={`/community/${props.postInfo._id}`}><Button type="primary" key="console">
+                    <Link to={`/community/${props.postInfo._id}`}><Button type="primary" key="console">
                         Go
                     </Button>
-                    </a>
+                    </Link>
                     ]}
                  />
             </div>
@@ -144,7 +147,8 @@ function Postlist(props) {
                 
                 <br />
         
-                <TextArea onChange={DescHandler} value={Description} style={{height:300}} placeholder='내용을 입력해주세요.'/>
+                <TextArea onChange={DescHandler} value={Description} style={{height:300}} 
+                showCount maxLength={2500} placeholder='내용을 입력해주세요.'/>
 
                 <br />
                 <br />

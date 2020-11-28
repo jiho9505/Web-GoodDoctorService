@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { Table, Button } from 'antd';  
 import moment from "moment";
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+
 
 function AlertList(props) {
   const [Datas, setDatas] = useState([])
@@ -86,7 +88,7 @@ function AlertList(props) {
           key: 'title',
           align: 'center',
           render: (text,record) => (
-            <a  href={`community/${record._id}`}>{text}</a>
+            <Link to={`community/${record._id}`}>{text}</Link>
           )
         },
         {
