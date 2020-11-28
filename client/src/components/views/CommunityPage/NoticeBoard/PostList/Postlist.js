@@ -147,8 +147,8 @@ function Postlist(props) {
                 
                 <br />
         
-                <TextArea onChange={DescHandler} value={Description} style={{height:300}} 
-                showCount maxLength={2500} placeholder='내용을 입력해주세요.'/>
+                <TextArea showCount onChange={DescHandler} value={Description} style={{height:300}} 
+                 maxLength={2500} placeholder='내용을 입력해주세요.'/>
 
                 <br />
                 <br />

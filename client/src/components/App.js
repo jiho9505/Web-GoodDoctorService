@@ -20,7 +20,10 @@ import MustRead from "./views/MustRead/MustRead"
 import Privacy from "./views/Privacy/Privacy"
 import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
 import AdfitWebComponent from 'react-adfit-web-component'
-
+import PreMyComment from "./views/MyPage/MyComment/PreMyComment"
+import PreMyPost from "./views/MyPage/MyPost/PreMyPost"
+import PwdChange from "./views/MyPage/PwdChange/PwdChange"
+import RemoveUser from "./views/MyPage/RemoveUser/RemoveUser"
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -48,6 +51,10 @@ function App() {
           <Route exact path="/privacy" component={Auth(Privacy, null)} />
           <Route exact path="/write" component={Auth(Postlist, true)} />
           <Route exact path="/mypage" component={Auth(MyPage, true)} />
+          <Route exact path="/mycomment" component={Auth(PreMyComment, true)} />
+          <Route exact path="/mypost" component={Auth(PreMyPost, true)} />
+          <Route exact path="/pwdchange" component={Auth(PwdChange, true)} />
+          <Route exact path="/removeuser" component={Auth(RemoveUser, true)} />
           <Route exact path="/mustread" component={Auth(MustRead, null)} />
           <Route exact path="/admin" component={Auth(Admin, true, true)} />
           <Route exact path="/findpassword" component={Auth(FindPassword, false)} />
