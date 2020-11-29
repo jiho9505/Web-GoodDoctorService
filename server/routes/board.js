@@ -3,7 +3,6 @@ const router = express.Router();
 const multer = require('multer');
 const multerS3 = require('multer-s3')
 const AWS = require("aws-sdk");
-const async = require('async');
 const config = require('../config/key')
 const { Board } = require("../models/Board");
 const { Alert } = require("../models/Alert");
@@ -133,50 +132,25 @@ router.delete('/', (req, res) => {
 
     var postId = req.query.id
     
-    async.parallel([
+    const callMyPromise = async () => {
+        try{
+            await Promise.all([
+                Board.findOneAndDelete({_id:postId}).exec(),
+                Comment.deleteMany({postId: postId}).exec(),
+                Alarm.deleteMany({postId: postId}).exec(),
+                Like.deleteMany({postId: postId}).exec(),
+                Alert.deleteMany({postId: postId}).exec()
 
-        function(callback){
-            Board.findOneAndDelete({_id:postId})
-                .exec((err)=>{
-                if(err) callback(err)
-                callback(null)
-            })
-        },
-        function(callback){
-            Comment.deleteMany({postId: postId}) 
-                    .exec((err)=>{
-                        if(err) callback(err)
-                        callback(null)
-            })
-        },
-        function(callback){
-            Alarm.deleteMany({postId: postId}) 
-                    .exec((err)=>{
-                        if(err) callback(err)
-                        callback(null)
-            })
-        },
-        
-        function(callback){
-            Like.deleteMany({postId: postId}) 
-            .exec((err)=>{
-                   if(err) callback(err)
-                   callback(null)
-            })
-        },
-        function(callback){
-            Alert.deleteMany({postId: postId})
-            .exec((err)=>{
-                   if(err) callback(err)
-                   callback(null)
-            })
-        }
-        ],
-
-        function(err,results){
-            if(err) return res.json({success: false})
+            ])
             return res.json({success: true})
-}); 
+        }
+        catch{
+            return res.json({success: false})
+        }
+    }
+
+    callMyPromise()
+
 
 })
 

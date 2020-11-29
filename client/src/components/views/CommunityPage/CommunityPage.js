@@ -116,11 +116,8 @@ function  CommunityPage() {
     setSkip(skip)
 }
 
-  const refresh = (value) => {
-    let skip = 0
-
-    if(value === 1){
-      setCategory(value)
+  const refactoring = (value,skip,Limit,SearchTerms) => {
+    setCategory(value)
 
       Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
         .then(response => {
@@ -135,57 +132,21 @@ function  CommunityPage() {
          }
        )
     setSkip(skip)
+  }
+  const refresh = (value) => {
+    let skip = 0
+
+    if(value === 1){
+      refactoring(value,skip,Limit,SearchTerms)
     }
     else if(value === 2){
-      setCategory(value)
-
-      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-           
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
-    setSkip(skip)
+      refactoring(value,skip,Limit,SearchTerms)
     }
     else if(value === 3){
-      setCategory(value)
-
-      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-           
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
-    setSkip(skip)
+      refactoring(value,skip,Limit,SearchTerms)
     }
     else{
-      setCategory(value)
-
-      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-        
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
-    setSkip(skip)
+      refactoring(value,skip,Limit,SearchTerms)
     }
   }
 

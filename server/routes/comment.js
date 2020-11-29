@@ -19,115 +19,96 @@ router.get("/", (req, res) => {
 
 
 router.post("/", (req, res) => {
-
-    const comment = new Comment(req.body)
-
-    comment.save((err, comment) => {
-        if (err) return res.json({ success: false, err })
-  
-        Comment.findOne({ '_id': comment._id })
-            .populate('postId')
-            .populate('writer')
-            .exec((err, result) => {
-                if(err) return res.json({ success: false, err })
     
-                if(result.responseTo)
-                {
-                    Comment.findOne({ _id: result.responseTo })
-                       .populate('writer')
-                       .exec((err, results) => {
-                            if(err) return res.json({ success: false, err })
-                            let variables = {  
-                                userId : results.writer,
-                                postId : result.postId._id,
-                                toWhom : result.writer,
-                                choice : true
-                               }
-                            if(results.writer.nickname !== result.writer.nickname){
-                                const alarm = new Alarm(variables)
-                                            alarm.save((err) => {
-                                                if(err) return res.json({ success: false, err })
-                                            })
-                            }                  
-                    })
-                }
-                else{
-                    let variables = {  
-                        userId : result.postId.writer,
-                        postId : result.postId._id,
-                        toWhom : result.writer,
-                    }
-                    
-                    User.findOne({_id:result.postId.writer})
-                        .exec((err,userInfo)=>{
-                            if(err) return res.json({ success: false, err })
-                            if(userInfo.nickname !== result.writer.nickname){
-                                const alarm = new Alarm(variables)
-                                alarm.save((err) => {
-                                    if(err) return res.json({ success: false, err })
-                                })
-                                    }
-                                })
-     
-                }
-              
+    const callMyPromise = async () => {
+        try{
+            const comments = new Comment(req.body)
+            const comment = await comments.save()
+            const result = await Comment.findOne({ '_id': comment._id })
+                                        .populate('postId')
+                                        .populate('writer')
+                                        .exec()
 
+                                       
+            await Board.findOneAndUpdate({_id : result.postId},{ $inc: { "commentCount": 1 }}).exec()
+
+            if(result.responseTo)
+            {
                 
+                const results = await Comment.findOne({ _id: result.responseTo })
+                                            .populate('writer')
+                                            .exec()
+                
+                let variables = {  
+                    userId : results.writer,
+                    postId : result.postId._id,
+                    toWhom : result.writer,
+                    choice : true
+                    }
+                if(results.writer.nickname !== result.writer.nickname){
+                    const alarm = new Alarm(variables)
+                    await alarm.save()
+                }                  
+                
+            }
+            else{
+                let variables = {  
+                    userId : result.postId.writer,
+                    postId : result.postId._id,
+                    toWhom : result.writer,
+                }
+                
+                const userInfo = await User.findOne({_id:result.postId.writer}).exec()
 
-                Board.findOneAndUpdate({_id : result.postId},{ $inc: { "commentCount": 1 } },
-                        (err)=> {                         
-                            if (err) return res.json({ success: false, err })
-                            return res.status(200).json({ success: true, result })
-                            })
-                    
-                        })
-          
-    })
+                if(userInfo.nickname !== result.writer.nickname){
+                    const alarm = new Alarm(variables)
+                    await alarm.save()
+                }
+            }
+                                  
+            return res.json({success: true, result })
+        }
+        catch{
+            return res.json({success: false})
+        }
+    }
 
+    callMyPromise()
 })
+ 
 
 router.delete("/", (req, res) => {
-    Comment.findOneAndDelete({ _id : req.query.id })
-            .exec((err,resultInfo) => {
-                if (err) return res.json({ success: false})
 
-                Alert.deleteMany({ commentId : req.query.id})
-                        .exec((err) => {
-                           if (err) return res.json({ success: false})
-                        })  
+    const callMyPromise = async () => {
+        try{
+            const resultInfo = await Comment.findOneAndDelete({ _id : req.query.id }).exec()
 
-                if(resultInfo.responseTo){
-
-                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } },
-                            (err)=> {
-                                if (err) return res.json({ success: false })
-                                return res.json({ success: true })
-                    
-                        })
-                }
-                else{
-                    Comment.find({ responseTo : resultInfo._id})
-                            .exec((err,comlength)=>{
-                            let count = (comlength.length * -1) - 1;
-                            if (err) return res.json({ success: false})
-
-                            Comment.deleteMany({ responseTo : resultInfo._id})
-                                    .exec((err)=>{
-                                        if (err) return res.json({ success: false})
-                                    })
-
-                            Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } },
-                            (err)=> {
-                                if (err) return res.status(400).json({ success: false })
-                                res.status(200).json({ success: true })
-                    
-                        })
-                        
-                       })
-                }         
-                       })
+            if(resultInfo.responseTo){
+                await Promise.all([
+                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }).exec() ,
+                    Alert.deleteMany({ commentId : req.query.id}).exec()
+                ])
                 
-            })
+            }
+            else{
+                const comlength = await Comment.find({ responseTo : resultInfo._id}).exec()
+                let count = (comlength.length * -1) - 1;
+                await Promise.all([
+                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } }).exec() ,
+                    Alert.deleteMany({ commentId : req.query.id}).exec() ,
+                    Comment.deleteMany({ responseTo : resultInfo._id}).exec()
+                ])      
+            }   
+
+            return res.json({success: true})
+        }
+        catch{
+            return res.json({success: false})
+        }
+    }
+
+    callMyPromise()             
+})
 
 router.post("/info", (req, res) => {
         Comment.find({writer : req.body._id})
