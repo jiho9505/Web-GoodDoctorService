@@ -10,7 +10,7 @@
 
 ## 프로젝트 개발내용
 <p>- 프론트는 REACT 이용 / 백은 EXPRESS 이용 / DB는 MONGO DB 이용</p> 
-<p>- 혼자서 풀스택으로 개발 & CSR 방식</p>  
+<p>- 혼자서 풀스택으로 개발 & CSR , SPA 방식</p>  
 
 ## 프로젝트 개발동기
 <p>- 환자들이 명의를 선택할 권리를 넓히기 위해 만들었다. </p>
@@ -20,14 +20,17 @@
 
 ## 최종 결과물
 🏠 [Homepage](https://www.findgooddoctors.co.kr/)
+<br><br/>구글플레이스토어 - '숨은명의찾기' 웹뷰앱 출시
 ## Install
-
+server 와 client folder 각각
 ```sh
 npm install
 ```
 
 ## Usage
-
+1. server config folder 안에 prod.js를 참고
+2. 해당 환경변수들을 local에서 쓸 수 있도록 js 생성
+3. 그 후 아래 명령어 입력
 ```sh
 npm run dev
 ```
