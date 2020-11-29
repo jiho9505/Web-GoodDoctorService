@@ -2,36 +2,41 @@ import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
 import Auth from "../hoc/auth";
 import LandingPage from "./views/LandingPage/LandingPage.js";
-import LoginPage from "./views/LoginPage/LoginPage.js";
-import CommunityPage from "./views/CommunityPage/CommunityPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
-import Postlist from "./views/CommunityPage/NoticeBoard/PostList/Postlist"
-import DetailBoardPage from "./views/CommunityPage/DetailBoardPage/DetailBoardPage"
 import Logo from "./views/Logo/Logo"
-import FindPassword from "./views/LoginPage/FindPassword/FindPassword"
-import FindPwNextPage from  "./views/LoginPage/FindPassword/FindPwNextPage"
-import ResetPw from  "./views/LoginPage/FindPassword/ResetPw"
-import NotFound from "./views/NotFound/NotFound"
-import Success from "./views/Success/Success"
-import MyPage from "./views/MyPage/MyPage"
-import Admin from "./views/Admin/Admin"
-import MustRead from "./views/MustRead/MustRead"
-import Privacy from "./views/Privacy/Privacy"
-import BeforeRegister from "./views/BeforeRegister/BeforeRegister"
 import AdfitWebComponent from 'react-adfit-web-component'
-import PreMyComment from "./views/MyPage/MyComment/PreMyComment"
-import PreMyPost from "./views/MyPage/MyPost/PreMyPost"
-import PwdChange from "./views/MyPage/PwdChange/PwdChange"
-import RemoveUser from "./views/MyPage/RemoveUser/RemoveUser"
-//null   Anyone Can go inside
-//true   only logged in user can go inside
-//false  logged in user can't go inside
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const LoginPage = React.lazy(() => import('./views/LoginPage/LoginPage.js'));
+const CommunityPage = React.lazy(() => import('./views/CommunityPage/CommunityPage.js'));
+const Postlist = React.lazy(() => import('./views/CommunityPage/NoticeBoard/PostList/Postlist'));
+const DetailBoardPage = React.lazy(() => import('./views/CommunityPage/DetailBoardPage/DetailBoardPage'));
+const FindPassword = React.lazy(() => import('./views/LoginPage/FindPassword/FindPassword'));
+const FindPwNextPage = React.lazy(() => import('./views/LoginPage/FindPassword/FindPwNextPage'));
+const ResetPw = React.lazy(() => import('./views/LoginPage/FindPassword/ResetPw'));
+const NotFound = React.lazy(() => import('./views/NotFound/NotFound'));
+const Success = React.lazy(() => import('./views/Success/Success'));
+const MyPage = React.lazy(() => import('./views/MyPage/MyPage'));
+const Admin = React.lazy(() => import('./views/Admin/Admin'));
+const MustRead = React.lazy(() => import('./views/MustRead/MustRead'));
+const Privacy = React.lazy(() => import('./views/Privacy/Privacy'));
+const BeforeRegister = React.lazy(() => import('./views/BeforeRegister/BeforeRegister'));
+const PreMyComment = React.lazy(() => import('./views/MyPage/MyComment/PreMyComment'));
+const PreMyPost = React.lazy(() => import('./views/MyPage/MyPost/PreMyPost'));
+const PwdChange = React.lazy(() => import('./views/MyPage/PwdChange/PwdChange'));
+const RemoveUser = React.lazy(() => import('./views/MyPage/RemoveUser/RemoveUser'));
+
 
 function App() {
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+
   return (
  
-    <Suspense fallback={(<div>Loading...</div>)}>
+    <Suspense fallback={(<div style={{display:'flex', marginTop:'200px', justifyContent:'center', alignItems: 'center'}}>
+      <Spin indicator={antIcon} /></div>)}>
+      
       <NavBar/>
       
       
