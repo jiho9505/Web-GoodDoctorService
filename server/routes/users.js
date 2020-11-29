@@ -49,36 +49,195 @@ router.post("/info", (req, res) => {
 })
 })
 
+router.post("/getout", (req, res) => {
+  
+    const uIPromise = () => {
+        return new Promise((resolve, reject) => {
+    
+        User.findOne({nickname : req.body.nickname})
+            .exec((err,user)=>{
+                if(err) reject(new Error("존재하지 않는 닉네임입니다."))
+                resolve(user)
+        
+        })
+    })}
+
+    const DBPromise_1 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+        User.findOneAndDelete({_id : user._id},(err)=>{
+            if(err) reject(new Error("Error 발생.."))
+            resolve()
+        })
+        
+    })
+    }
+
+    const DBPromise_3 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+        Like.deleteMany({userId : user._id}) 
+                .exec((err)=>{
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve()
+        // 게시물 자체 Like를 삭제해야하지만 시스템에 이상은 없음 (DB만 남음)
+    })
+    })  
+        
+    }
+
+    const DBPromise_4 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+        Alarm.deleteMany({userId : user._id}) 
+            .exec((err)=>{
+                if(err) reject(new Error("Error 발생.."))
+                resolve()
+            })
+        
+    })
+    }
+
+    const DBPromise_5 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+        Alarm.deleteMany({toWhom : user._id}) 
+            .exec((err)=>{
+                if(err) reject(new Error("Error 발생.."))
+                resolve()
+            })
+        
+    })
+    }
+
+    const DBPromise_6 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+        Alert.deleteMany({userId : user._id}) 
+            .exec((err)=>{
+                if(err) reject(new Error("Error 발생.."))
+                resolve()
+            })
+        
+    })
+    }
+
+    const DBPromise_7 = (user) => {
+    return new Promise((resolve, reject) => {
+    
+            Comment.find({writer : user._id})
+                .exec((err,results) => {
+                    if(err) reject(new Error("Error 발생.."))
+                    resolve(results)
+            })
+        
+    })
+    }
+
+    const DBPromise_8 = async (results) => {
+    
+    await Promise.all(
+        results.map((resultInfo)=>{
+            
+            if(resultInfo.responseTo){                   
+                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }).exec()    
+                    Comment.deleteOne({_id : resultInfo._id}).exec()
+                    }
+                else{
+                    Comment.find({ responseTo : resultInfo._id})
+                            .exec((comlength)=>{
+                                if(comlength){
+                                    let count = (comlength.length * -1) - 1;
+                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": count } }).exec()
+                                }
+                                else{
+                                    Board.findOneAndUpdate({_id : resultInfo.postId},{ $inc: { "commentCount": -1 } }).exec()
+                                }
+                                
+                    Comment.deleteOne({_id : resultInfo._id}).exec()
+                    Comment.deleteMany({responseTo : resultInfo._id}).exec()   
+                    // if와 else 둘의 실행순서가 보장되야할듯                                   
+                            })
+                        }}
+    ))
+                .catch(()=>{throw new Error("Error 발생..")})
+    } 
+
+    const DBPromise_9 = (user) => {
+        return new Promise((resolve, reject) => {
+        
+                Board.find({writer : user._id})
+                    .exec((err,results) => {
+                        if(err) reject(new Error("Error 발생.."))
+                        resolve(results)
+                })
+            
+        })
+    }
+
+    const DBPromise_10 = async (posts) => {
+        await Promise.all(
+            posts.map((post)=>{
+                Board.findOneAndDelete({_id:post._id}).exec(),
+                Comment.deleteMany({postId:post._id}).exec(),
+                Alarm.deleteMany({postId:post._id}).exec(),
+                Like.deleteMany({postId: post._id}).exec(),
+                Alert.deleteMany({postId:post._id}).exec()
+        }))
+                    .catch(()=>{throw new Error("Error 발생..")})        
+    }
+
+    const callMyPromise = async () => { 
+    
+    try{
+    const userInfo = await uIPromise();
+    
+    const DBresult = await DBPromise_7(userInfo)
+    const BoardResult = await DBPromise_9(userInfo)
+    await Promise.all([DBPromise_1(userInfo),DBPromise_3(userInfo),
+        DBPromise_4(userInfo),DBPromise_5(userInfo),DBPromise_6(userInfo),
+        DBPromise_8(DBresult),DBPromise_10(BoardResult)])
+    
+    return res.json({success: true})
+    }
+    catch(err){
+        return res.json({success: false, message: err.toString()})
+    }
+    };
+
+    callMyPromise()
+})
+
 router.post("/login", (req, res) => {
-    User.findOne({ email: req.body.email }, (err, user) => {
-        if (!user)
-            return res.json({
-                loginSuccess: false,
-                message: "E-mail을 확인해주세요."
-            });
+        User.findOne({ email: req.body.email }, (err, user) => {
+            if (!user)
+                return res.json({
+                    loginSuccess: false,
+                    message: "E-mail을 확인해주세요."
+                });
 
-        user.comparePassword(req.body.password, (err, isMatch) => {
-            if (!isMatch)
-                return res.json({ loginSuccess: false, message: "비밀번호를 확인해주세요" });
+            user.comparePassword(req.body.password, (err, isMatch) => {
+                if (!isMatch)
+                    return res.json({ loginSuccess: false, message: "비밀번호를 확인해주세요" });
 
-            user.generateToken((err, user) => {
-                if (err) return res.send(err);
-     
-                 res.cookie("w_auth", user.token , { httpOnly: true ,  secure: process.env.NODE_ENV === 'production'  })
-                    .status(200)
-                    .json({
-                        loginSuccess: true, userId: user._id
-                    });
+                user.generateToken((err, user) => {
+                    if (err) return res.send(err);
+        
+                    res.cookie("w_auth", user.token , { httpOnly: true ,  secure: process.env.NODE_ENV === 'production'  })
+                        .status(200)
+                        .json({
+                            loginSuccess: true, userId: user._id
+                        });
+                });
             });
         });
     });
-});
 
 router.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).send({
-            success: true
+        User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
+            if (err) return res.json({ success: false, err });
+            return res.status(200).send({
+                success: true
         });
     });
 });
@@ -238,18 +397,6 @@ router.post("/remove", (req, res) => {
         })
       }
 
-      const DBPromise_2 = (user) => {
-        return new Promise((resolve, reject) => {
-       
-            Board.deleteMany({writer : user._id})
-                    .exec((err)=>{
-                    if(err) reject(new Error("Error 발생.."))
-                    resolve()
-        })  
-          
-        })
-      }
-
       const DBPromise_3 = (user) => {
         return new Promise((resolve, reject) => {
        
@@ -339,7 +486,30 @@ router.post("/remove", (req, res) => {
         ))
                     .catch(()=>{throw new Error("Error 발생..")})
     } 
-               
+
+    const DBPromise_9 = (user) => {
+        return new Promise((resolve, reject) => {
+        
+                Board.find({writer : user._id})
+                    .exec((err,results) => {
+                        if(err) reject(new Error("Error 발생.."))
+                        resolve(results)
+                })
+            
+        })
+    }
+
+    const DBPromise_10 = async (posts) => {
+        await Promise.all(
+            posts.map((post)=>{
+                Board.findOneAndDelete({_id:post._id}).exec(),
+                Comment.deleteMany({postId:post._id}).exec(),
+                Alarm.deleteMany({postId:post._id}).exec(),
+                Like.deleteMany({postId: post._id}).exec(),
+                Alert.deleteMany({postId:post._id}).exec()
+        }))
+                    .catch(()=>{throw new Error("Error 발생..")})        
+    }
 
       const callMyPromise = async () => { 
         
@@ -348,11 +518,13 @@ router.post("/remove", (req, res) => {
         
         await pwdPromise(userInfo);
         const DBresult = await DBPromise_7(userInfo)
-        await DBPromise_8(DBresult)
-        await Promise.all([DBPromise_1(userInfo),DBPromise_2(userInfo),DBPromise_3(userInfo),
-            DBPromise_4(userInfo),DBPromise_5(userInfo),DBPromise_6(userInfo)])
+        const BoardResult = await DBPromise_9(userInfo)
+        await Promise.all([DBPromise_1(userInfo),DBPromise_3(userInfo),
+            DBPromise_4(userInfo),DBPromise_5(userInfo),DBPromise_6(userInfo),
+            DBPromise_8(DBresult),DBPromise_10(BoardResult)])
         
         return res.json({success: true})
+   
         }
         catch(err){
             return res.json({success: false, message:err.toString()})

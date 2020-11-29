@@ -15,7 +15,6 @@ function MustRead() {
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>숨은 명의 찾기</Title>
             <p>관절,인대,힘줄 관련 명의들로 구성</p>
-            <p>다른 부위에 대한 문의가 많아질 시 추가할 계획 있습니다 :)</p>
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>명의 목록 기준</Title>
             <p>1.네이버에서 회원 수 많은 카페들의 추천 병원(90%)</p>
