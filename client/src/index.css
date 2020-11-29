@@ -236,7 +236,8 @@ input.error {
 
   .mustread{
     width: 90%;
-    margin: 3rem auto
+    margin: 3rem auto;
+    font-size: 1.1rem
   }
 
   .demo-loadmore-list {

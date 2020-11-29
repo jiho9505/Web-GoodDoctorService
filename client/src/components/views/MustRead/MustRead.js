@@ -6,17 +6,22 @@ const { Title } = Typography
 function MustRead() {
     return (
         <div className='mustread'>
-            <p><span style={{color:'red'}}>구글플레이스토어</span>에 <span style={{color:'red'}}>'숨은명의찾기' 앱</span> 출시</p>
+            <div style={{border : '1px solid #eee'}}></div>
+            <br></br>
+            <div style={{display:'flex', justifyContent:'center'}}>
+              <p><span style={{color:'red'}}>구글 플레이스토어</span><br/> <span style={{color:'red'}}>'숨은명의찾기' 앱</span> 출시</p>
+            </div>
+               
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>숨은 명의 찾기</Title>
-            <p>관절,인대,힘줄 관련 명의들로 구성되어있습니다.</p>
-            <p>- 다른 부위에 대한 문의가 많아지면 추가할게요 :) -</p>
+            <p>관절,인대,힘줄 관련 명의들로 구성</p>
+            <p>다른 부위에 대한 문의가 많아질 시 추가할 계획 있습니다 :)</p>
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>명의 목록 기준</Title>
             <p>1.네이버에서 회원 수 많은 카페들의 추천 병원(90%)</p>
             <p>2.EBS 명의에 출연하신 분들(10%)</p>
             {/*
-            <p>3.기타-네이버 검색하면서 수집했던 분들(3%)</p>
+            <p>3.숨은명의찾기 자체 추천(3%)</p>
             */}
             <div style={{border : '1px solid #eee'}}></div>
             <Title level={4}>사용법</Title>

@@ -18,6 +18,10 @@ function NavBar() {
     setVisible(false)
   };
 
+  const clickHandler = () => {
+    setVisible(false)
+  }
+
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div>
@@ -49,12 +53,13 @@ function NavBar() {
         </div>
 
         <Drawer
-          title="Find Good Doctors"
+          title="숨은명의찾기"
           placement="right"
           className="menu_drawer"
           closable={false}
           onClose={onClose}
           visible={visible}
+          onClick={clickHandler}
         >
           <LeftMenu mode="inline" />
           <RightMenu mode="inline" />
