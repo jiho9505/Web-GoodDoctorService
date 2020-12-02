@@ -63,7 +63,20 @@ function HospitalList(props) {
     };
     
     const clickHandler = (lat,lng) => {
-      props.refreshFunction(lat,lng)
+      if(props.user.userData._id){
+          props.refreshFunction(lat,lng)
+        }
+        else{
+          message.config({
+            top: 100
+          })
+          message.success('로그인을 하셔야 이용할 수 있는 기능입니다.')
+          setTimeout(() => {
+            props.history.push('/login')
+          }, 1000);
+          
+       };
+      
     }
 
   return (

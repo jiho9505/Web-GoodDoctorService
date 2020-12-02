@@ -154,7 +154,7 @@ function DetailBoardPage(props) {
                 <div style={{border : '1px solid #eee'}}></div>
                 <br/>
                 <div style={{display:'flex', justifyContent:'center'}}>
-                    <p>이 게시물이 마음에 드신다면 엄지를 눌러주세요!</p>
+                    <p>게시물이 마음에 드신다면 엄지 Click!</p>
                 </div>
                 <div style={{display:'flex', justifyContent:'center'}}>
                     <Likes postId={postId} userId={localStorage.getItem('userId')}  />

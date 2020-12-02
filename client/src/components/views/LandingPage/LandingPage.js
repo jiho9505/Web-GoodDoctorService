@@ -4,6 +4,7 @@ import Mapservice from "./mapservice/mapservice"
 import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
 import HospitalList from './hospitalList/hospitalList'
+import Manual from './Manual/Manual'
 import { location , part } from './Data'
 import Axios from 'axios'
 
@@ -57,8 +58,15 @@ function LandingPage(props) {
     return (
         <div className='landing'>
             
-            <br/>    
-            <br/>
+        <br/>   
+        <div className='manual'>
+            <Manual/>
+        </div> 
+        <br/>
+
+        
+            
+            
         <div className='center'>
            <Row className='row' gutter={[64,32]}>
                 <Col  lg={12} xs={24}>
@@ -71,7 +79,7 @@ function LandingPage(props) {
                 </Col>
             </Row>
         </div>
-        <br/>
+        
         <div className='center'>   
             <Row className='row' gutter={[64,32]} style={{ marginTop: '20px'}}>
                 <Col lg={12} md={24} xs={24}>

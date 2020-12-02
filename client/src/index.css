@@ -196,8 +196,17 @@ input.error {
     display: block;
   }
 
+  .manual{
+    display: none;
+  }
+
 
 @media (max-width: 767px) {
+
+  .manual{
+    display: flex;
+    justify-content: center;
+  }
 
   .ad{
     display: block;
@@ -354,6 +363,10 @@ input.error {
 }
 
 @media (max-width: 290px) {
+  .manual{
+    display: flex;
+    justify-content: center;
+  }
 
   .ad{
     display: none;
