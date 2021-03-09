@@ -110,6 +110,9 @@ function Postlist(props) {
     const ChooseBoardHandler = (value) => {
         setChooseBoard(value) 
       }
+    const ClickListener = () => {
+        window.location.reload();
+    }
 
     return (
     
@@ -121,10 +124,11 @@ function Postlist(props) {
                     title="게시물 수정에 성공하였습니다!"
                     subTitle="해당 게시물로 다시 돌아가려면 아래의 버튼을 클릭해주세요!"
                     extra={[
-                    <Link to={`/community/${props.postInfo._id}`}><Button type="primary" key="console">
+                   <Button type="primary" key="console" onClick={ClickListener}>
                         Go
                     </Button>
-                    </Link>
+                   
+                    
                     ]}
                  />
             </div>
