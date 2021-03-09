@@ -14,7 +14,7 @@ const Boardlist = [
     { key: 2, value: "정보 공유" },
     { key: 3, value: "고민 털기" }
 ]
-
+    
 function Postlist(props) {
 
     useEffect(() => {

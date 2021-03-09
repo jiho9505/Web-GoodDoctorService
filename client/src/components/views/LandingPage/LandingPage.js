@@ -3,6 +3,8 @@ import { Col, Row  } from 'antd'
 import Mapservice from "./mapservice/mapservice"
 import CheckBox from "./checkbox/checkbox"
 import CheckBox_2 from "./checkbox/checkbox_2"
+import SelectBox1 from "./SelectBox/SelectBox1"
+import SelectBox2 from "./SelectBox/SelectBox2"
 import HospitalList from './hospitalList/hospitalList'
 import Manual from './Manual/Manual'
 import { location , part } from './Data'
@@ -64,24 +66,31 @@ function LandingPage(props) {
         </div> 
         <br/>
 
+        <div className='mobile_board'>
+            <div className='center' style={{width: '100%'}}>
+                <SelectBox1 list={location} handleFilters={filters => handleFilters(filters, "location_")} />
+                <SelectBox2 list={part} handleFilters={filters => handleFilters(filters, "part_")}/>
+            </div>
+        </div>
+
         
             
             
-        <div className='center'>
-           <Row className='row' gutter={[64,32]}>
-                <Col  lg={12} xs={24}>
-                    {/* CheckBox */}
+        <div className='web_board'>
+           <Row gutter={[64,32]}>
+                <Col  lg={12} md={24} xs={24}>
+                
                     <CheckBox list={location} handleFilters={filters => handleFilters(filters, "location_")}/>
                 </Col>
-                <Col  lg={12} xs={24}>
-                    {/* CheckBox */}
+                <Col  lg={12} md={24} xs={24}>
+                    
                     <CheckBox_2 list={part} handleFilters={filters => handleFilters(filters, "part_")}/>
                 </Col>
             </Row>
         </div>
         
         <div className='center'>   
-            <Row className='row' gutter={[64,32]} style={{ marginTop: '20px'}}>
+            <Row className='row' gutter={[64,32]} style={{ marginTop: '5px'}}>
                 <Col lg={12} md={24} xs={24}>
                      
                     <Mapservice lat={lat} lng={lng} test={hospital} style={{ margin: '3rem auto'}}/>

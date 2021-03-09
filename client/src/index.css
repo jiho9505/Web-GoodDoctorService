@@ -95,6 +95,22 @@ body {
   height: 75vh;
 }
 
+select {
+  width: 130px;
+  padding: .4em .5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url('arrow.jpg') no-repeat 95% 50%;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  }
+  
+  select::-ms-expand {
+      display: none;
+  }
+
 input.error {
   border-color: red;
 }
@@ -138,7 +154,7 @@ input.error {
   height:400px;
   justify-content:center;
   align-items:center;
-  overflow-y : scroll
+  overflow-y : scroll;
 }
 
 ::-webkit-scrollbar {
@@ -334,12 +350,9 @@ input.error {
   }
 
   .hospital{
-    display:flex;
-    width:300px;
+    width:100%;
     height:300px;
-    justify-content:center;
-    align-items:center;
-    overflow-y : scroll
+    
   }
  
   .space{
@@ -363,6 +376,11 @@ input.error {
 }
 
 @media (max-width: 290px) {
+
+  
+  select {
+  width: 100px;
+  }
   .manual{
     display: flex;
     justify-content: center;
@@ -482,23 +500,12 @@ input.error {
   .pwd_button{
     margin-left: 95px;
   }
-  .row{
-    margin-top: 50px;
-    width: 100%;
-  }
-
-  .center{
-    display: flex;
-    justify-content: center;
-  }
+  
 
   .hospital{
-    display:flex;
+
     width:220px;
     height:250px;
-    justify-content:center;
-    align-items:center;
-    overflow-y : scroll
   }
  
   .space{
