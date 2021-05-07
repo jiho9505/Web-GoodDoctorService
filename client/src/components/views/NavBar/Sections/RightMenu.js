@@ -40,7 +40,7 @@ function RightMenu(props) {
               
             </Menu.Item>
             <Menu.Item key="logout">
-              <Link to="/mypage" onClick={logoutHandler}>로그아웃</Link>
+              <Link to="/" onClick={logoutHandler}>로그아웃</Link>
       
             </Menu.Item>
           </Menu>
