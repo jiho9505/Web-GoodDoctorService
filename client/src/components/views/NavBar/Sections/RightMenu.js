@@ -11,7 +11,7 @@ function RightMenu(props) {
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
       if (response.status === 200) {
-        props.history.push("/login");
+        window.localStorage.removeItem('userId') 
       } else {
         alert('Log Out Failed')
       }
@@ -40,7 +40,7 @@ function RightMenu(props) {
               
             </Menu.Item>
             <Menu.Item key="logout">
-              <Link to="/" onClick={logoutHandler}>로그아웃</Link>
+              <Link to="/login" onClick={logoutHandler}>로그아웃</Link>
       
             </Menu.Item>
           </Menu>
@@ -56,7 +56,7 @@ function RightMenu(props) {
               <Link to="/mypage">My Page</Link>
             </Menu.Item>
             <Menu.Item key="logout">
-             <Link to="/mypage" onClick={logoutHandler}>로그아웃</Link>
+             <Link to="/login" onClick={logoutHandler}>로그아웃</Link>
             </Menu.Item>
           </Menu>
         ) 
