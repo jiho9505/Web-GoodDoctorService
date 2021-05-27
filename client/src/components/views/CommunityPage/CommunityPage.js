@@ -9,24 +9,6 @@ import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
 import { Link } from 'react-router-dom';
 
-
-const list = [{
-  _id : 0,
-  name : '전체'
-},
-{
-  _id : 1,
-  name : '완치'
-},
-{
-  _id : 2,
-  name : '정보'
-},
-{
-  _id : 3,
-  name : '고민'
-}]
-
 function  CommunityPage() {
 
     const [Skip, setSkip] = useState(0)
@@ -136,18 +118,7 @@ function  CommunityPage() {
   const refresh = (value) => {
     let skip = 0
 
-    if(value === 1){
-      refactoring(value,skip,Limit,SearchTerms)
-    }
-    else if(value === 2){
-      refactoring(value,skip,Limit,SearchTerms)
-    }
-    else if(value === 3){
-      refactoring(value,skip,Limit,SearchTerms)
-    }
-    else{
-      refactoring(value,skip,Limit,SearchTerms)
-    }
+    refactoring(value,skip,Limit,SearchTerms);
   }
 
     return (
@@ -168,7 +139,7 @@ function  CommunityPage() {
             <div className='spacing'></div>
             <div className='spacing'></div>
             <div className='mobile_board'>
-              <MobileCategory list={list} refresh={refresh}/>
+              <MobileCategory refresh={refresh}/>
             </div>
             <div className='com_spacing'></div>
             

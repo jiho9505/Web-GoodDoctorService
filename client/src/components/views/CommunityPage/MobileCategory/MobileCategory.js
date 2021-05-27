@@ -2,13 +2,30 @@ import React, { useState } from 'react'
 import { Collapse, Radio } from 'antd';
 const { Panel } = Collapse;
 
+const list = [{
+    _id : 0,
+    name : '전체'
+  },
+  {
+    _id : 1,
+    name : '완치'
+  },
+  {
+    _id : 2,
+    name : '정보'
+  },
+  {
+    _id : 3,
+    name : '고민'
+  }]
+
 
 function MobileCategory(props) {
 
     const [Value, setValue] = useState(0)
-    
+
     const renderRadioBox = () => (
-        props.list &&  props.list.map((value) => (
+        list.map((value) => (
             <Radio key={value._id} value={value._id}>{value.name}</Radio>
            
         ))
