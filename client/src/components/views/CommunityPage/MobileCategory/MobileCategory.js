@@ -25,16 +25,14 @@ function MobileCategory(props) {
     const [Value, setValue] = useState(0)
 
     const renderRadioBox = () => (
-        list.map((value) => (
-            <Radio key={value._id} value={value._id}>{value.name}</Radio>
-           
+        list.map((value,index) => (
+            <Radio key={index} value={value._id}>{value.name}</Radio>
         ))
     )
 
-    const handleChange = (event) => {
-
-        setValue(event.target.value)
-        props.refresh(event.target.value)
+    const handleChange = (e) => {
+        setValue(e.target.value)
+        props.refresh(e.target.value)
     }
 
     return (

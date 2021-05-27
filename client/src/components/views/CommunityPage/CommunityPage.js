@@ -22,29 +22,29 @@ function  CommunityPage() {
     
     useEffect(() => {
     
-    Axios.get('/api/board')
-         .then(response => {
-           if(response.data.success){
-              setBoard(response.data.result)
+      Axios.get('/api/board')
+          .then(response => {
+            if(response.data.success){
+                setBoard(response.data.result)
+              }
+              else{
+                alert("게시판 목록을 불러오는데 실패하였습니다.")
+              }
+            }
+          )
+
+      Axios.get(`/api/board/mobile?skip=${Skip}&limit=${Limit}`)
+          .then(response => {
+            if(response.data.success){
+              setMobileBoard(response.data.result)
+              setPostSize(response.data.postSize)
+              
             }
             else{
               alert("게시판 목록을 불러오는데 실패하였습니다.")
             }
           }
         )
-
-    Axios.get(`/api/board/mobile?skip=${Skip}&limit=${Limit}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-            
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
   
   }, [])
 
@@ -68,8 +68,6 @@ function  CommunityPage() {
 
   const updateSearchTerms = (newSearchTerm) => {
     let skip = 0
-    
-    setSearchTerms(newSearchTerm)
 
     Axios.get(`/api/board?term=${newSearchTerm}`)
          .then(response => {
@@ -95,36 +93,34 @@ function  CommunityPage() {
            }
          }
        )
+
+    setSearchTerms(newSearchTerm)
     setSkip(skip)
 }
 
   const refactoring = (value,skip,Limit,SearchTerms) => {
-    setCategory(value)
 
       Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
         .then(response => {
           if(response.data.success){
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
-       
            }
            else{
              alert("게시판 목록을 불러오는데 실패하였습니다.")
            }
          }
        )
+    setCategory(value)
     setSkip(skip)
   }
-  const refresh = (value) => {
-    let skip = 0
 
-    refactoring(value,skip,Limit,SearchTerms);
+  const refresh = (value) => {
+    refactoring(value,0,Limit,SearchTerms);
   }
 
     return (
         <div className='postlist'>
-            
-           
             <br/>
             <br/>
             <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -132,7 +128,11 @@ function  CommunityPage() {
                 <Notification/>
               </div>
               <div >
-                <Link to="/write"><Button ><EditOutlined style={{marginTop : 10}} />글쓰기</Button></Link>
+                <Link to="/write">
+                  <Button >
+                    <EditOutlined style={{marginTop : 10}} />글쓰기
+                  </Button>
+                </Link>
                   
               </div>
             </div>

@@ -11,7 +11,7 @@ function NoticeBoard(props) {
   useEffect(() => {
     let array = []
     if(props.list && props.list.length>0){
-        props.list.map((list,index)=>{
+        props.list.forEach((list,index)=>{
           if(list.chooseBoard === 1){
             list.chooseBoard = '완치 후기'
           }
@@ -41,7 +41,8 @@ function NoticeBoard(props) {
   }
 
   },[props.list])
-      const clickHandler = (id) => {
+
+    const clickHandler = (id) => {
         let body = {
           _id : id
         }
@@ -53,7 +54,7 @@ function NoticeBoard(props) {
              })
       }
 
-      const columns = [
+    const columns = [
         {
           title: '구분',
           dataIndex: 'chooseBoard',
