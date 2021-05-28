@@ -19,12 +19,14 @@ function  CommunityPage() {
   const [MobileBoard, setMobileBoard] = useState([])
   const [SearchTerms, setSearchTerms] = useState("")
   const [Category, setCategory] = useState(0)
+  const [isLoading, setisLoading] = useState(false)
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     
   useEffect(() => {
     
       requestComAPI("");
       requestAPI("",Skip,Limit,"");
+      setisLoading(true)
   
   }, [])
 
@@ -113,18 +115,18 @@ function  CommunityPage() {
             <div className='com_spacing'></div>
             
             <div className='web_board'>
-      
-              {Board && Board.length > 0 ? <NoticeBoard  list={Board}/> : 
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', paddingBottom:'30px'}}>
-                <Spin indicator={antIcon} />
-              </div>}
+            
+              { isLoading ? <NoticeBoard  list={Board}/> : 
+                <div style={{display:'flex', justifyContent:'center', alignItems:'center', paddingBottom:'30px'}}>
+                  <Spin indicator={antIcon} />
+                </div>}
             </div>
             <div className='mobile_board'>
      
-              {MobileBoard && MobileBoard.length > 0 ? <MobileNoticeBoard  list={MobileBoard}/>  : 
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: '30px'}}>
-              <Spin indicator={antIcon} />
-            </div>}
+              { isLoading ? <MobileNoticeBoard  list={MobileBoard}/>  : 
+                <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: '30px'}}>
+                  <Spin indicator={antIcon} />
+                </div>}
             </div>
             
             <div className='spacing'></div>
