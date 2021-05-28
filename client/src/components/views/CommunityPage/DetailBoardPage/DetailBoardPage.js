@@ -5,7 +5,6 @@ import { UserOutlined, AlertTwoTone } from '@ant-design/icons';
 import moment from 'moment'
 import Comments from './Sections/Comments'
 import Likes from './Sections/Likes';
-import Postlist from '../NoticeBoard/PostList/Postlist'
 import {useHistory} from "react-router";
 
 const { Title } = Typography
@@ -14,7 +13,6 @@ const { TextArea } = Input
 function DetailBoardPage(props) {
     const history = useHistory();
     const postId = props.match.params.postId
-    // const [update, setupdate] = useState(false)
     const [PostInfo, setPostInfo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
    
@@ -47,8 +45,7 @@ function DetailBoardPage(props) {
 
     const updateHandler = () => {
         if(window.confirm('이 게시물을 수정하시겠습니까?')){
-            // setupdate(true)
-          
+    
             history.push({
                 pathname: "/write",
                 state: {postInfo: PostInfo}
@@ -103,18 +100,16 @@ function DetailBoardPage(props) {
     }
     return (
         <div>
-            {/* {update ?  */}
-                
-                {/* <Postlist postInfo={PostInfo} />  */}
-                <div className='mustread'>
+            <div className='mustread'>
                 {
-                    
                     ( PostInfo.writer && PostInfo.writer._id === localStorage.getItem('userId') ) 
                     || ( props.user &&  props.user.userData && props.user.userData.isAdmin ) ? 
                     <div style={{display:'flex', justifyContent:'flex-end'}}>
                         <Button onClick={updateHandler}>수정</Button>&nbsp;<Button onClick={deleteHandler}>삭제</Button>
-                    </div> : <div style={{display:'flex', justifyContent:'flex-end'}}>
-                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}}onClick={alertHandler}/></div>
+                    </div> : 
+                    <div style={{display:'flex', justifyContent:'flex-end'}}>
+                        <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}}onClick={alertHandler}/>
+                    </div>
                 }
                 <div style={{color:'yellowgreen'}}>
                     { PostInfo.chooseBoard === 1 ? '완치후기 >' : 

@@ -18,7 +18,7 @@ const Boardlist = [
 ]
     
 function Postlist(props) {
-    // {postInfo: PostInfo}
+  
     const location = useLocation();
     const PostInfo = location.state.postInfo;
     useEffect(() => {
