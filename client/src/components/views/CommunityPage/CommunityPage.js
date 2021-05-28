@@ -13,27 +13,17 @@ const Limit = 8;
 
 function  CommunityPage() {
 
-    const [Skip, setSkip] = useState(0)
-    const [PostSize, setPostSize] = useState(0)
-    const [Board, setBoard] = useState([])
-    const [MobileBoard, setMobileBoard] = useState([])
-    const [SearchTerms, setSearchTerms] = useState("")
-    const [Category, setCategory] = useState(0)
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+  const [Skip, setSkip] = useState(0)
+  const [PostSize, setPostSize] = useState(0)
+  const [Board, setBoard] = useState([])
+  const [MobileBoard, setMobileBoard] = useState([])
+  const [SearchTerms, setSearchTerms] = useState("")
+  const [Category, setCategory] = useState(0)
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     
-    useEffect(() => {
+  useEffect(() => {
     
-      Axios.get('/api/board')
-          .then(response => {
-            if(response.data.success){
-                setBoard(response.data.result)
-              }
-              else{
-                alert("게시판 목록을 불러오는데 실패하였습니다.")
-              }
-            }
-          )
-
+      requestComAPI("");
       requestAPI("",Skip,Limit,"");
   
   }, [])
@@ -42,14 +32,22 @@ function  CommunityPage() {
     let skip = Skip + Limit;
 
     requestAPI(Category,skip,Limit,SearchTerms);
-  
     setSkip(skip)
   }
 
   const updateSearchTerms = (newSearchTerm) => {
     let skip = 0
 
-    Axios.get(`/api/board?term=${newSearchTerm}`)
+    requestComAPI(newSearchTerm)
+    requestAPI(Category,skip,Limit,newSearchTerm);
+
+    setSearchTerms(newSearchTerm)
+    setSkip(skip)
+  }
+
+  const requestComAPI = (SearchTerms) => {
+      
+    Axios.get(`/api/board?term=${SearchTerms}`)
          .then(response => {
             if(response.data.success){
               setBoard(response.data.result)
@@ -60,12 +58,7 @@ function  CommunityPage() {
             }
           }
         )
-
-    requestAPI(Category,skip,Limit,newSearchTerm);
-
-    setSearchTerms(newSearchTerm)
-    setSkip(skip)
-}
+  }
 
   const requestAPI = (value,skip,Limit,SearchTerms) => {
     
