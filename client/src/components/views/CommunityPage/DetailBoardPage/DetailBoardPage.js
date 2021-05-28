@@ -6,13 +6,15 @@ import moment from 'moment'
 import Comments from './Sections/Comments'
 import Likes from './Sections/Likes';
 import Postlist from '../NoticeBoard/PostList/Postlist'
+import {useHistory} from "react-router";
 
 const { Title } = Typography
 const { TextArea } = Input
 
 function DetailBoardPage(props) {
+    const history = useHistory();
     const postId = props.match.params.postId
-    const [update, setupdate] = useState(false)
+    // const [update, setupdate] = useState(false)
     const [PostInfo, setPostInfo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
    
@@ -45,7 +47,12 @@ function DetailBoardPage(props) {
 
     const updateHandler = () => {
         if(window.confirm('이 게시물을 수정하시겠습니까?')){
-            setupdate(true)
+            // setupdate(true)
+          
+            history.push({
+                pathname: "/write",
+                state: {postInfo: PostInfo}
+            })
         }
     }
 
@@ -96,8 +103,9 @@ function DetailBoardPage(props) {
     }
     return (
         <div>
-            {update ? 
-                <Postlist postInfo={PostInfo} /> : 
+            {/* {update ?  */}
+                
+                {/* <Postlist postInfo={PostInfo} />  */}
                 <div className='mustread'>
                 {
                     
@@ -168,7 +176,7 @@ function DetailBoardPage(props) {
                 
                 
                 
-            </div>}    
+            </div>   
             
         
         </div>    

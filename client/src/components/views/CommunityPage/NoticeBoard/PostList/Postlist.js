@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Input, Button, Select , Form , message, Result} from 'antd'
 import PictureUpload from './PictureUpload/PictureUpload'
 import Axios from 'axios';
+import {useLocation} from "react-router";
+
+
+
 
 const { Option } = Select;
 const {TextArea} = Input
@@ -14,14 +18,16 @@ const Boardlist = [
 ]
     
 function Postlist(props) {
-
+    // {postInfo: PostInfo}
+    const location = useLocation();
+    const PostInfo = location.state.postInfo;
     useEffect(() => {
         
-        if(props.postInfo){
-            setPostTitle(props.postInfo.title)
-            setDescription(props.postInfo.description)
-            setImages([...props.postInfo.images])
-            setChooseBoard(props.postInfo.chooseBoard)
+        if(PostInfo){
+            setPostTitle(PostInfo.title)
+            setDescription(PostInfo.description)
+            setImages([...PostInfo.images])
+            setChooseBoard(PostInfo.chooseBoard)
         }
         
         
@@ -149,7 +155,7 @@ function Postlist(props) {
                 
                 <br />
         
-                <TextArea showCount onChange={DescHandler} value={Description} style={{height:300}} 
+                <TextArea onChange={DescHandler} value={Description} style={{height:300}} 
                  maxLength={2500} placeholder='내용을 입력해주세요.'/>
 
                 <br />
