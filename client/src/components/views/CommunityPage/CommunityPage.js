@@ -61,11 +61,17 @@ function  CommunityPage() {
   }
 
   const requestAPI = (value,skip,Limit,SearchTerms) => {
-    
-      Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
+      let param = {
+        params : {
+          skip,
+          limit : Limit,
+          term : SearchTerms,
+          choose : value
+        }
+      }
+      Axios.get(`/api/board/mobile`,param)
         .then(response => {
           if(response.data.success){
-            console.log(response.data.result)
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
            }

@@ -29,7 +29,7 @@ const storage = multerS3({
     },
 })
 
-var upload = multer({ storage: storage }).single("file")
+let upload = multer({ storage: storage }).single("file")
 
 router.post('/image', (req, res) => {
 
@@ -45,8 +45,8 @@ router.post('/image', (req, res) => {
 
 router.post('/view', (req, res) => {
 
-    var postId = req.body._id
-    var body = {
+    let postId = req.body._id
+    let body = {
         _id : postId
     }
 
@@ -61,9 +61,9 @@ router.post('/view', (req, res) => {
 
 
 router.get('/', (req, res) => {
-    var postId = req.query.id
-    var body = {}
-    var term = req.query.term
+    let postId = req.query.id
+    let body = {}
+    let term = req.query.term
    
     if(postId){
         body._id = postId
@@ -97,7 +97,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    var board = new Board(req.body)
+    let board = new Board(req.body)
 
     board.save((err,doc) => {
         if(err) return res.json({ success: false ,err })
@@ -108,11 +108,11 @@ router.post('/', (req, res) => {
 
 router.patch('/', (req, res) => {
 
-    var postId = req.query.id
-    var body = {
+    let postId = req.query.id
+    let body = {
         _id : postId
     }
-    var content = {
+    let content = {
         title : req.body.title,
         description : req.body.description,
         images : req.body.images,
@@ -130,7 +130,7 @@ router.patch('/', (req, res) => {
 
 router.delete('/', (req, res) => {
 
-    var postId = req.query.id
+    let postId = req.query.id
     
     const callMyPromise = async () => {
         try{
@@ -184,8 +184,8 @@ router.post("/info", (req, res) => {
 })
 
 router.get('/mobile', (req, res) => {
-   
-    var term = req.query.term
+ 
+    let term = req.query.term
     let limit = parseInt(req.query.limit)
     let skip = parseInt(req.query.skip);
     let value = req.query.choose ? parseInt(req.query.choose) : ''
