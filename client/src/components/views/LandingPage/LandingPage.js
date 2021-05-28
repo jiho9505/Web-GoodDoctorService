@@ -88,7 +88,7 @@ function LandingPage(props) {
                 </Col>
             </Row>
         </div>
-        
+        <br/>
         <div className='center'>   
             <Row className='row' gutter={[64,32]} style={{ marginTop: '5px'}}>
                 <Col lg={12} md={24} xs={24}>

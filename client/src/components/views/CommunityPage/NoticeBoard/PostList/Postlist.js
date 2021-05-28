@@ -20,17 +20,18 @@ const Boardlist = [
 function Postlist(props) {
   
     const location = useLocation();
-    const PostInfo = location.state.postInfo;
+    
     useEffect(() => {
         
-        if(PostInfo){
-            setPostTitle(PostInfo.title)
-            setDescription(PostInfo.description)
-            setImages([...PostInfo.images])
-            setChooseBoard(PostInfo.chooseBoard)
+        if(location && location.state){
+            const PostInfo = location.state.postInfo;
+            if(PostInfo){
+                setPostTitle(PostInfo.title)
+                setDescription(PostInfo.description)
+                setImages([...PostInfo.images])
+                setChooseBoard(PostInfo.chooseBoard)
+            }
         }
-        
-        
     }, [])
 
     const [PostTitle, setPostTitle] = useState("")

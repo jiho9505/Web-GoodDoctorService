@@ -6,7 +6,7 @@ import { message } from 'antd'
 
 export default function (SpecificComponent, option, adminRoute = null) {
     function AuthenticationCheck(props) {
-
+        
         let user = useSelector(state => state.user);
         const dispatch = useDispatch();
      
