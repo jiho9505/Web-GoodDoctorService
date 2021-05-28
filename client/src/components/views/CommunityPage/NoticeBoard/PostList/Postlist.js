@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Input, Button, Select , Form , message, Result} from 'antd'
 import PictureUpload from './PictureUpload/PictureUpload'
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
-
 
 const { Option } = Select;
 const {TextArea} = Input

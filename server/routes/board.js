@@ -184,20 +184,18 @@ router.post("/info", (req, res) => {
 })
 
 router.get('/mobile', (req, res) => {
+   
     var term = req.query.term
     let limit = parseInt(req.query.limit)
     let skip = parseInt(req.query.skip);
-    let value = parseInt(req.query.choose)
+    let value = req.query.choose ? parseInt(req.query.choose) : ''
     let body = {}
+   
+    value ? body.chooseBoard = value : ''
     
-    if(value){
-        body.chooseBoard = value
-    }
-
     if(term){
-        
     
-            Board.find(body)
+        Board.find(body)
             .find({ $text: { $search: term } })
             .populate('writer')
             .sort( { createdAt: -1 } )

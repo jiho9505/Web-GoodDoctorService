@@ -9,10 +9,11 @@ import MobileNoticeBoard from './NoticeBoard/MobileNoticeBoard'
 import MobileCategory from './MobileCategory/MobileCategory'
 import { Link } from 'react-router-dom';
 
+const Limit = 8;
+
 function  CommunityPage() {
 
     const [Skip, setSkip] = useState(0)
-    const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
     const [Board, setBoard] = useState([])
     const [MobileBoard, setMobileBoard] = useState([])
@@ -33,36 +34,15 @@ function  CommunityPage() {
             }
           )
 
-      Axios.get(`/api/board/mobile?skip=${Skip}&limit=${Limit}`)
-          .then(response => {
-            if(response.data.success){
-              setMobileBoard(response.data.result)
-              setPostSize(response.data.postSize)
-              
-            }
-            else{
-              alert("게시판 목록을 불러오는데 실패하였습니다.")
-            }
-          }
-        )
+      requestAPI("",Skip,Limit,"");
   
   }, [])
 
   const onLoadMore = () => {
     let skip = Skip + Limit;
 
-    Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${Category}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard([...MobileBoard,...response.data.result])
-             setPostSize(response.data.postSize)
-      
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
+    requestAPI(Category,skip,Limit,SearchTerms);
+  
     setSkip(skip)
   }
 
@@ -81,28 +61,18 @@ function  CommunityPage() {
           }
         )
 
-   Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${newSearchTerm}&choose=${Category}`)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-          
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
+    requestAPI(Category,skip,Limit,newSearchTerm);
 
     setSearchTerms(newSearchTerm)
     setSkip(skip)
 }
 
-  const refactoring = (value,skip,Limit,SearchTerms) => {
-
+  const requestAPI = (value,skip,Limit,SearchTerms) => {
+    
       Axios.get(`/api/board/mobile?skip=${skip}&limit=${Limit}&term=${SearchTerms}&choose=${value}`)
         .then(response => {
           if(response.data.success){
+            console.log(response.data.result)
              setMobileBoard(response.data.result)
              setPostSize(response.data.postSize)
            }
@@ -116,7 +86,7 @@ function  CommunityPage() {
   }
 
   const refresh = (value) => {
-    refactoring(value,0,Limit,SearchTerms);
+    requestAPI(value,0,Limit,SearchTerms);
   }
 
     return (
