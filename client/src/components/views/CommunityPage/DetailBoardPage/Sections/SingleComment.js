@@ -101,15 +101,11 @@ function SingleComment(props) {
             
         }
     }
-
-
-    return (
-        <div>
-            { user && user.userData && props.comment.writer &&
-        <div>
-            
-            {props.child ? <Comment style={{padding:'0px'}}
-                actions={actions_child}
+    
+    
+    const renderComment = (actions) => {
+        return <Comment
+                actions={actions}
                 author={writer.nickname === props.comment.writer.nickname ? 
                     <span>
                     {props.comment.writer.nickname}
@@ -145,43 +141,16 @@ function SingleComment(props) {
                     </p>
                 }
             ></Comment>
-                : <Comment
-                actions={actions}
-                author={writer.nickname === props.comment.writer.nickname ? 
-                    <span>
-                        {props.comment.writer.nickname}
-                        &nbsp;&nbsp;
-                        <Badge  count='작성자' style={{ backgroundColor: '#52c41a' }} />
-                        {user.userData._id === props.comment.writer._id || user.userData.isAdmin? 
-                        <span style={{ fontSize : '15px'}}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <DeleteOutlined  onClick={deleteHandler}/>
-                        </span> : <span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
-                            </span>}
-                    </span> : 
-                    <span>{props.comment.writer.nickname}
-                        &nbsp;&nbsp;
-                        {user.userData._id === props.comment.writer._id || user.userData.isAdmin ? 
-                            <span style={{ fontSize : '15px'}}>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <DeleteOutlined  onClick={deleteHandler}/>
-                            </span> : <span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <AlertTwoTone twoToneColor="#eb2f96" style={{ fontSize : '18px'}} onClick={alertHandler}/>
-                            </span>}
-                    </span>
-                    }
-                avatar={
-                    <Avatar style={{ backgroundColor: '#87d068' }} icon={ <UserOutlined />} />
-                }
-                content={
-                    <p>
-                        {props.comment.content}
-                    </p>
-                }
-            ></Comment>}
+    }
+
+
+    return (
+        <div>
+            { user && user.userData && props.comment.writer &&
+        <div>
+            
+            {props.child ? renderComment(actions_child) :
+            renderComment(actions)}
 
 
             {OpenReply &&
