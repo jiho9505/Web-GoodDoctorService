@@ -1,6 +1,6 @@
 import React , {useEffect,useState} from 'react'
-import { EditOutlined , LoadingOutlined} from '@ant-design/icons';
-import { Button , Spin } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import NoticeBoard from './NoticeBoard/NoticeBoard'
 import SearchTool from './SearchTool/SearchTool'
 import Axios from 'axios'
@@ -19,14 +19,16 @@ function  CommunityPage() {
   const [MobileBoard, setMobileBoard] = useState([])
   const [SearchTerms, setSearchTerms] = useState("")
   const [Category, setCategory] = useState(0)
-  const [isLoading, setisLoading] = useState(false)
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+  const [isLoading, setisLoading] = useState(true)
     
   useEffect(() => {
-    
+    const func = async () => {
       requestComAPI("");
-      requestAPI("",Skip,Limit,"");
-      setisLoading(true)
+      await requestAPI("",Skip,Limit,"");
+      setisLoading(false)
+    }
+    func();
+      
   
   }, [])
 
@@ -62,7 +64,7 @@ function  CommunityPage() {
         )
   }
 
-  const requestAPI = (value,skip,Limit,SearchTerms) => {
+  const requestAPI = async(value,skip,Limit,SearchTerms) => {
       let param = {
         params : {
           skip,
@@ -71,17 +73,17 @@ function  CommunityPage() {
           choose : value
         }
       }
-      Axios.get(`/api/board/mobile`,param)
-        .then(response => {
-          if(response.data.success){
-             setMobileBoard(response.data.result)
-             setPostSize(response.data.postSize)
-           }
-           else{
-             alert("게시판 목록을 불러오는데 실패하였습니다.")
-           }
-         }
-       )
+      await Axios.get(`/api/board/mobile`,param)
+              .then(response => {
+                if(response.data.success){
+                  setMobileBoard(response.data.result)
+                  setPostSize(response.data.postSize)
+                }
+                else{
+                  alert("게시판 목록을 불러오는데 실패하였습니다.")
+                }
+              }
+            )
     setCategory(value)
     setSkip(skip)
   }
@@ -115,18 +117,10 @@ function  CommunityPage() {
             <div className='com_spacing'></div>
             
             <div className='web_board'>
-            
-              { isLoading ? <NoticeBoard  list={Board}/> : 
-                <div style={{display:'flex', justifyContent:'center', alignItems:'center', paddingBottom:'30px'}}>
-                  <Spin indicator={antIcon} />
-                </div>}
+               <NoticeBoard  list={Board} isLoading={isLoading}/>
             </div>
             <div className='mobile_board'>
-     
-              { isLoading ? <MobileNoticeBoard  list={MobileBoard}/>  : 
-                <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: '30px'}}>
-                  <Spin indicator={antIcon} />
-                </div>}
+               <MobileNoticeBoard  list={MobileBoard} isLoading={isLoading}/> 
             </div>
             
             <div className='spacing'></div>

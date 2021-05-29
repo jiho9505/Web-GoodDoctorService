@@ -10,7 +10,9 @@ function MobileNoticeBoard(props) {
 
     const list = props.list
     
-
+{/* <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: '30px'}}>
+                  <Spin indicator={antIcon} />
+                </div> */}
     
     
     const clickHandler = (id) => {
